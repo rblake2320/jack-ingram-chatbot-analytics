@@ -1,0 +1,17 @@
+name: Pull Request Template
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  pr-template:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Check PR Template
+        uses: JJ/github-pr-contains-action@releases/v0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          bodyContains: '## Description'
+          bodyDoesNotContain: 'No description provided'
