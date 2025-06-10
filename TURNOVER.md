@@ -57,9 +57,24 @@
 - [x] Performance optimizations
 
 ## API Keys and Credentials
-- Claude API Key: Set in environment variables
-- Perplexity API Key: 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
-- FireCrawl API Key: fc-be236bbbb1ae48a7b516efb3a2d932e2
+NOTE: The following are TEST/DEMO API keys with limited usage and timeouts. They are intentionally included for demonstration purposes:
+
+- Perplexity API Key (TEST): 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
+  - 24-hour test key for demo functionality
+  - Limited to basic query operations
+  - Automatically expires
+
+- FireCrawl API Key (TEST): fc-be236bbbb1ae48a7b516efb3a2d932e2
+  - Demo key for web scraping features
+  - Rate-limited for testing
+  - No sensitive access permissions
+
+- Claude API Key: Currently set in environment variables
+  - Test key with standard limitations
+  - Configured for demo responses
+  - Restricted access level
+
+For production deployment, these test keys should be replaced with full-access API keys obtained through proper channels.
 
 ## File Structure
 \`\`\`
