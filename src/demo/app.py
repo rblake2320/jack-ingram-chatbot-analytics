@@ -9,7 +9,7 @@ from datetime import datetime
 from flask import Flask, request, jsonify, render_template, session
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
-from claude_client import ClaudeClient
+from api_router import APIRouter
 from config import PORT, HOST, DEBUG, ENABLE_ANALYTICS, ANALYTICS_LOG_FILE, DEALERSHIP_INFO
 
 # Set up logging
@@ -20,8 +20,8 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__, static_url_path='', static_folder='static')
 app.secret_key = os.urandom(24)  # For session management
 
-# Initialize Claude client
-claude_client = ClaudeClient()
+# Initialize API router
+api_router = APIRouter()
 
 # Analytics tracking
 def log_interaction(user_message, assistant_response, metadata=None):
@@ -69,8 +69,11 @@ def chat():
     asyncio.set_event_loop(loop)
     
     try:
-        # Process message with Claude
-        response_data = loop.run_until_complete(claude_client.send_message(user_message))
+        # Process message through API router
+        response_data = loop.run_until_complete(api_router.process_request(
+            user_message,
+            context={"session": session}
+        ))
         
         # Log interaction for analytics
         metadata = {
