@@ -6,7 +6,7 @@ import json
 import requests
 import logging
 from typing import Dict, List, Any, Optional
-from .config import (
+from config import (
     ANTHROPIC_API_URL,
     ANTHROPIC_VERSION,
     MODEL,
@@ -22,7 +22,7 @@ class ClaudeClient:
     
     def __init__(self, api_key: Optional[str] = None):
         """Initialize the Claude client with API credentials"""
-        from .config import ANTHROPIC_API_KEY
+        from config import ANTHROPIC_API_KEY
         self.api_url = ANTHROPIC_API_URL
         self.headers = {
             "x-api-key": api_key or ANTHROPIC_API_KEY,
@@ -44,24 +44,24 @@ class ClaudeClient:
         Returns:
             Dict containing the response and metadata
         """
-        # Add user message to conversation history
-        self.conversation_history.append({"role": "user", "content": user_message})
-        
-        # Prepare the request payload
-        payload = {
-            "model": self.model,
-            "max_tokens": max_tokens,
-            "system": self.system_prompt,
-            "messages": self.conversation_history
-        }
-        
         try:
             # Send the request to the API
             logger.info(f"Sending request to Claude API: {user_message[:50]}...")
+            
+            payload = {
+                "model": self.model,
+                "max_tokens": max_tokens,
+                "messages": [
+                    {"role": "system", "content": self.system_prompt}
+                ] + self.conversation_history + [
+                    {"role": "user", "content": user_message}
+                ]
+            }
+            
             response = requests.post(
                 self.api_url,
                 headers=self.headers,
-                data=json.dumps(payload)
+                json=payload
             )
             
             # Log the full response for debugging
@@ -84,9 +84,10 @@ class ClaudeClient:
             response_data = response.json()
             
             # Extract the assistant's message
-            assistant_message = response_data.get("content", [{"text": "Sorry, I couldn't process your request."}])[0]["text"]
+            assistant_message = response_data.get("content", [{"text": "Sorry, I couldn't process your request."}])[0].get("text", "Sorry, I couldn't process your request.")
             
-            # Add assistant response to conversation history
+            # Update conversation history
+            self.conversation_history.append({"role": "user", "content": user_message})
             self.conversation_history.append({"role": "assistant", "content": assistant_message})
             
             return {

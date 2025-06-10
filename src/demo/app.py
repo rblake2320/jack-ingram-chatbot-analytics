@@ -7,15 +7,15 @@ import json
 import logging
 from datetime import datetime
 from flask import Flask, request, jsonify, render_template, session
-from .claude_client import ClaudeClient
-from .config import PORT, HOST, DEBUG, ENABLE_ANALYTICS, ANALYTICS_LOG_FILE, DEALERSHIP_INFO
+from claude_client import ClaudeClient
+from config import PORT, HOST, DEBUG, ENABLE_ANALYTICS, ANALYTICS_LOG_FILE, DEALERSHIP_INFO
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Initialize Flask app
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='', static_folder='static')
 app.secret_key = os.urandom(24)  # For session management
 
 # Initialize Claude client
@@ -90,6 +90,11 @@ def reset_conversation():
 def get_dealership_info():
     """Return dealership information"""
     return jsonify(DEALERSHIP_INFO)
+
+@app.route('/health')
+def health_check():
+    """Health check endpoint for DigitalOcean App Platform"""
+    return jsonify({"status": "healthy"}), 200
 
 def run_app():
     """Run the Flask application"""
