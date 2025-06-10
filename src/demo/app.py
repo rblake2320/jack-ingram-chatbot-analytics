@@ -7,6 +7,8 @@ import json
 import logging
 from datetime import datetime
 from flask import Flask, request, jsonify, render_template, session
+import asyncio
+from concurrent.futures import ThreadPoolExecutor
 from claude_client import ClaudeClient
 from config import PORT, HOST, DEBUG, ENABLE_ANALYTICS, ANALYTICS_LOG_FILE, DEALERSHIP_INFO
 
@@ -62,22 +64,30 @@ def chat():
         claude_client.reset_conversation()
         session['conversation_id'] = f"conv_{datetime.now().strftime('%Y%m%d%H%M%S')}"
     
-    # Process message with Claude
-    response_data = claude_client.send_message(user_message)
+    # Create event loop for async operations
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
     
-    # Log interaction for analytics
-    metadata = {
-        "conversation_id": session.get('conversation_id'),
-        "timestamp": datetime.now().isoformat(),
-        "user_agent": request.headers.get('User-Agent'),
-        "usage": response_data.get("usage", {})
-    }
-    log_interaction(user_message, response_data.get("response", ""), metadata)
-    
-    return jsonify({
-        "response": response_data.get("response", "I'm sorry, I couldn't process your request."),
-        "conversation_id": session.get('conversation_id')
-    })
+    try:
+        # Process message with Claude
+        response_data = loop.run_until_complete(claude_client.send_message(user_message))
+        
+        # Log interaction for analytics
+        metadata = {
+            "conversation_id": session.get('conversation_id'),
+            "timestamp": datetime.now().isoformat(),
+            "user_agent": request.headers.get('User-Agent'),
+            "usage": response_data.get("usage", {})
+        }
+        log_interaction(user_message, response_data.get("response", ""), metadata)
+        
+        return jsonify({
+            "response": response_data.get("response", "I'm sorry, I couldn't process your request."),
+            "conversation_id": session.get('conversation_id')
+        })
+        
+    finally:
+        loop.close()
 
 @app.route('/api/reset', methods=['POST'])
 def reset_conversation():

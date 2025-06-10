@@ -45,7 +45,21 @@ class ClaudeClient:
             Dict containing the response and metadata
         """
         try:
-            # Send the request to the API
+            # Get real-time context from MCP
+            mcp_client = MCPClient()
+            realtime_info = await mcp_client.get_realtime_info(user_message)
+            
+            # Enhance user message with real-time context
+            enhanced_message = f"""User message: {user_message}
+
+Available real-time information:
+- Current inventory: {realtime_info.get('inventory', {})}
+- Service availability: {realtime_info.get('service', {})}
+- Latest offers: {realtime_info.get('offers', {})}
+- Related updates: {realtime_info.get('search', {})}
+"""
+            
+            # Send request to API
             logger.info(f"Sending request to Claude API: {user_message[:50]}...")
             
             payload = {
@@ -53,7 +67,7 @@ class ClaudeClient:
                 "max_tokens": max_tokens,
                 "system": self.system_prompt,
                 "messages": self.conversation_history + [
-                    {"role": "user", "content": user_message}
+                    {"role": "user", "content": enhanced_message}
                 ]
             }
             
