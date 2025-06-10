@@ -27,13 +27,13 @@ class MCPClient:
         results = {}
         
         try:
-            # Search for latest information
+            # Use FireCrawl to get real-time website data
+            website_data = await self.crawl_dealership_site()
+            results['website'] = website_data
+            
+            # Use Brave Search for additional context
             brave_results = await self.brave_search(query)
             results['search'] = brave_results
-            
-            # Get inventory data through WayStation
-            inventory = await self.get_inventory()
-            results['inventory'] = inventory
             
             # Get service availability
             service_slots = await self.get_service_slots() 
@@ -56,12 +56,10 @@ class MCPClient:
             "results": ["Mock search result 1", "Mock search result 2"]
         }
         
-    async def get_inventory(self) -> Dict[str, Any]:
-        """Get current inventory data"""
-        return {
-            "status": "mock",
-            "inventory": ["Mock inventory item 1", "Mock inventory item 2"]
-        }
+    async def crawl_dealership_site(self) -> Dict[str, Any]:
+        """Get real-time website data using FireCrawl"""
+        firecrawl = FireCrawlClient()
+        return await firecrawl.crawl_dealership_sites()
         
     async def get_service_slots(self) -> Dict[str, Any]:
         """Get service appointment availability"""
