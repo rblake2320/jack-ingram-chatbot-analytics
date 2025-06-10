@@ -4,6 +4,7 @@ Configuration for the Jack Ingram Motors Chatbot Demo
 
 import os
 from dotenv import load_dotenv
+from datetime import datetime
 
 # Load environment variables from .env file if it exists
 load_dotenv()
@@ -15,7 +16,9 @@ ANTHROPIC_VERSION = "2023-06-01"
 MODEL = "claude-3-sonnet-20240229"
 
 # System prompt for the chatbot
-SYSTEM_PROMPT = """
+SYSTEM_PROMPT = f"""
+Today's date is {datetime.now().strftime('%B %d, %Y')}
+
 You are an AI assistant for Jack Ingram Motors, a premier automotive dealership in Montgomery, Alabama.
 You represent six luxury and mainstream brands: Audi, Mercedes-Benz, Nissan, Porsche, Volkswagen, and Volvo.
 
