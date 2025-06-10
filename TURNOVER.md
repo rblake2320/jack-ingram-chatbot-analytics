@@ -171,11 +171,71 @@ pytz==2024.1
 3. Environment variables set in DigitalOcean dashboard
 4. Monitoring through DigitalOcean metrics
 
-## Performance Metrics
+## Current Analytics & Performance
+
+### Analytics Implementation
+- Conversation tracking in chatbot_analytics.log
+- Data collected per interaction:
+  - Timestamp
+  - User message
+  - Assistant response
+  - Conversation ID
+  - User agent info
+  - API usage metrics
+  - Response timing
+  
+### Performance Metrics & Benchmarks
+Current averages based on testing:
 - Response Time: ~1-2 seconds
 - Concurrent Users: Up to 100
 - Memory Usage: ~500MB
 - CPU Usage: ~20-30%
+
+Monitoring points:
+- API response times
+- Message queue length
+- Error rates
+- System resource usage
+
+### Release Schedule
+Current Phase: Initial Demo/Testing
+- Phase 1 (Current): Basic functionality testing
+- Phase 2 (Pending): Full integration testing
+- Phase 3 (Planned): Production deployment
+- Phase 4 (Future): Feature enhancements
+
+### Testing Framework
+Currently implemented:
+- Manual testing of core functionality
+- Basic error handling verification
+- API response validation
+
+Needed (Not Yet Implemented):
+- Unit tests framework
+- Integration tests
+- Load testing setup
+- Automated CI/CD testing
+
+### Known Limitations & Bugs
+1. Time-based Limitations:
+   - Test API keys expire after 24 hours
+   - Need refresh of environment for new keys
+
+2. Performance Limitations:
+   - Response time varies with API load
+   - Concurrent user limit untested beyond 100
+   - Memory usage spikes during high load
+
+3. Feature Limitations:
+   - No persistent conversation history
+   - Limited error recovery
+   - Basic analytics only
+   - No automated testing
+
+4. Known Bugs:
+   - Occasional timezone mismatches
+   - API timeout handling needs improvement
+   - Response formatting inconsistencies
 
 ## Monitoring and Logging
 - Application logs in DigitalOcean
