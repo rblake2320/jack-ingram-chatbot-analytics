@@ -51,9 +51,8 @@ class ClaudeClient:
             payload = {
                 "model": self.model,
                 "max_tokens": max_tokens,
-                "messages": [
-                    {"role": "system", "content": self.system_prompt}
-                ] + self.conversation_history + [
+                "system": self.system_prompt,
+                "messages": self.conversation_history + [
                     {"role": "user", "content": user_message}
                 ]
             }

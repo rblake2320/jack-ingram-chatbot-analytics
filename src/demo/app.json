@@ -1,0 +1,27 @@
+{
+  "spec": {
+    "name": "jack-ingram-chatbot",
+    "region": "nyc",
+    "services": [{
+      "name": "web",
+      "github": {
+        "repo": "rblake2320/jack-ingram-chatbot-analytics",
+        "branch": "main",
+        "deploy_on_push": true
+      },
+      "source_dir": "src/demo",
+      "envs": [{
+        "key": "ANTHROPIC_API_KEY",
+        "value": "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",
+        "type": "SECRET"
+      }],
+      "build_command": "pip install -r requirements.txt",
+      "run_command": "gunicorn --bind 0.0.0.0:8080 app:app",
+      "instance_size_slug": "basic-xxs",
+      "instance_count": 1,
+      "routes": [{
+        "path": "/"
+      }]
+    }]
+  }
+}
