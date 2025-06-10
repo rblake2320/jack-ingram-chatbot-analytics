@@ -11,3 +11,4 @@ aiodns==3.1.1  # For async DNS resolution
 cchardet==2.1.7  # For faster encoding detection
 uvloop==0.19.0  # For faster async operations
 uvicorn==0.27.1  # ASGI server for better async performance
+pytz==2024.1  # Timezone handling
