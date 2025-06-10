@@ -26,7 +26,7 @@ class ClaudeClient:
         self.api_url = ANTHROPIC_API_URL
         self.headers = {
             "x-api-key": api_key or ANTHROPIC_API_KEY,
-            "anthropic-version": ANTHROPIC_VERSION,
+            "anthropic-version": "2023-06-01",
             "content-type": "application/json"
         }
         self.system_prompt = SYSTEM_PROMPT

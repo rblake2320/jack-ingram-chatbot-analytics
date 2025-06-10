@@ -11,7 +11,7 @@ load_dotenv()
 # API Configuration
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "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")
 ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages"
-ANTHROPIC_VERSION = "2024-02-29"
+ANTHROPIC_VERSION = "2023-06-01"
 MODEL = "claude-3-sonnet-20240229"
 
 # System prompt for the chatbot
