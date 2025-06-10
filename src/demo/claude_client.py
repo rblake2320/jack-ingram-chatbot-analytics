@@ -83,7 +83,14 @@ class ClaudeClient:
             response_data = response.json()
             
             # Extract the assistant's message
-            assistant_message = response_data.get("content", [{"text": "Sorry, I couldn't process your request."}])[0].get("text", "Sorry, I couldn't process your request.")
+            content_list = response_data.get("content", [])
+            assistant_message = ""
+            for content in content_list:
+                if content.get("type") == "text":
+                    assistant_message += content.get("text", "")
+            
+            if not assistant_message:
+                assistant_message = "Sorry, I couldn't process your request."
             
             # Update conversation history
             self.conversation_history.append({"role": "user", "content": user_message})
