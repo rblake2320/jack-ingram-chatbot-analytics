@@ -6,6 +6,7 @@ import logging
 from typing import Dict, Any, Optional
 from api_gateway import APIGateway
 from claude_client import ClaudeClient
+from perplexity_client import PerplexityClient
 
 class APIRouter:
     """Router for managing API requests"""
@@ -14,6 +15,7 @@ class APIRouter:
         self.logger = logging.getLogger(__name__)
         self.gateway = APIGateway()
         self.claude = ClaudeClient()
+        self.perplexity = PerplexityClient()
         
     async def process_request(
         self,
@@ -34,14 +36,19 @@ class APIRouter:
             # Extract vehicle query parameters
             query = self.extract_vehicle_params(message)
             
-            # Get data from API Gateway if vehicle related
+            # Get data from multiple sources
             vehicle_data = {}
+            perplexity_data = {}
+            
             if query:
+                # Run API calls concurrently
                 vehicle_data = await self.gateway.get_vehicle_data(query)
+                perplexity_data = await self.perplexity.get_realtime_info(message)
             
             # Enhance Claude prompt with real-time data
             enhanced_context = {
                 "vehicle_data": vehicle_data,
+                "realtime_info": perplexity_data,
                 "session": context.get("session", {}) if context else {}
             }
             

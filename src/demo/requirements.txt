@@ -6,3 +6,4 @@ aiohttp==3.9.3
 asyncio==3.4.3
 beautifulsoup4==4.12.3
 lxml==5.1.0
+httpx==0.26.0
