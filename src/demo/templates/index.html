@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jack Ingram Motors AI Assistant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .chat-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .chat-header {
+            background-color: #212529;
+            color: white;
+            padding: 15px 20px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .chat-header h1 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .message {
+            max-width: 80%;
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 15px;
+            position: relative;
+            line-height: 1.5;
+        }
+        .user-message {
+            background-color: #007bff;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 0;
+        }
+        .assistant-message {
+            background-color: #e9ecef;
+            color: #212529;
+            align-self: flex-start;
+            border-bottom-left-radius: 0;
+        }
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+        .chat-input input {
+            flex-grow: 1;
+            border: 1px solid #ced4da;
+            border-radius: 20px;
+            padding: 10px 15px;
+            margin-right: 10px;
+        }
+        .chat-input button {
+            border-radius: 20px;
+        }
+        .brand-logo {
+            height: 30px;
+            margin-right: 10px;
+        }
+        .dealership-info {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        .brand-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .brand-badge {
+            background-color: #e9ecef;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .brand-badge:hover {
+            background-color: #007bff;
+            color: white;
+        }
+        .typing-indicator {
+            display: none;
+            align-self: flex-start;
+            background-color: #e9ecef;
+            padding: 10px 15px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            color: #6c757d;
+        }
+        .typing-indicator span {
+            animation: blink 1.5s infinite;
+        }
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes blink {
+            0% { opacity: 0.2; }
+            20% { opacity: 1; }
+            100% { opacity: 0.2; }
+        }
+        .suggested-questions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .suggested-question {
+            background-color: #e9ecef;
+            padding: 8px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .suggested-question:hover {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5 mb-5">
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="d-flex align-items-center">
+                    <img src="https://www.jackingram.com/static/dealer-18641/JackIngramMotors_Logo.png" alt="Jack Ingram Motors Logo" class="brand-logo">
+                    <h1>Jack Ingram Motors AI Assistant</h1>
+                </div>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message assistant-message">
+                    Welcome to Jack Ingram Motors! I'm your AI assistant, here to help with any questions about our vehicles, services, or dealership information. How can I assist you today?
+                </div>
+                <div class="suggested-questions">
+                    <div class="suggested-question" onclick="askQuestion('What brands do you carry?')">What brands do you carry?</div>
+                    <div class="suggested-question" onclick="askQuestion('How do I schedule a service appointment?')">Schedule service</div>
+                    <div class="suggested-question" onclick="askQuestion('What are your hours?')">Dealership hours</div>
+                    <div class="suggested-question" onclick="askQuestion('Do you have any special offers?')">Current offers</div>
+                </div>
+                <div class="typing-indicator" id="typingIndicator">
+                    Thinking<span>.</span><span>.</span><span>.</span>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="userInput" placeholder="Type your message here..." class="form-control">
+                <button class="btn btn-primary" id="sendButton">Send</button>
+                <button class="btn btn-outline-secondary ms-2" id="resetButton" title="Reset conversation">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+                        <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <div class="dealership-info mt-4">
+            <h5>About Jack Ingram Motors</h5>
+            <p>Jack Ingram Motors is Montgomery's premier automotive dealership, offering a wide selection of new and pre-owned vehicles across six luxury and mainstream brands.</p>
+            
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <h6>Location</h6>
+                    <p>1000 Eastern Blvd, Montgomery, AL 36117</p>
+                    
+                    <h6>Contact</h6>
+                    <p>Phone: (334) 277-5700<br>
+                    Website: <a href="https://www.jackingram.com/" target="_blank">www.jackingram.com</a></p>
+                </div>
+                <div class="col-md-6">
+                    <h6>Hours</h6>
+                    <p><strong>Sales:</strong><br>
+                    Mon-Fri: 9:00 AM - 7:00 PM<br>
+                    Saturday: 9:00 AM - 6:00 PM<br>
+                    Sunday: Closed</p>
+                    
+                    <p><strong>Service:</strong><br>
+                    Mon-Fri: 7:30 AM - 6:00 PM<br>
+                    Saturday: 8:00 AM - 5:00 PM<br>
+                    Sunday: Closed</p>
+                </div>
+            </div>
+            
+            <h6>Our Brands</h6>
+            <div class="brand-badges">
+                <div class="brand-badge" onclick="askQuestion('Tell me about your Audi inventory')">Audi</div>
+                <div class="brand-badge" onclick="askQuestion('Tell me about your Mercedes-Benz inventory')">Mercedes-Benz</div>
+                <div class="brand-badge" onclick="askQuestion('Tell me about your Nissan inventory')">Nissan</div>
+                <div class="brand-badge" onclick="askQuestion('Tell me about your Porsche inventory')">Porsche</div>
+                <div class="brand-badge" onclick="askQuestion('Tell me about your Volkswagen inventory')">Volkswagen</div>
+                <div class="brand-badge" onclick="askQuestion('Tell me about your Volvo inventory')">Volvo</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatMessages = document.getElementById('chatMessages');
+            const userInput = document.getElementById('userInput');
+            const sendButton = document.getElementById('sendButton');
+            const resetButton = document.getElementById('resetButton');
+            const typingIndicator = document.getElementById('typingIndicator');
+            
+            // Function to add a message to the chat
+            function addMessage(message, isUser) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message');
+                messageDiv.classList.add(isUser ? 'user-message' : 'assistant-message');
+                messageDiv.textContent = message;
+                
+                // Remove typing indicator if it's visible
+                typingIndicator.style.display = 'none';
+                
+                // Add message to chat
+                chatMessages.appendChild(messageDiv);
+                
+                // Scroll to bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            // Function to show typing indicator
+            function showTypingIndicator() {
+                typingIndicator.style.display = 'block';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            // Function to send message to backend
+            async function sendMessage(message) {
+                try {
+                    showTypingIndicator();
+                    
+                    const response = await fetch('/api/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ message })
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    
+                    const data = await response.json();
+                    addMessage(data.response, false);
+                    
+                } catch (error) {
+                    console.error('Error:', error);
+                    typingIndicator.style.display = 'none';
+                    addMessage('Sorry, I encountered an error. Please try again later.', false);
+                }
+            }
+            
+            // Function to reset conversation
+            async function resetConversation() {
+                try {
+                    const response = await fetch('/api/reset', {
+                        method: 'POST'
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    
+                    // Clear chat messages except the first welcome message
+                    while (chatMessages.children.length > 1) {
+                        chatMessages.removeChild(chatMessages.lastChild);
+                    }
+                    
+                    // Add reset confirmation message
+                    addMessage('Conversation has been reset. How can I help you today?', false);
+                    
+                } catch (error) {
+                    console.error('Error:', error);
+                    addMessage('Sorry, I encountered an error while resetting the conversation.', false);
+                }
+            }
+            
+            // Event listener for send button
+            sendButton.addEventListener('click', function() {
+                const message = userInput.value.trim();
+                if (message) {
+                    addMessage(message, true);
+                    sendMessage(message);
+                    userInput.value = '';
+                }
+            });
+            
+            // Event listener for Enter key
+            userInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const message = userInput.value.trim();
+                    if (message) {
+                        addMessage(message, true);
+                        sendMessage(message);
+                        userInput.value = '';
+                    }
+                }
+            });
+            
+            // Event listener for reset button
+            resetButton.addEventListener('click', resetConversation);
+        });
+        
+        // Function to ask a suggested question
+        function askQuestion(question) {
+            const chatMessages = document.getElementById('chatMessages');
+            const userInput = document.getElementById('userInput');
+            
+            // Add user message
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', 'user-message');
+            messageDiv.textContent = question;
+            chatMessages.appendChild(messageDiv);
+            
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // Send to backend
+            fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: question })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Add assistant message
+                const assistantDiv = document.createElement('div');
+                assistantDiv.classList.add('message', 'assistant-message');
+                assistantDiv.textContent = data.response;
+                chatMessages.appendChild(assistantDiv);
+                
+                // Scroll to bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const errorDiv = document.createElement('div');
+                errorDiv.classList.add('message', 'assistant-message');
+                errorDiv.textContent = 'Sorry, I encountered an error. Please try again later.';
+                chatMessages.appendChild(errorDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            });
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
