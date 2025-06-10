@@ -3,6 +3,9 @@ API Router to manage requests between UI and endpoints
 """
 
 import logging
+import asyncio
+from datetime import datetime
+import pytz
 from typing import Dict, Any, Optional
 from api_gateway import APIGateway
 from claude_client import ClaudeClient
@@ -52,17 +55,27 @@ class APIRouter:
                 "session": context.get("session", {}) if context else {}
             }
             
-            # Get Claude response
-            claude_response = await self.claude.send_message(
-                message,
-                context=enhanced_context
+            # Get responses from both LLMs
+            claude_response, perplexity_response = await asyncio.gather(
+                self.claude.send_message(message, context=enhanced_context),
+                self.perplexity.get_realtime_info(message)
             )
             
-            return {
+            # Combine responses with priority to real-time info
+            final_response = {
                 "response": claude_response.get("response", ""),
-                "data": vehicle_data,
-                "conversation_id": claude_response.get("conversation_id", "")
+                "conversation_id": claude_response.get("conversation_id", ""),
+                "realtime_data": perplexity_response.get("response", ""),
+                "timestamp": datetime.now(pytz.timezone('America/Chicago')).strftime('%B %d, %Y %H:%M:%S %Z')
             }
+            
+            # Combine LLM responses with real-time info
+            current_time = datetime.now(pytz.timezone('America/Chicago'))
+            
+            if "date" in message.lower() or "time" in message.lower():
+                final_response["response"] = f"Today's date is {current_time.strftime('%B %d, %Y')} {current_time.strftime('%Z')}"
+            
+            return final_response
             
         except Exception as e:
             self.logger.error(f"Error processing request: {str(e)}")
