@@ -10,6 +10,7 @@ from typing import Dict, Any, Optional
 from api_gateway import APIGateway
 from claude_client import ClaudeClient
 from perplexity_client import PerplexityClient
+from knowledge_base import KnowledgeBase
 
 class APIRouter:
     """Router for managing API requests"""
@@ -19,6 +20,7 @@ class APIRouter:
         self.gateway = APIGateway()
         self.claude = ClaudeClient()
         self.perplexity = PerplexityClient()
+        self.knowledge = KnowledgeBase()
         
     async def process_request(
         self,
@@ -36,8 +38,27 @@ class APIRouter:
             Combined response from all endpoints
         """
         try:
-            # Extract vehicle query parameters
+            # Check cache for common queries
+            cached_response = self.knowledge.get_cached_response(message.lower())
+            if cached_response:
+                return {"response": cached_response, "source": "cache"}
+                
+            # Extract query parameters
             query = self.extract_vehicle_params(message)
+            
+            # Get dealership info if relevant
+            dealership_info = {}
+            brand = query.get("make") if query else None
+            
+            if any(keyword in message.lower() for keyword in ["hours", "location", "contact", "about", "services"]):
+                category = next((k for k in ["hours", "services"] if k in message.lower()), "main")
+                dealership_info = self.knowledge.get_dealership_info(category, brand)
+                
+                # Cache and return formatted dealership info
+                if dealership_info:
+                    response = self.format_dealership_response(dealership_info, category)
+                    self.knowledge.cache_response(message.lower(), response)
+                    return {"response": response, "source": "knowledge_base"}
             
             # Get data from multiple sources
             vehicle_data = {}
@@ -84,20 +105,55 @@ class APIRouter:
                 "details": str(e)
             }
             
+    def format_dealership_response(self, info: Dict[str, Any], category: str) -> str:
+        """Format dealership information into a response"""
+        if category == "hours":
+            return f"""
+Sales Hours:
+{self.knowledge.format_hours('sales')}
+
+Service Hours:
+{self.knowledge.format_hours('service')}
+"""
+        elif category == "services":
+            services = info.get("services", {})
+            response = "Our services include:\n"
+            for dept, service_list in services.items():
+                response += f"\n{dept.title()}:\n"
+                response += "\n".join(f"- {service}" for service in service_list)
+            return response
+        else:
+            main_info = info.get("main", {})
+            return f"""
+{main_info.get('name', 'Jack Ingram Motors')}
+{main_info.get('about', '')}
+
+Location: {main_info.get('location', '')}
+Phone: {main_info.get('phone', '')}
+Website: {main_info.get('website', '')}
+"""
+
     def extract_vehicle_params(self, message: str) -> Dict[str, Any]:
         """Extract vehicle-related parameters from message"""
-        # Simple extraction - could be enhanced with NLP
         params = {}
-        
-        makes = ["nissan", "audi", "mercedes", "porsche", "volkswagen", "volvo"]
         message = message.lower()
         
-        # Extract make
+        # Extract brand/make
+        makes = ["nissan", "audi", "mercedes", "porsche", "volkswagen", "volvo"]
         for make in makes:
             if make in message:
                 params["make"] = make
+                # Get brand-specific tone for responses
+                params["tone"] = self.knowledge.get_brand_tone(make)
+                # Get popular models for the brand
+                params["models"] = self.knowledge.get_brand_models(make)
                 break
-                
-        # TODO: Add model and year extraction
+        
+        # Extract common topics
+        topics = ["inventory", "price", "test drive", "service", "special", "offer"]
+        for topic in topics:
+            if topic in message:
+                params["topic"] = topic
+                break
         
         return params
