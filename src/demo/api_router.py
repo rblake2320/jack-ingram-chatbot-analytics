@@ -9,7 +9,7 @@ import pytz
 from typing import Dict, Any, Optional
 from api_gateway import APIGateway
 from claude_client import ClaudeClient
-from perplexity_client import PerplexityClient
+from realtime_client import RealtimeClient
 from knowledge_base import KnowledgeBase
 
 class APIRouter:
@@ -19,7 +19,7 @@ class APIRouter:
         self.logger = logging.getLogger(__name__)
         self.gateway = APIGateway()
         self.claude = ClaudeClient()
-        self.perplexity = PerplexityClient()
+        self.realtime = RealtimeClient()
         self.knowledge = KnowledgeBase()
         
     async def process_request(
@@ -76,11 +76,18 @@ class APIRouter:
                 "session": context.get("session", {}) if context else {}
             }
             
-            # Get responses from both LLMs
-            claude_response, perplexity_response = await asyncio.gather(
-                self.claude.send_message(message, context=enhanced_context),
-                self.perplexity.get_realtime_info(message)
+            # Get real-time data and Claude response concurrently
+            realtime_data, claude_response = await asyncio.gather(
+                self.realtime.get_realtime_info(message),
+                self.claude.send_message(message, context=enhanced_context)
             )
+            
+            # Use real-time data for time-sensitive queries
+            if "date" in message.lower() or "time" in message.lower():
+                return {
+                    "response": f"Today's date and time is {realtime_data['current_time']}",
+                    "source": "realtime"
+                }
             
             # Combine responses with priority to real-time info
             final_response = {
