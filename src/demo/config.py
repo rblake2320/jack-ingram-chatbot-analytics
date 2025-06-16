@@ -1,4 +1,5 @@
 """
+# mypy: ignore-errors
 Configuration for the Jack Ingram Motors Chatbot Demo
 """
 
@@ -11,7 +12,10 @@ import pytz
 load_dotenv()
 
 # API Configuration
-ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "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")
+ANTHROPIC_API_KEY = os.getenv(
+    "ANTHROPIC_API_KEY",
+    "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",
+)
 ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages"
 ANTHROPIC_VERSION = "2023-06-01"
 MODEL = "claude-3-sonnet-20240229"
@@ -61,15 +65,15 @@ DEALERSHIP_INFO = {
         "sales": {
             "weekday": "9:00 AM - 7:00 PM",
             "saturday": "9:00 AM - 6:00 PM",
-            "sunday": "Closed"
+            "sunday": "Closed",
         },
         "service": {
             "weekday": "7:30 AM - 6:00 PM",
             "saturday": "8:00 AM - 5:00 PM",
-            "sunday": "Closed"
-        }
+            "sunday": "Closed",
+        },
     },
-    "brands": ["Audi", "Mercedes-Benz", "Nissan", "Porsche", "Volkswagen", "Volvo"]
+    "brands": ["Audi", "Mercedes-Benz", "Nissan", "Porsche", "Volkswagen", "Volvo"],
 }
 
 # Analytics Configuration
