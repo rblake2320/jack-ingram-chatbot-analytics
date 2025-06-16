@@ -1,4 +1,5 @@
 """
+# mypy: ignore-errors
 Initialize test package
 """
 
