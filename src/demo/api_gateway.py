@@ -13,8 +13,8 @@ class APIGateway:
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.base_urls = {
-            "inventory": "http://localhost:5001",  # Inventory DB API
-            "car": "https://car-api.example.com",  # CarAPI
+            "inventory": "http://localhost:5001",  # Assumes a local inventory service is running on port 5001
+            "car": "https://car-api.example.com",  # Placeholder URL, replace with actual Car API
             "nhtsa": "https://api.nhtsa.gov"       # NHTSA API
         }
         

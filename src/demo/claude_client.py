@@ -3,7 +3,7 @@ API client for interacting with the Anthropic Claude API with enhanced error han
 """
 
 import json
-import requests
+import httpx  # Added httpx
 import logging
 from typing import Dict, List, Any, Optional
 from config import (
@@ -23,9 +23,17 @@ class ClaudeClient:
     def __init__(self, api_key: Optional[str] = None):
         """Initialize the Claude client with API credentials"""
         from config import ANTHROPIC_API_KEY
+        from demo.mcp_client import MCPClient # Ensuring MCPClient is available
+
+        resolved_api_key = api_key or ANTHROPIC_API_KEY
+        if not resolved_api_key:
+            error_message = "Anthropic API key not found. Please set ANTHROPIC_API_KEY environment variable."
+            logger.critical(error_message)
+            raise ValueError(error_message)
+
         self.api_url = ANTHROPIC_API_URL
         self.headers = {
-            "x-api-key": api_key or ANTHROPIC_API_KEY,
+            "x-api-key": resolved_api_key,
             "anthropic-version": "2023-06-01",
             "content-type": "application/json"
         }
@@ -33,7 +41,7 @@ class ClaudeClient:
         self.model = MODEL
         self.conversation_history: List[Dict[str, str]] = []
     
-    def send_message(self, user_message: str, max_tokens: int = 1024) -> Dict[str, Any]:
+    async def send_message(self, user_message: str, max_tokens: int = 1024) -> Dict[str, Any]: # Changed to async def
         """
         Send a message to Claude and get a response with enhanced error handling
         
@@ -46,8 +54,8 @@ class ClaudeClient:
         """
         try:
             # Get real-time context from MCP
-            mcp_client = MCPClient()
-            realtime_info = await mcp_client.get_realtime_info(user_message)
+            mcp_client = MCPClient() # MCPClient will be in scope due to import in __init__
+            realtime_info = await mcp_client.get_realtime_info(user_message) # await is now correct
             
             # Enhance user message with real-time context
             enhanced_message = f"""User message: {user_message}
@@ -71,11 +79,13 @@ Available real-time information:
                 ]
             }
             
-            response = requests.post(
-                self.api_url,
-                headers=self.headers,
-                json=payload
-            )
+            async with httpx.AsyncClient() as client: # Replaced requests.post with httpx.AsyncClient
+                response = await client.post(
+                    self.api_url,
+                    headers=self.headers,
+                    json=payload,
+                    timeout=30.0 # Added timeout
+                )
             
             # Log the full response for debugging
             logger.info(f"API Response Status: {response.status_code}")
@@ -83,7 +93,7 @@ Available real-time information:
             
             # Check for authentication errors specifically
             if response.status_code == 401:
-                error_data = response.json()
+                error_data = response.json() # httpx response.json() works similarly
                 error_message = error_data.get("error", {}).get("message", "Authentication failed")
                 logger.error(f"Authentication error: {error_message}")
                 return {
@@ -93,8 +103,8 @@ Available real-time information:
                 }
             
             # Check for other error status codes
-            response.raise_for_status()
-            response_data = response.json()
+            response.raise_for_status() # httpx response.raise_for_status() works similarly
+            response_data = response.json() # httpx response.json() works similarly
             
             # Extract the assistant's message
             content_list = response_data.get("content", [])
@@ -117,9 +127,9 @@ Available real-time information:
                 "usage": response_data.get("usage", {})
             }
             
-        except requests.exceptions.HTTPError as e:
+        except httpx.HTTPStatusError as e: # Changed to httpx.HTTPStatusError
             logger.error(f"HTTP Error: {str(e)}")
-            status_code = e.response.status_code if hasattr(e, 'response') else 0
+            status_code = e.response.status_code
             error_detail = ""
             
             # Try to extract error details from response
@@ -136,7 +146,7 @@ Available real-time information:
                 "status_code": status_code
             }
             
-        except requests.exceptions.RequestException as e:
+        except httpx.RequestError as e: # Changed to httpx.RequestError
             logger.error(f"Request Error: {str(e)}")
             return {
                 "response": f"I'm having trouble connecting to the Claude API. Technical details: {str(e)}",

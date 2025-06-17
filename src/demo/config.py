@@ -11,7 +11,9 @@ import pytz
 load_dotenv()
 
 # API Configuration
-ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "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")
+# The Anthropic API key is essential for the application to function.
+# It must be set as an environment variable ANTHROPIC_API_KEY.
+ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages"
 ANTHROPIC_VERSION = "2023-06-01"
 MODEL = "claude-3-sonnet-20240229"
@@ -47,7 +49,7 @@ Always be helpful and aim to move customers further along their car buying or se
 """
 
 # Web App Configuration
-PORT = 5000  # Changed from 8080 to 5000 to avoid conflict with PostgreSQL
+PORT = 8080  # Changed from 5000 to 8080
 HOST = "0.0.0.0"
 DEBUG = True
 

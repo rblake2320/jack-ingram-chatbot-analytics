@@ -62,16 +62,14 @@ def chat():
     conversation_id = session.get('conversation_id')
     if not conversation_id:
         # Reset conversation for new sessions
-        claude_client.reset_conversation()
+        api_router.claude.reset_conversation()
         session['conversation_id'] = f"conv_{datetime.now().strftime('%Y%m%d%H%M%S')}"
-    
-    # Create event loop for async operations
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
     
     try:
         # Process message through API router
-        response_data = loop.run_until_complete(api_router.process_request(
+        # asyncio.run() is suitable for calling async code from sync code
+        # It handles loop creation and closing implicitly.
+        response_data = asyncio.run(api_router.process_request(
             user_message,
             context={"session": session}
         ))
@@ -90,13 +88,14 @@ def chat():
             "conversation_id": session.get('conversation_id')
         })
         
-    finally:
-        loop.close()
+    except Exception as e:
+        logger.error(f"Error in /api/chat: {str(e)}")
+        return jsonify({"error": "An internal server error occurred"}), 500
 
 @app.route('/api/reset', methods=['POST'])
 def reset_conversation():
     """Reset the conversation history"""
-    claude_client.reset_conversation()
+    api_router.claude.reset_conversation()
     session['conversation_id'] = f"conv_{datetime.now().strftime('%Y%m%d%H%M%S')}"
     return jsonify({"status": "success", "message": "Conversation reset"})
 

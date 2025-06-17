@@ -10,6 +10,8 @@
 
 This repository contains a comprehensive analytics-enabled chatbot solution designed specifically for Jack Ingram Motors and its six brand-specific dealership sites (Audi, Mercedes-Benz, Nissan, Porsche, Volkswagen, and Volvo). The solution provides powerful customer engagement capabilities while capturing detailed analytics to drive marketing campaigns and business growth.
 
+The `src/demo/` directory specifically contains a functional Python-based chatbot backend demonstration using the Anthropic Claude API. See `src/demo/README.md` for details on running this specific demo application.
+
 ### Key Features
 
 - **Brand-Specific Intelligence**: Unique voice and tone for each dealership brand
@@ -40,11 +42,8 @@ Implementation of this solution delivers:
 │   │   └── requirements/          # Requirements documents
 │   ├── implementation/            # Implementation documents
 │   └── business/                  # Business documents
-├── src/                           # Source code directory (for future development)
-│   ├── config/                    # Configuration files
-│   ├── api/                       # API integration code
-│   ├── analytics/                 # Analytics implementation
-│   └── ui/                        # UI components
+├── src/                           # Source code directory
+│   └── demo/                    # Functional Python chatbot backend demo (see src/demo/README.md for details)
 ├── examples/                      # Example code and usage
 ├── tests/                         # Test files
 └── .github/                       # GitHub specific files
@@ -143,6 +142,7 @@ jiChat('init', {
   analyticsEnabled: true
 });
 ```
+*Note: The JavaScript embed code above describes a potential frontend integration method for a chatbot service, which could be powered by the Python backend available in `src/demo/app.py` (which offers API endpoints), or represents a broader project vision.*
 
 Key technical features include:
 - Asynchronous loading for minimal performance impact
@@ -155,9 +155,8 @@ Key technical features include:
 
 ### Prerequisites
 
-- Node.js 16+
-- OpenAI API access
-- Web server with HTTPS support
+- `Python 3.8+` (for the `src/demo` Python application)
+- `Anthropic Claude API access` (for the `src/demo` Python application)
 
 ### Installation
 
@@ -167,18 +166,23 @@ git clone https://github.com/rblake2320/jack-ingram-chatbot-analytics.git
 cd jack-ingram-chatbot-analytics
 ```
 
-2. Install dependencies (for future development):
+2. Install dependencies for the Python demo (see `src/demo/README.md` for more details, including `pip install -r src/demo/requirements.txt` if available, or manual Flask, httpx, python-dotenv):
 ```bash
-npm install
+# Example: pip install flask httpx python-dotenv anthropic
 ```
 
-3. Configure environment variables:
-```bash
-cp .env.example .env
-# Edit .env with your API keys and configuration
-```
+3. Configure environment variables for the Python demo:
+   Create a `.env` file in the `src/demo/` directory:
+   ```bash
+   echo "ANTHROPIC_API_KEY=your_claude_api_key_here" > src/demo/.env
+   ```
+   Ensure your `ANTHROPIC_API_KEY` is correctly set in this file.
 
-4. Deploy to your web server following the [Implementation Plan](docs/implementation/implementation_plan.md).
+4. Run the Python demo application (from the root directory):
+   ```bash
+   python -m src.demo.app
+   ```
+   Or navigate to `src/demo` and run `python -m app`. The application will typically be available at `http://localhost:8080`. Refer to `src/demo/README.md` for detailed instructions.
 
 ## Contributing
 
@@ -201,4 +205,4 @@ Project Owner: [rblake2320](https://github.com/rblake2320)
 ## Acknowledgments
 
 - Jack Ingram Motors for providing access to their website ecosystem
-- OpenAI for the Assistants API technology
+- Anthropic for the Claude API technology (used in the `src/demo` application)

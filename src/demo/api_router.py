@@ -8,9 +8,9 @@ from datetime import datetime
 import pytz
 from typing import Dict, Any, Optional
 from api_gateway import APIGateway
-from claude_client import ClaudeClient
-from realtime_client import RealtimeClient
-from knowledge_base import KnowledgeBase
+from .claude_client import ClaudeClient # Relative import
+from .realtime_client import RealtimeClient # Relative import
+from .knowledge_base import KnowledgeBase # Relative import
 
 class APIRouter:
     """Router for managing API requests"""
@@ -67,12 +67,15 @@ class APIRouter:
             if query:
                 # Run API calls concurrently
                 vehicle_data = await self.gateway.get_vehicle_data(query)
-                perplexity_data = await self.perplexity.get_realtime_info(message)
+                # perplexity_data = await self.perplexity.get_realtime_info(message) # Original line commented out
+                # Following subtask: self.perplexity -> self.realtime.
+                # This means perplexity_data will hold results from self.realtime.get_realtime_info
+                perplexity_data = await self.realtime.get_realtime_info(message)
             
             # Enhance Claude prompt with real-time data
             enhanced_context = {
                 "vehicle_data": vehicle_data,
-                "realtime_info": perplexity_data,
+                "realtime_info": perplexity_data, # This now comes from self.realtime
                 "session": context.get("session", {}) if context else {}
             }
             
@@ -93,7 +96,7 @@ class APIRouter:
             final_response = {
                 "response": claude_response.get("response", ""),
                 "conversation_id": claude_response.get("conversation_id", ""),
-                "realtime_data": perplexity_response.get("response", ""),
+                "realtime_data": realtime_data.get("response", ""), # Changed perplexity_response to realtime_data
                 "timestamp": datetime.now(pytz.timezone('America/Chicago')).strftime('%B %d, %Y %H:%M:%S %Z')
             }
             

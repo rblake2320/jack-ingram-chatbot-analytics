@@ -113,8 +113,8 @@ The chatbot provides a simple REST API:
 
 ## Security Considerations
 
-- The API key is stored in the configuration file for demo purposes only
-- In production, use environment variables or a secure vault
+- The `ANTHROPIC_API_KEY` must be set as an environment variable. It is not hardcoded in the application. You can use a `.env` file (as shown in the Installation section) or set it directly in your deployment environment.
+- In production, ensure your environment variables are managed securely, for example, using a secure vault or your hosting platform's secret management tools.
 - Implement rate limiting for production deployments
 - Add CSRF protection for the web interface
 - Consider adding user authentication for sensitive operations
