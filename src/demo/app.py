@@ -12,6 +12,7 @@ import asyncio
 from concurrent.futures import ThreadPoolExecutor
 from api_router import APIRouter
 from config import PORT, HOST, DEBUG, ENABLE_ANALYTICS, ANALYTICS_LOG_FILE, DEALERSHIP_INFO
+from claude_client import ClaudeClient
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -23,6 +24,9 @@ app.secret_key = os.urandom(24)  # For session management
 
 # Initialize API router
 api_router = APIRouter()
+
+# Initialize Claude client
+claude_client = ClaudeClient()
 
 # Analytics tracking
 def log_interaction(user_message, assistant_response, metadata=None):

@@ -47,7 +47,7 @@ Always be helpful and aim to move customers further along their car buying or se
 """
 
 # Web App Configuration
-PORT = 5000  # Changed from 8080 to 5000 to avoid conflict with PostgreSQL
+PORT = int(os.getenv("PORT", 8080))  # Use environment PORT, default 8080 for DigitalOcean
 HOST = "0.0.0.0"
 DEBUG = True
 
