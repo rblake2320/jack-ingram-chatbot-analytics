@@ -10,11 +10,11 @@ import requests
 from unittest.mock import patch, MagicMock
 
 # Add the parent directory to the Python path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # Now import the modules
-from src.demo.claude_client import ClaudeClient
-from src.demo.config import ANTHROPIC_API_KEY, ANTHROPIC_API_URL
+from claude_client import ClaudeClient
+from config import ANTHROPIC_API_KEY, ANTHROPIC_API_URL
 
 class TestClaudeClient(unittest.TestCase):
     """Test the Claude API client functionality"""
