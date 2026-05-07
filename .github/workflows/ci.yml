@@ -1,0 +1,108 @@
+# Languages: auto-detected
+name: CI
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    outputs:
+      languages: ${{ steps.detect.outputs.languages }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: detect
+        run: |
+          LANGS="[]"
+          [[ -f "package.json" ]] && LANGS=$(echo "$LANGS" | jq '. += ["node"]')
+          [[ -f "go.mod" ]] && LANGS=$(echo "$LANGS" | jq '. += ["go"]')
+          [[ -f "Cargo.toml" ]] && LANGS=$(echo "$LANGS" | jq '. += ["rust"]')
+          [[ -f "pyproject.toml" ]] && LANGS=$(echo "$LANGS" | jq '. += ["python"]')
+          if compgen -G "*.csproj" > /dev/null; then
+            LANGS=$(echo "$LANGS" | jq '. += ["csharp"]')
+          fi
+          echo "languages=$LANGS" >> $GITHUB_OUTPUT
+
+  node:
+    needs: detect
+    if: contains(needs.detect.outputs.languages, 'node')
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm test
+      - run: npm audit --audit-level=high
+
+  python:
+    needs: detect
+    if: contains(needs.detect.outputs.languages, 'python')
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - run: pip install -e .[dev]
+      - run: pytest
+
+  go:
+    needs: detect
+    if: contains(needs.detect.outputs.languages, 'go')
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version: ["1.21", "1.22"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go-version }}
+          cache: true
+      - run: go mod download
+      - run: go vet ./...
+      - run: go test -v ./...
+
+  rust:
+    needs: detect
+    if: contains(needs.detect.outputs.languages, 'rust')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo fmt --check
+      - run: cargo clippy -- -D warnings
+      - run: cargo test
+
+  csharp:
+    needs: detect
+    if: contains(needs.detect.outputs.languages, 'csharp')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - run: dotnet restore
+      - run: dotnet build -c Release
+      - run: dotnet test -c Release
