@@ -3,7 +3,7 @@ import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {DRACOLoader} from 'three/addons/loaders/DRACOLoader.js';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
-import {validateManifest,packGroups,projectedExtent,unionBounds,validAction,explodeOffset} from './atlas-core.mjs';
+import {validateManifest,packGroups,packSurfaceInventory,projectedExtent,unionBounds,validAction,explodeOffset} from './atlas-core.mjs';
 import {renderRecallCards} from './recall-ui.mjs';
 
 const $=id=>document.getElementById(id);
@@ -29,7 +29,7 @@ function updatePresentation(){
   if(!shellModel)return;
   const atRest=(mode==='assembled' || mode==='exploded') && explosion<.005;
   const exterior=rendering==='solid' && !selected && atRest;
-  const cutaway=atRest && (rendering==='xray' || (rendering==='solid' && !!selected));
+  const cutaway=!exterior && mode!=='separate';
   const next=exterior?'exterior':cutaway?'cutaway':'systems';
   model.visible=next!=='exterior';shellModel.visible=next!=='systems';
   if(next!==shellState){
@@ -57,7 +57,7 @@ function draw() {
     if(selectionBox && selected) selectionBox.box.copy(unionBounds(groups.get(selected)));
     renderer.render(scene,camera); frames++;
     const visible=shellState==='exterior'?shellMeshes.length:[...groups.values()].flat().filter(m=>m.visible).length;
-    $('model-metrics').textContent=shellState==='exterior'?`${visible} licensed exterior surfaces · ${manifest.mesh_count} illustrative system meshes ready`:`${visible}/${manifest.mesh_count-manifest.ignored_meshes.length} system meshes visible · ${renderer.info.render.triangles.toLocaleString()} rendered triangles · ${renderer.info.render.calls} draw calls`;
+    $('model-metrics').textContent=shellState==='exterior'?`${visible} licensed exterior surfaces · ${manifest.mesh_count} illustrative system meshes ready`:`${visible}/${manifest.mesh_count-manifest.ignored_meshes.length} ${shellModel?'illustrative system meshes':'licensed source surfaces'} visible · ${renderer.info.render.triangles.toLocaleString()} rendered triangles · ${renderer.info.render.calls} draw calls`;
     viewport.dataset.visibleMeshes=String(visible);
     viewport.dataset.drawCalls=String(renderer.info.render.calls);
     viewport.dataset.frames=String(frames);
@@ -121,27 +121,27 @@ function explodedBounds(){
   return result;
 }
 function explodeTo(amount,animate=true){
-  if(mode==='separate' || mode==='isolated'){restoreTransforms();hidden.clear();for(const meshes of groups.values())for(const mesh of meshes)mesh.visible=true;pose(0);}
+  if(mode==='separate' || mode==='surfaces' || mode==='isolated'){restoreTransforms();hidden.clear();for(const meshes of groups.values())for(const mesh of meshes)mesh.visible=true;pose(0);}
   mode='exploded';leaf=null;viewport.dataset.mode=mode;controls.enableRotate=true;
   if(animate && !matchMedia('(prefers-reduced-motion: reduce)').matches)motion={from:explosion,to:amount,started:performance.now()};else{motion=null;pose(amount);}
   fit(amount>0 ? explodedBounds() : vehicleBounds,false,true,amount===0 && !selected && rendering==='solid');
-  $('view-state').textContent='Spatial exploded view · drag to orbit · slide to reassemble';
+  $('view-state').textContent=shellModel?'Illustrative zone explosion · not a service disassembly':'Source-surface explosion · drag to orbit · slide to reassemble';
   document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-pressed','false'));updateList();draw();
 }
 function appearance(){
   for(const [mesh,original] of materials){const mat=displayMaterials.get(mesh),id=mesh.userData.componentId,active=id===selected && (!leaf || leaf===mesh);
     mat.color?.copy(original.color);mat.emissive?.copy(original.emissive);mat.opacity=original.opacity;mat.transparent=original.transparent;mat.depthWrite=original.depthWrite;mat.wireframe=rendering==='wire';
     if(rendering==='systems')mat.color?.set(palette[id]);
-    if(rendering==='xray' && !active && isShell(id)){mat.transparent=true;mat.opacity=.12;mat.depthWrite=false;}
-    if(active){mat.emissive?.set(0x60151c);if(!mat.emissive)mat.color?.set(palette[id]);}
+    if((rendering==='xray' || (shellModel && mode!=='separate')) && !active && isShell(id)){mat.transparent=true;mat.opacity=shellModel ? .08 : .12;mat.depthWrite=false;}
+    if(active && !leaf){mat.emissive?.set(0x60151c);if(!mat.emissive)mat.color?.set(palette[id]);}
     mat.needsUpdate=true;mesh.material=mat;
   }
   updatePresentation();
   document.querySelectorAll('[data-render]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.render===rendering)));
   draw();
 }
-function renderMode(next){rendering=next;appearance();$('view-state').textContent={solid:'Exterior · select a part to explore',xray:'X-ray · licensed silhouette over illustrative internals',systems:'Systems · colors identify component groups',wire:'Wireframe · inspect the supplied surface geometry'}[next];}
-function setCamera(view){if(mode==='separate')setMode('assembled');cameraView=view;rotating=false;$('rotate').setAttribute('aria-pressed','false');document.querySelectorAll('[data-camera]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.camera===view)));fit(unionBounds(currentMeshes()),false,true);}
+function renderMode(next){rendering=next;appearance();$('view-state').textContent=shellModel?{solid:'Exterior · select a zone to explore',xray:'X-ray · licensed silhouette over illustrative zones',systems:'Concept map · schematic volumes, not Porsche part geometry',wire:'Wireframe · illustrative geometry only'}[next]:{solid:'Source exterior · select a surface group',xray:'Transparent panels · no engine internals in this asset',systems:'Group colors · artist-authored surfaces only',wire:'Wireframe · artist-authored surfaces only'}[next];}
+function setCamera(view){if(mode==='separate' || mode==='surfaces')setMode('assembled');cameraView=view;rotating=false;$('rotate').setAttribute('aria-pressed','false');document.querySelectorAll('[data-camera]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.camera===view)));fit(unionBounds(currentMeshes()),false,true);}
 function updateConnections(){
   if(!connections)return;
   for(const line of [...connections.children]){line.geometry.dispose();line.material.dispose();connections.remove(line);}
@@ -161,8 +161,8 @@ let tour=[
   {at:0,title:'01 / Explore the exterior',text:'Rotate the car, then take it apart. Every selectable piece comes from the credited 3D asset.',run:()=>{setMode('assembled');rotating=true;}},
   {at:3.5,title:'02 / See beneath the body',text:'X-ray fades the shell so the supplied supporting geometry becomes visible.',run:()=>{renderMode('xray');select('front-wheels');}},
   {at:7,title:'03 / Understand the groups',text:'Component colors and relationship lines help you follow the model. Lines describe group associations.',run:()=>{renderMode('systems');tracing=true;$('trace').setAttribute('aria-pressed','true');updateConnections();}},
-  {at:10.5,title:'04 / Take it apart',text:'The continuous exploded view moves the real mesh groups out of the assembled car. Drag to inspect from any angle.',run:()=>{rotating=false;cameraView='perspective';explodeTo(1);}},
-  {at:15,title:'05 / Inspect actual surfaces',text:'Select wheels, glazing or body panels. The inspector exposes the source material surfaces for each group.',run:()=>{select('rear-wheels');renderMode('solid');}},
+  {at:10.5,title:'04 / Every source surface',text:'The 44 credited exterior meshes separate at their original scale. They are artist-authored surfaces, not OEM service parts.',run:()=>{rotating=false;setMode('surfaces');}},
+  {at:15,title:'05 / Inspect actual surfaces',text:'Select wheels, glazing or body panels. The inspector shows the source material surfaces within each group.',run:()=>{select('rear-wheels');}},
   {at:19,title:'06 / Put it back together',text:'Reassembly restores every piece to its original position. Use the slider and controls to explore for yourself.',run:()=>{tracing=false;updateConnections();explodeTo(0);}},
 ];
 function startTour(){stopTour();tourStarted=performance.now();tourStep=-1;$('tour').textContent='■ Stop tour';draw();}
@@ -176,22 +176,39 @@ function restoreTransforms() {
   model.updateMatrixWorld(true);
 }
 
-function separation() {
+function fitSeparated(items){
+  const extents=items.map(item=>({id:item.id,...extentOf(unionBounds(item.meshes))}));
+  const minX=Math.min(...extents.map(e=>e.minX)),maxX=Math.max(...extents.map(e=>e.maxX));
+  const minY=Math.min(...extents.map(e=>e.minY)),maxY=Math.max(...extents.map(e=>e.maxY));
+  const bounds=unionBounds(currentMeshes()),aspect=viewport.clientWidth/viewport.clientHeight;
+  const depth=bounds.getCenter(new THREE.Vector3()).dot(normal);
+  const center=right.clone().multiplyScalar((minX+maxX)/2).addScaledVector(up,(minY+maxY)/2).addScaledVector(normal,depth);
+  const size=Math.max(maxY-minY,(maxX-minX)/aspect)*.54;
+  cameraMotion=null;camera.position.copy(center).addScaledVector(normal,bounds.getSize(new THREE.Vector3()).length()*2+10);
+  camera.up.copy(up);controls.target.copy(center);controls.enableRotate=false;
+  camera.left=-size*aspect;camera.right=size*aspect;camera.top=size;camera.bottom=-size;
+  camera.near=.01;camera.far=1000;camera.zoom=1;camera.updateProjectionMatrix();controls.update();draw();
+  return extents;
+}
+
+function separation(everySurface=false) {
   restoreTransforms();
   for(const meshes of groups.values()) for(const mesh of meshes) mesh.visible=true;
-  const boxes=[...groups].map(([id,meshes])=>({id,box:unionBounds(meshes)}));
-  for(const p of packGroups(boxes,right,up,viewport.clientWidth/viewport.clientHeight)) {
-    for(const mesh of groups.get(p.id)) {
+  const items=everySurface?[...originals.keys()].map(mesh=>({id:`source-${mesh.userData.meshIndex}`,meshes:[mesh],box:new THREE.Box3().setFromObject(mesh)})):[...groups].map(([id,meshes])=>({id,meshes,box:unionBounds(meshes)}));
+  const positions=everySurface?packSurfaceInventory(items,right,up,viewport.clientWidth/viewport.clientHeight):packGroups(items,right,up,viewport.clientWidth/viewport.clientHeight);
+  const byId=new Map(items.map(item=>[item.id,item]));
+  for(const p of positions) {
+    for(const mesh of byId.get(p.id).meshes) {
       const world=mesh.getWorldPosition(new THREE.Vector3()).add(p.delta);
       mesh.position.copy(mesh.parent.worldToLocal(world));
     }
   }
   model.updateMatrixWorld(true);
-  fit(unionBounds(currentMeshes()),true);
+  const extents=fitSeparated(items);
   camera.updateMatrixWorld(true);
   let fits=true;
-  for(const meshes of groups.values()) {
-    const b=unionBounds(meshes);
+  for(const item of items) {
+    const b=unionBounds(item.meshes);
     for(const x of [b.min.x,b.max.x]) for(const y of [b.min.y,b.max.y]) for(const z of [b.min.z,b.max.z]) {
       const p=new THREE.Vector3(x,y,z).project(camera);
       if(Math.abs(p.x)>1.001 || Math.abs(p.y)>1.001) fits=false;
@@ -200,7 +217,6 @@ function separation() {
   viewport.dataset.packingFits=String(fits);
   if(!fits) throw new Error('Separated parts do not fit the usable canvas.');
   // Verify applied world transforms, rather than trusting the packing function.
-  const extents=[...groups].map(([id,meshes])=>({id,...extentOf(unionBounds(meshes))}));
   let overlaps=0;
   for(let a=0;a<extents.length;a++) for(let b=a+1;b<extents.length;b++) {
     const x=extents[a],y=extents[b];
@@ -208,14 +224,18 @@ function separation() {
   }
   if(overlaps) throw new Error('Separated geometry overlaps; restore the vehicle.');
   viewport.dataset.packingOverlaps=String(overlaps);
-  $('view-state').textContent='Separated parts · drag to pan · scroll to zoom';
+  viewport.dataset.packingCount=String(items.length);
+  viewport.dataset.inventory=everySurface?'source-surfaces':'component-groups';
+  $('view-state').textContent=everySurface?'44 artist-authored surfaces · drag to pan · click to inspect':'Separated groups · drag to pan · scroll to zoom';
 }
 
 function setMode(next) {
   motion=cameraMotion=null;leaf=null;hidden.clear();
   mode=next;
+  scene.background.set(next==='surfaces'?0x68737e:0xf0efed);
+  if(next!=='surfaces' && next!=='separate'){delete viewport.dataset.inventory;delete viewport.dataset.packingCount;}
   explosion=0;$('explode').value='0';$('explode-value').textContent='0%';
-  if(next==='separate') {rotating=false;$('rotate').setAttribute('aria-pressed','false');separation();}
+  if(next==='separate' || next==='surfaces') {rotating=false;$('rotate').setAttribute('aria-pressed','false');if(next==='surfaces')rendering='solid';separation(next==='surfaces');}
   else {
     restoreTransforms();
     for(const [id,meshes] of groups) for(const mesh of meshes) mesh.visible=next!=='peel' || !isShell(id);
@@ -244,6 +264,16 @@ function updateList() {
   }
 }
 
+function inspectSurface(mesh){
+  stopTour();motion=null;rotating=false;leaf=mesh;
+  for(const other of originals.keys())other.visible=other===mesh;
+  mode='isolated';viewport.dataset.mode=mode;viewport.dataset.selectedMesh=String(mesh.userData.meshIndex);
+  $('selection-title').textContent=`${shellModel?'Illustrative mesh':'Source surface'} ${mesh.userData.meshIndex}`;
+  $('selection-description').textContent=`${materials.get(mesh).name || 'Unnamed material'} · ${shellModel?'schematic geometry':'artist-authored exterior surface'}`;
+  appearance();updateConnections();updateList();fit(new THREE.Box3().setFromObject(mesh),false,true);
+  $('view-state').textContent=`${shellModel?'Illustrative mesh':'Source surface'} ${mesh.userData.meshIndex} · reassemble to restore all`;
+}
+
 function select(id, focus=false) {
   if(!groups.has(id)) throw new Error('Unknown component.');
   if(mode==='peel' && isShell(id)) setMode('assembled');
@@ -259,11 +289,11 @@ function select(id, focus=false) {
   $('component-evidence').hidden=!c.geometry_grade;
   if(c.geometry_grade){$('component-grade').textContent=`Identity: ${c.identity_grade}. Geometry: ${c.geometry_grade}. Placement: ${c.placement_grade}.`;$('component-sources').replaceChildren();for(const source of manifest.sources.filter(s=>c.source_ids.includes(s.id))){const a=document.createElement('a');a.href=source.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=source.title+' ↗';const p=document.createElement('p');p.textContent=source.scope;$('component-sources').append(a,p);}}
   $('surface-inspector').hidden=false;$('source-surfaces').replaceChildren();
-  for(const mesh of meshes){const button=document.createElement('button');button.type='button';button.textContent=`${materials.get(mesh).name || 'Surface'} · source mesh ${mesh.userData.meshIndex}`;button.addEventListener('click',()=>{stopTour();motion=null;rotating=false;leaf=mesh;for(const other of originals.keys())other.visible=other===mesh;mode='isolated';viewport.dataset.mode=mode;viewport.dataset.selectedMesh=String(mesh.userData.meshIndex);appearance();updateConnections();updateList();fit(new THREE.Box3().setFromObject(mesh),false,true);$('view-state').textContent=`Source surface: ${materials.get(mesh).name} · reassemble to restore all parts`;});$('source-surfaces').append(button);}
+  for(const mesh of meshes){const button=document.createElement('button');button.type='button';button.textContent=`${materials.get(mesh).name || 'Surface'} · ${shellModel?'illustrative':'source'} mesh ${mesh.userData.meshIndex}`;button.addEventListener('click',()=>inspectSurface(mesh));$('source-surfaces').append(button);}
   viewport.dataset.selected=id;
   if(mode==='isolated') $('view-state').textContent='Isolated · '+c.label;
   appearance();updateConnections();updateList();
-  if(focus) fit(unionBounds(meshes),mode==='separate',true);
+  if(focus) fit(unionBounds(meshes),mode==='separate' || mode==='surfaces',true);
   draw();
 }
 
@@ -444,21 +474,22 @@ async function init() {
     lastDown=null; const rect=renderer.domElement.getBoundingClientRect();
     raycaster.setFromCamera(new THREE.Vector2((e.clientX-rect.left)/rect.width*2-1,-(e.clientY-rect.top)/rect.height*2+1),camera);
     if(shellState==='exterior'){if(raycaster.intersectObjects(shellMeshes,false).length)renderMode('xray');return;}
-    const hit=raycaster.intersectObjects(currentMeshes(),false)[0]; if(hit) select(hit.object.userData.componentId);
+    const hit=raycaster.intersectObjects(currentMeshes(),false)[0]; if(hit){select(hit.object.userData.componentId);if(mode==='surfaces')inspectSurface(hit.object);}
   });
   document.querySelectorAll('[data-view]').forEach(button=>{button.disabled=false;button.addEventListener('click',()=>{stopTour();setMode(button.dataset.view);});});
   document.querySelectorAll('[data-render]').forEach(button=>{button.disabled=false;button.addEventListener('click',()=>{stopTour();renderMode(button.dataset.render);});});
   document.querySelectorAll('[data-camera]').forEach(button=>{button.disabled=false;button.addEventListener('click',()=>{stopTour();setCamera(button.dataset.camera);});});
   for(const id of ['tour','explode','rotate','reset-atlas','trace','labels'])$(id).disabled=false;
+  if($('source-inventory')){$('source-inventory').disabled=false;$('source-inventory').addEventListener('click',()=>{stopTour();setMode('surfaces');});}
   $('explode').addEventListener('input',e=>{stopTour();explodeTo(Number(e.target.value)/100);});
   $('tour').addEventListener('click',()=>tourStarted===null?startTour():stopTour());
-  $('rotate').addEventListener('click',()=>{stopTour();if(mode==='separate')setMode('assembled');rotating=!rotating;lastFrame=performance.now();$('rotate').setAttribute('aria-pressed',String(rotating));draw();});
+  $('rotate').addEventListener('click',()=>{stopTour();if(mode==='separate' || mode==='surfaces')setMode('assembled');rotating=!rotating;lastFrame=performance.now();$('rotate').setAttribute('aria-pressed',String(rotating));draw();});
   $('reset-atlas').addEventListener('click',()=>{stopTour();setMode('assembled');});
   $('trace').addEventListener('click',()=>{stopTour();if(!selected)select('body');tracing=!tracing;$('trace').setAttribute('aria-pressed',String(tracing));updateConnections();draw();});
   $('labels').addEventListener('click',()=>{showLabels=!showLabels;$('labels').setAttribute('aria-pressed',String(showLabels));draw();});
   document.querySelectorAll('[data-ask], #part-search, #atlas-question, #atlas-send').forEach(el=>el.disabled=false);
   $('focus').disabled=false; $('isolate').disabled=false;
-  $('focus').addEventListener('click',()=>{stopTour();if(selected) fit(unionBounds(groups.get(selected)),mode==='separate',true);});
+  $('focus').addEventListener('click',()=>{stopTour();if(selected) fit(unionBounds(groups.get(selected)),mode==='separate' || mode==='surfaces',true);});
   $('isolate').addEventListener('click',()=>{stopTour();isolate();});
   $('atlas-form').addEventListener('submit',e=>{e.preventDefault();ask($('atlas-question').value);});
   document.querySelectorAll('[data-ask]').forEach(b=>b.addEventListener('click',()=>ask(b.dataset.ask)));
@@ -472,7 +503,7 @@ async function init() {
   });
   new ResizeObserver(()=>{
     renderer.setSize(viewport.clientWidth,viewport.clientHeight);
-    if(mode==='separate') separation(); else fit(unionBounds(currentMeshes()));
+    if(mode==='separate' || mode==='surfaces') separation(mode==='surfaces'); else fit(unionBounds(currentMeshes()));
   }).observe(viewport);
   setMode('assembled');
   viewport.dataset.ready='true';

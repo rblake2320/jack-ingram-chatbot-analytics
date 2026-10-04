@@ -155,18 +155,22 @@ primary sources and adoption decisions.
 
 ## Interactive showroom and buying assistant
 
-Open `/vehicle-atlas?subject=systems` for the combined visual experience. It
-starts on the licensed, recognizable Carrera 4S exterior (44 displayed surfaces;
-model year unverified). Click the car or press X-ray to reveal the separate MY2026
-non-hybrid 992.2 systems reconstruction: 77 selectable components, 165 meshes,
-45,644 source triangles and a 1.53 MB internal GLB. Explode continuously, switch
-system/wireframe modes, choose camera views, isolate parts, trace functional links
-or play the guided tour. The two assets are hash verified and visually aligned by
-their bounding envelopes. The licensed shell's own wheels and underbody disappear
-in cutaway so they do not duplicate the illustrative assemblies. Sources and
-evidence grades accompany every internal component. Their geometry is original
-and representative; public specifications constrain the envelope, wheelbase,
-tires and brake diameters. Neither asset is OEM manufacturing CAD or an exact VIN.
+Open `/vehicle-atlas` for the credited Carrera 4S exterior (44 imported vehicle
+surfaces; model year unverified). The prominent **Take apart 44 surfaces** control
+separates every imported mesh at its original scale. Click a separated surface to
+inspect it alone, or reassemble the model. The guided tour also visits this view.
+These surfaces are artist-authored geometry, not Porsche service parts. The asset
+does not contain engine or transmission internals.
+
+Open `/vehicle-atlas?subject=systems` for a separate **illustrative system map**.
+It starts on the licensed exterior, then X-ray or Concept map displays an original
+procedural reconstruction: 77 named schematic regions, 165 meshes and 45,644
+triangles in a 1.53 MB GLB. A transparent licensed silhouette supplies visual
+context. Component dimensions are constrained by public specifications, but the
+shapes and positions are illustrative. Its larger mesh and region counts do not
+mean it has the source detail of the exterior or the F-15 Eagle Atlas. The two
+assets are hash verified and aligned by their bounding envelopes; neither is
+OEM manufacturing CAD, a service disassembly or an exact VIN.
 
 Ask `2025 Porsche 911 recalls` or `2026 Atlas recalls` in the website chat.
 Official NHTSA issue, consequence and remedy appear inside the product. Reviewed
@@ -178,14 +182,9 @@ live lookup has a bounded cache and dated official-response fallback. A failed
 lookup is shown as unavailable, never as zero recalls. Manufacturer do-not-drive
 and park-outside flags are preserved. Service links are requests, not reservations.
 
-Open `/vehicle-atlas` for the licensed Carrera 4S model by itself. Select geometry directly
-or use its searchable component list. Separate parts, hide body panels, isolate a
-component, focus it and restore the vehicle. The connected assistant applies bounded
-viewer actions: try “show me the rear wheels” or “isolate the glass”.
-The asset contains 45 meshes; 44 are vehicle surfaces in seven reviewed component
-groups. A nonphysical source ground plane is preserved in the file and hidden in
-the viewer. The model year is unspecified; it is not a VIN-specific listing or a
-mechanical cutaway. Missing engine/transmission internals are stated explicitly.
+The exterior asset contains 45 meshes: 44 vehicle surfaces in seven reviewed
+groups plus one hidden source ground plane. The connected assistant applies
+bounded viewer actions such as “show me the rear wheels” and “isolate the glass”.
 
 Try “what is the best selling cars you have”, “compare Rogue and Atlas”, then
 “I need 7 seats”. The assistant answers inside chat, distinguishes five-seat models
@@ -194,9 +193,9 @@ separately from dealer stock; unpublished sales rankings and counts are never in
 
 The commercial and inventory browser on jackingram.com belong to the dealership.
 This repository supplies the demo host page, installable chat widget, buying guides,
-original systems reconstruction, interactive explorer, recall connections, backend
-and private analytics. External website
-handoffs are labeled; the demo's primary action now opens our explorer.
+original schematic systems map, interactive explorer, recall connections, backend
+and private analytics. External website handoffs are labeled; the demo's primary
+action opens the imported exterior geometry.
 
 The compiled viewer is committed for Python-only startup and container use. To
 rebuild it, install Node.js 24, then run `npm ci --ignore-scripts` and `npm run build`.

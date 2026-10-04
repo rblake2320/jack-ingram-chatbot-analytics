@@ -1,5 +1,43 @@
 # Vehicle explorer and useful in-chat advice — October 4, 2026
 
+## Geometry audit after the owner's internal-model screenshot
+
+The earlier first-frame repair did not inspect what appeared after entering the
+systems view. The owner's second screenshot was accurate: the red car was the
+procedurally generated schematic, and calling it comparable to Eagle Atlas's
+source-part exploration overstated its fidelity. This section supersedes any
+earlier use of “parts” that could imply Porsche-sourced service geometry.
+
+The local Eagle Atlas asset contains **677 imported mesh instances with 677
+source object identities**. The Porsche exterior has **44 displayed imported
+surfaces** (45 mesh definitions including a hidden backdrop), **no per-object
+component identity**, and **no engine internals**. The separately generated
+systems GLB has **165 meshes mapped to 77 named schematic regions**, all geometry
+grade D. Its boxes, cylinders and body slabs are authored by our generator; a
+larger mesh count does not make them Porsche parts. The exterior reference was
+uploaded in 2013 and its actual model year is unverified. No validated MY2026
+Carrera 4S source model with OEM internal part hierarchy is in this repository.
+The [compact GLB comparison](evidence/2026-10-04/porsche-asset-comparison.json)
+retains hashes, mesh-instance counts and identity counts for all three assets.
+
+The showroom now leads to `/vehicle-atlas`, where **Take apart 44 surfaces**
+separates the imported meshes individually. Clicking one isolates that actual
+source surface; reset restores the car. The layout uses real world-space mesh
+bounds, preserves each mesh scale, fits the visible canvas and checks every pair
+for projected overlap. The systems tab is labeled an **illustrative system map**;
+its transparent licensed shell remains in the cutaway and a badge says its
+internals are schematic, not Porsche CAD. The chat's Porsche model card and the
+website-demo primary action also open the imported exterior first. This improves
+the demonstrable geometry experience without presenting the 77 schematic zones
+as an F-15-equivalent digital twin.
+
+Compare the [owner's schematic screenshot](evidence/2026-10-04/porsche-concept-before-owner.png)
+with the [now-labeled concept view](evidence/2026-10-04/porsche-concept-labeled-after.png).
+Retained [source-surface layout](evidence/2026-10-04/porsche-source-surfaces-desktop.png)
+and [individual mesh inspection](evidence/2026-10-04/porsche-source-surface-isolated.png)
+show the actual browser result. The [geometry audit receipt](evidence/2026-10-04/porsche-geometry-audit.json)
+records desktop, mobile, selection, reset and labeled concept checks.
+
 ## Recognizable exterior and internal exploration
 
 **Failed, repaired, retested:** the first MY2026 systems page opened on its
@@ -52,7 +90,7 @@ lighting control and camera regions. Every component has owned GLB mesh indices,
 source IDs, identity/geometry/placement grades and null OEM part number. All shapes
 are grade D representative geometry. This is a public-fact explanatory scene.
 
-F-15-style controls now include spatial 0–100% explosion, x-ray, system colors,
+Controls inspired by the F-15 explorer include spatial 0–100% explosion, x-ray, system colors,
 wireframe, 3D/top/side/front/rear cameras, turntable, selected-part focus/isolation,
 connection traces, source surfaces, collision-filtered labels and a six-stage tour.
 The parts inventory is a separate packed view that preserves actual part scale.
@@ -64,7 +102,7 @@ The assistant applies bounded, validated actions on both assets.
 rotors. The initial bumper air opening extended the length to 4.571 m; the geometry
 was repaired and retested. See `systems-dimensions-before.txt` and
 `porsche-systems-geometry.json`. Browser reassembly measured zero component-center
-drift. All 77 parts packed with zero overlaps and fit the desktop and mobile canvas.
+drift. All 77 illustrative regions packed with zero overlaps and fit the desktop and mobile canvas.
 The final phone-width test measured 390 × 844 CSS pixels, scroll width 378,
 all 165 meshes present and zero packed overlaps. A 50% explosion, top view and
 wireframe were exercised through native controls. The full tour completed and

@@ -1,0 +1,30 @@
+{
+  "checked_at": "2026-10-04T21:37:15.5594441Z",
+  "inspector": "explorable-atlas/scripts/inspect_glb.py",
+  "exterior": {
+    "sha256": "421fdabf0da312edb3c22dc0fc915bcc75551ff0db7374a7ebac8af80efc5ea2",
+    "bytes": 4055076,
+    "mesh_definitions": 45,
+    "mesh_instances": 45,
+    "source_component_identities": 0,
+    "displayed_surfaces": 44,
+    "hidden_backdrop": 1
+  },
+  "porsche_schematic": {
+    "sha256": "5cabbc7f6d75563d14f16ae4ea43c9199f73019c805e2a9d9fa39af46031153a",
+    "bytes": 1525460,
+    "mesh_definitions": 165,
+    "mesh_instances": 165,
+    "generated_component_identities": 77,
+    "source": "scripts/build-porsche-systems.mjs",
+    "geometry_grade": "D illustrative"
+  },
+  "eagle_atlas_reference": {
+    "sha256": "35fb4a3f6ce339f586973078e6dfe49fca5bdf42bc49545cf619c6b06f71d1c8",
+    "bytes": 5068460,
+    "mesh_definitions": 677,
+    "mesh_instances": 677,
+    "source_object_identities": 677
+  },
+  "interpretation": "Mesh counts measure file structure, not OEM part accuracy or licensing."
+}

@@ -50,6 +50,32 @@ export function packGroups(items, right, up, aspect) {
   return placements;
 }
 
+// Pack each imported surface at its original scale, using actual projected bounds.
+// A surface is an artist-authored mesh, not a validated vehicle part.
+export function packSurfaceInventory(items, right, up, aspect) {
+  if (!Array.isArray(items) || !Number.isFinite(aspect) || aspect <= 0) throw new Error('Invalid surface inventory.');
+  const ids=new Set();
+  const entries=items.map(item=>{
+    if(typeof item.id!=='string' || !item.id || ids.has(item.id))throw new Error('Duplicate or invalid source surface.');
+    ids.add(item.id);
+    const bounds=projectedExtent(item.box,right,up);
+    return {...item,...bounds,width:Math.max(.015,bounds.width),height:Math.max(.015,bounds.height)};
+  }).sort((a,b)=>b.height-a.height||b.width-a.width||a.id.localeCompare(b.id));
+  if(!entries.length)return [];
+  const gap=Math.max(.06,Math.max(...entries.map(e=>Math.max(e.width,e.height)))*.025);
+  const area=entries.reduce((sum,e)=>sum+(e.width+gap)*(e.height+gap),0);
+  const target=Math.max(...entries.map(e=>e.width),Math.sqrt(area*aspect));
+  let x=0,y=0,rowHeight=0,totalWidth=0;
+  const placed=[];
+  for(const entry of entries){
+    if(x && x+entry.width>target){x=0;y+=rowHeight+gap;rowHeight=0;}
+    placed.push({...entry,x:x+entry.width/2,y:y+entry.height/2});
+    x+=entry.width+gap;totalWidth=Math.max(totalWidth,x-gap);rowHeight=Math.max(rowHeight,entry.height);
+  }
+  const totalHeight=y+rowHeight;
+  return placed.map(entry=>({id:entry.id,delta:right.clone().multiplyScalar(entry.x-totalWidth/2-(entry.minX+entry.maxX)/2).addScaledVector(up,totalHeight/2-entry.y-(entry.minY+entry.maxY)/2)}));
+}
+
 export function unionBounds(meshes) {
   const bounds=new Box3();
   for(const mesh of meshes) if(mesh.visible) bounds.union(new Box3().setFromObject(mesh));

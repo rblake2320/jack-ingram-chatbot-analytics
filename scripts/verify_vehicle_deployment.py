@@ -28,6 +28,12 @@ def main():
         ):
             assert client.get(path).status_code == 200
         assert "connect-src 'self' blob:" in client.get("/vehicle-atlas").headers["Content-Security-Policy"]
+        exterior_page = client.get("/vehicle-atlas").text
+        systems_page = client.get("/vehicle-atlas?subject=systems").raise_for_status().text
+        website_page = client.get("/website-demo").text
+        assert 'id="source-inventory"' in exterior_page and "Take apart 44 surfaces" in exterior_page
+        assert "SCHEMATIC INTERNALS" in systems_page and "not scanned Porsche parts" in systems_page
+        assert 'href="/vehicle-atlas">Explore imported Porsche surfaces' in website_page
         receipts.append(
             {
                 "scenario": "shipped viewer, decoder and licensed model",
@@ -36,6 +42,11 @@ def main():
                 "bytes": len(model),
             }
         )
+        porsche_guide = client.post("/api/chat", json={"message": "Tell me about the Porsche 911 in 3D"}).raise_for_status().json()
+        porsche_card = next(card for card in porsche_guide["vehicle_cards"] if card["id"] == "911")
+        assert porsche_card["explorer_url"] == "/vehicle-atlas"
+        assert "44 imported surfaces" in porsche_card["summary"]
+        receipts.append({"scenario": "website and chat guide open source geometry; systems are labeled schematic", "outcome": "Worked"})
         context = {"vehicle_id": manifest["id"]}
         for message, expected in (
             ("show rear wheels", {"operation": "select", "component_id": "rear-wheels"}),

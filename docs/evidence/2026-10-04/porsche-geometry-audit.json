@@ -1,0 +1,70 @@
+{
+  "checked_at": "2026-10-04T21:37:00.992Z",
+  "preview": "http://127.0.0.1:8092",
+  "scenarios": [
+    {
+      "scenario": "loaded credited exterior",
+      "outcome": "Worked",
+      "visible": 44
+    },
+    {
+      "scenario": "separate every imported surface",
+      "outcome": "Worked",
+      "count": 44,
+      "fits": "true",
+      "inventory": "source-surfaces",
+      "mode": "surfaces",
+      "overlaps": 0,
+      "visible": 44
+    },
+    {
+      "scenario": "click one source surface",
+      "outcome": "Worked",
+      "mesh": "42",
+      "mode": "isolated",
+      "title": "Source surface 42",
+      "visible": 1
+    },
+    {
+      "scenario": "reassemble after isolation",
+      "outcome": "Worked",
+      "visible": 44,
+      "max_center_drift": 0
+    },
+    {
+      "scenario": "labeled concept map",
+      "outcome": "Worked",
+      "badgeVisible": true,
+      "metrics": "44 licensed exterior surfaces · 165 illustrative system meshes ready",
+      "mode": "assembled",
+      "presentation": "cutaway",
+      "shellMeshes": 44,
+      "state": "Concept map · schematic volumes, not Porsche part geometry"
+    },
+    {
+      "scenario": "model-level recall to representative region",
+      "outcome": "Worked",
+      "campaign": "25V896000",
+      "notice": "25V896000 · 2025 PORSCHE 911 model-level campaign. Confirm your VIN and repair status with NHTSA or the manufacturer. 2026 representative component region; this does not apply the campaign to a 2026 vehicle.",
+      "region": "Rear-view camera region",
+      "selected": "rear-camera"
+    },
+    {
+      "scenario": "390 CSS pixel source-surface layout",
+      "outcome": "Worked",
+      "count": 44,
+      "cssHeight": 844,
+      "cssWidth": 390,
+      "documentScrollWidth": 382,
+      "fits": "true",
+      "mode": "surfaces",
+      "overlaps": 0,
+      "visible": 44
+    },
+    {
+      "scenario": "website demo action opened imported exterior",
+      "outcome": "Worked",
+      "destination": "http://127.0.0.1:8092/vehicle-atlas"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {Box3, Vector3} from 'three';
-import {projectedExtent,packGroups,validateManifest,validAction,explodeOffset} from './atlas-core.mjs';
+import {projectedExtent,packGroups,packSurfaceInventory,validateManifest,validAction,explodeOffset} from './atlas-core.mjs';
 import {readFileSync} from 'node:fs';
 
 test('licensed model manifest accounts for every mesh including repeated source names',()=>{
@@ -20,6 +20,25 @@ for(const aspect of [.46,1.8]) test(`rotated world bounds pack without overlappi
   const p=packGroups(items,right,up,aspect);
   const ext=items.map((item,i)=>projectedExtent(item.box.clone().translate(p[i].delta),right,up));
   for(let a=0;a<ext.length;a++) for(let b=a+1;b<ext.length;b++) assert.ok(ext[a].maxX<=ext[b].minX || ext[b].maxX<=ext[a].minX || ext[a].maxY<=ext[b].minY || ext[b].maxY<=ext[a].minY);
+});
+for(const aspect of [.52,1.8]) test(`44 imported surfaces pack at source scale without overlap at aspect ${aspect}`,()=>{
+  const right=new Vector3(1,0,-1).normalize(),up=new Vector3(-.3,1,-.3).normalize();
+  up.addScaledVector(right,-up.dot(right)).normalize();
+  const items=Array.from({length:44},(_,i)=>{
+    const width=i<6?1.2+i*.16:.04+(i*17%11)*.04;
+    const height=i<6?.6+i*.09:.04+(i*7%13)*.02;
+    const center=new Vector3((i%5)*.2,(i%3)*.04,Math.floor(i/5)*.1);
+    return {id:`source-${i}`,box:new Box3(center.clone(),center.clone().add(new Vector3(width,height,.1)))};
+  });
+  const placements=packSurfaceInventory(items,right,up,aspect);
+  assert.equal(placements.length,44);
+  const shifts=new Map(placements.map(p=>[p.id,p.delta]));
+  const extents=items.map(item=>projectedExtent(item.box.clone().translate(shifts.get(item.id)),right,up));
+  for(let a=0;a<extents.length;a++)for(let b=a+1;b<extents.length;b++){
+    const x=extents[a],y=extents[b];
+    assert.ok(x.maxX<=y.minX+1e-8 || y.maxX<=x.minX+1e-8 || x.maxY<=y.minY+1e-8 || y.maxY<=x.minY+1e-8,`${a} overlaps ${b}`);
+  }
+  assert.throws(()=>packSurfaceInventory([items[0],items[0]],right,up,aspect),/Duplicate/);
 });
 test('viewer executes only bounded component actions',()=>{
   assert.equal(validAction({operation:'isolate',component_id:'glass'},['glass']),true);
