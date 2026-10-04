@@ -1,0 +1,7 @@
+# Preserve machine-generated transcripts, including diagnostic whitespace.
+docs/evidence/** -whitespace
+*.py text eol=lf
+*.js text eol=lf
+*.css text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
