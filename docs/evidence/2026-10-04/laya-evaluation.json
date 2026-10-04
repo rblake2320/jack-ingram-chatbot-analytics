@@ -1,0 +1,499 @@
+{
+  "model": "convaiinnovations/laya",
+  "sdk": "0.3.26",
+  "revision": "7b928d828b7b0e022f929d9bd2e44165aa270148",
+  "device": "cpu",
+  "threads": 2,
+  "input_type": "synthetic short English text, not screenshots or customer transcripts",
+  "corpus_sha256": "f7fc617c90462252a5e5976d2f39e4072de91a33787ae3cbfba6aa8bb31b1485",
+  "cases": 24,
+  "baseline_correct": 24,
+  "laya_correct": 22,
+  "valid_results": 24,
+  "load_seconds": 6.42,
+  "median_milliseconds": 716.935,
+  "release_policy": "Advisory only; no probability threshold grants action or overrides baseline.",
+  "acceptance_target": "At least 22/24 labels, all typed outputs valid; domain calibration still required.",
+  "rows": [
+    {
+      "text": "What are your sales hours?",
+      "expected": "hours",
+      "baseline": "hours",
+      "laya": {
+        "status": "advisory",
+        "intent": "hours",
+        "probabilities": {
+          "hours": 0.9955,
+          "contact": 0.0005,
+          "inventory": 0.0005,
+          "service": 0.0007,
+          "appointment": 0.001,
+          "other": 0.0018
+        },
+        "model": "convaiinnovations/laya",
+        "calibration": "not_validated_for_dealership"
+      },
+      "milliseconds": 717.06
+    },
+    {
+      "text": "Are you open on Sunday?",
+      "expected": "hours",
+      "baseline": "hours",
+      "laya": {
+        "status": "advisory",
+        "intent": "hours",
+        "probabilities": {
+          "hours": 0.9098,
+          "contact": 0.013,
+          "inventory": 0.0037,
+          "service": 0.0082,
+          "appointment": 0.0091,
+          "other": 0.0562
+        },
+        "model": "convaiinnovations/laya",
+        "calibration": "not_validated_for_dealership"
+      },
+      "milliseconds": 699.15
+    },
+    {
+      "text": "When does the showroom close?",
+      "expected": "hours",
+      "baseline": "hours",
+      "laya": {
+        "status": "advisory",
+        "intent": "hours",
+        "probabilities": {
+          "hours": 0.9907,
+          "contact": 0.0006,
+          "inventory": 0.0037,
+          "service": 0.0008,
+          "appointment": 0.0019,
+          "other": 0.0023
+        },
+        "model": "convaiinnovations/laya",
+        "calibration": "not_validated_for_dealership"
+      },
+      "milliseconds": 650.46
+    },
+    {
+      "text": "Opening time tomorrow?",
+      "expected": "hours",
+      "baseline": "hours",
+      "laya": {
+        "status": "advisory",
+        "intent": "hours",
+        "probabilities": {
+          "hours": 0.9467,
+          "contact": 0.0033,
+          "inventory": 0.0038,
+          "service": 0.0057,
+          "appointment": 0.0096,
+          "other": 0.0308
+        },
+        "model": "convaiinnovations/laya",
+        "calibration": "not_validated_for_dealership"
+      },
+      "milliseconds": 539.61
+    },
+    {
+      "text": "What is your phone number?",
+      "expected": "contact",
+      "baseline": "contact",
+      "laya": {
+        "status": "advisory",
+        "intent": "contact",
+        "probabilities": {
+          "hours": 0.0101,
+          "contact": 0.3371,
+          "inventory": 0.0293,
+          "service": 0.1758,
+          "appointment": 0.1354,
+          "other": 0.3123
+        },
+        "model": "convaiinnovations/laya",
+        "calibration": "not_validated_for_dealership"
+      },
+      "milliseconds": 563.73
+    },
+    {
+      "text": "Where is the dealership?",
+      "expected": "contact",
+      "baseline": "contact",
+      "laya": {
+        "status": "advisory",
+        "intent": "contact",
+        "probabilities": {
+          "hours": 0.0378,
+          "contact": 0.879,
+          "inventory": 0.0203,
+          "service": 0.0109,
+          "appointment": 0.0251,
+          "other": 0.0269
+        },
+        "model": "convaiinnovations/laya",
+        "calibration": "not_validated_for_dealership"
+      },
+      "milliseconds": 716.81
+    },
+    {
+      "text": "Give me your address",
+      "expected": "contact",
+      "baseline": "contact",
+      "laya": {
+        "status": "advisory",
+        "intent": "contact",
+        "probabilities": {
+          "hours": 0.0011,
+          "contact": 0.9689,
+          "inventory": 0.0015,
+          "service": 0.0052,
+          "appointment": 0.0068,
+          "other": 0.0164
+        },
+        "model": "convaiinnovations/laya",
+        "calibration": "not_validated_for_dealership"
+      },
+      "milliseconds": 705.31
+    },
+    {
+      "text": "I need to speak with a human",
+      "expected": "contact",
+      "baseline": "contact",
+      "laya": {
+        "status": "advisory",
+        "intent": "appointment",
+        "probabilities": {
+          "hours": 0.0032,
+          "contact": 0.074,
+          "inventory": 0.0016,
+          "service": 0.0066,
+          "appointment": 0.6314,
+          "other": 0.2832
+        },
+        "model": "convaiinnovations/laya",
+        "calibration": "not_validated_for_dealership"
+      },
+      "milliseconds": 672.99
+    },
+    {
+      "text": "Show me your inventory",
+      "expected": "inventory",
+      "baseline": "inventory",
+      "laya": {
+        "status": "advisory",
+        "intent": "inventory",
+        "probabilities": {
+          "hours": 0.0,
+          "contact": 0.0001,
+          "inventory": 0.9991,
+          "service": 0.0002,
+          "appointment": 0.0001,
+          "other": 0.0004
+        },
+        "model": "convaiinnovations/laya",
+        "calibration": "not_validated_for_dealership"
+      },
+      "milliseconds": 641.31
+    },
+    {
+      "text": "What cars are available?",
+      "expected": "inventory",
+      "baseline": "inventory",
+      "laya": {
+        "status": "advisory",
+        "intent": "inventory",
+        "probabilities": {
+          "hours": 0.0001,
+          "contact": 0.0001,
+          "inventory": 0.9989,
+          "service": 0.0002,
+          "appointment": 0.0002,
+          "other": 0.0007
+        },
+        "model": "convaiinnovations/laya",
+        "calibration": "not_validated_for_dealership"
+      },
+      "milliseconds": 647.0
+    },
+    {
+      "text": "What is the price of an Audi Q5?",
+      "expected": "inventory",
+      "baseline": "inventory",
+      "laya": {
+        "status": "advisory",
+        "intent": "inventory",
+        "probabilities": {
+          "hours": 0.0077,
+          "contact": 0.0082,
+          "inventory": 0.8923,
+          "service": 0.0274,
+          "appointment": 0.0169,
+          "other": 0.0474
+        },
+        "model": "convaiinnovations/laya",
+        "calibration": "not_validated_for_dealership"
+      },
+      "milliseconds": 783.22
+    },
+    {
+      "text": "Do you have any SUVs?",
+      "expected": "inventory",
+      "baseline": "inventory",
+      "laya": {
+        "status": "advisory",
+        "intent": "inventory",
+        "probabilities": {
+          "hours": 0.0001,
+          "contact": 0.0002,
+          "inventory": 0.998,
+          "service": 0.0005,
+          "appointment": 0.0004,
+          "other": 0.0008
+        },
+        "model": "convaiinnovations/laya",
+        "calibration": "not_validated_for_dealership"
+      },
+      "milliseconds": 719.0
+    },
+    {
+      "text": "I need an oil change",
+      "expected": "service",
+      "baseline": "service",
+      "laya": {
+        "status": "advisory",
+        "intent": "service",
+        "probabilities": {
+          "hours": 0.0012,
+          "contact": 0.0015,
+          "inventory": 0.0015,
+          "service": 0.9849,
+          "appointment": 0.0067,
+          "other": 0.0042
+        },
+        "model": "convaiinnovations/laya",
+        "calibration": "not_validated_for_dealership"
+      },
+      "milliseconds": 647.05
+    },
+    {
+      "text": "Can you repair my brakes?",
+      "expected": "service",
+      "baseline": "service",
+      "laya": {
+        "status": "advisory",
+        "intent": "service",
+        "probabilities": {
+          "hours": 0.0003,
+          "contact": 0.0004,
+          "inventory": 0.0004,
+          "service": 0.9951,
+          "appointment": 0.0027,
+          "other": 0.0012
+        },
+        "model": "convaiinnovations/laya",
+        "calibration": "not_validated_for_dealership"
+      },
+      "milliseconds": 740.19
+    },
+    {
+      "text": "What service do you offer?",
+      "expected": "service",
+      "baseline": "service",
+      "laya": {
+        "status": "advisory",
+        "intent": "service",
+        "probabilities": {
+          "hours": 0.0045,
+          "contact": 0.005,
+          "inventory": 0.0076,
+          "service": 0.805,
+          "appointment": 0.0927,
+          "other": 0.0853
+        },
+        "model": "convaiinnovations/laya",
+        "calibration": "not_validated_for_dealership"
+      },
+      "milliseconds": 818.58
+    },
+    {
+      "text": "I need maintenance",
+      "expected": "service",
+      "baseline": "service",
+      "laya": {
+        "status": "advisory",
+        "intent": "service",
+        "probabilities": {
+          "hours": 0.0002,
+          "contact": 0.0002,
+          "inventory": 0.0002,
+          "service": 0.9909,
+          "appointment": 0.0061,
+          "other": 0.0024
+        },
+        "model": "convaiinnovations/laya",
+        "calibration": "not_validated_for_dealership"
+      },
+      "milliseconds": 774.38
+    },
+    {
+      "text": "Book a test drive",
+      "expected": "appointment",
+      "baseline": "appointment",
+      "laya": {
+        "status": "advisory",
+        "intent": "appointment",
+        "probabilities": {
+          "hours": 0.0003,
+          "contact": 0.0004,
+          "inventory": 0.0003,
+          "service": 0.0064,
+          "appointment": 0.9912,
+          "other": 0.0014
+        },
+        "model": "convaiinnovations/laya",
+        "calibration": "not_validated_for_dealership"
+      },
+      "milliseconds": 898.93
+    },
+    {
+      "text": "Can I schedule a service appointment?",
+      "expected": "appointment",
+      "baseline": "appointment",
+      "laya": {
+        "status": "advisory",
+        "intent": "service",
+        "probabilities": {
+          "hours": 0.0007,
+          "contact": 0.001,
+          "inventory": 0.0005,
+          "service": 0.7254,
+          "appointment": 0.2672,
+          "other": 0.0053
+        },
+        "model": "convaiinnovations/laya",
+        "calibration": "not_validated_for_dealership"
+      },
+      "milliseconds": 869.46
+    },
+    {
+      "text": "I want to arrange a test drive",
+      "expected": "appointment",
+      "baseline": "appointment",
+      "laya": {
+        "status": "advisory",
+        "intent": "appointment",
+        "probabilities": {
+          "hours": 0.0001,
+          "contact": 0.0002,
+          "inventory": 0.0001,
+          "service": 0.0004,
+          "appointment": 0.9985,
+          "other": 0.0007
+        },
+        "model": "convaiinnovations/laya",
+        "calibration": "not_validated_for_dealership"
+      },
+      "milliseconds": 886.33
+    },
+    {
+      "text": "Help me book an appointment",
+      "expected": "appointment",
+      "baseline": "appointment",
+      "laya": {
+        "status": "advisory",
+        "intent": "appointment",
+        "probabilities": {
+          "hours": 0.0,
+          "contact": 0.0001,
+          "inventory": 0.0,
+          "service": 0.0005,
+          "appointment": 0.9992,
+          "other": 0.0002
+        },
+        "model": "convaiinnovations/laya",
+        "calibration": "not_validated_for_dealership"
+      },
+      "milliseconds": 942.82
+    },
+    {
+      "text": "Hello",
+      "expected": "other",
+      "baseline": "other",
+      "laya": {
+        "status": "advisory",
+        "intent": "other",
+        "probabilities": {
+          "hours": 0.0019,
+          "contact": 0.0024,
+          "inventory": 0.0023,
+          "service": 0.0089,
+          "appointment": 0.0093,
+          "other": 0.9752
+        },
+        "model": "convaiinnovations/laya",
+        "calibration": "not_validated_for_dealership"
+      },
+      "milliseconds": 846.93
+    },
+    {
+      "text": "Thank you",
+      "expected": "other",
+      "baseline": "other",
+      "laya": {
+        "status": "advisory",
+        "intent": "other",
+        "probabilities": {
+          "hours": 0.0044,
+          "contact": 0.0055,
+          "inventory": 0.0095,
+          "service": 0.046,
+          "appointment": 0.0413,
+          "other": 0.8934
+        },
+        "model": "convaiinnovations/laya",
+        "calibration": "not_validated_for_dealership"
+      },
+      "milliseconds": 816.15
+    },
+    {
+      "text": "Tell me a joke",
+      "expected": "other",
+      "baseline": "other",
+      "laya": {
+        "status": "advisory",
+        "intent": "other",
+        "probabilities": {
+          "hours": 0.0015,
+          "contact": 0.0023,
+          "inventory": 0.0026,
+          "service": 0.0152,
+          "appointment": 0.0178,
+          "other": 0.9607
+        },
+        "model": "convaiinnovations/laya",
+        "calibration": "not_validated_for_dealership"
+      },
+      "milliseconds": 701.09
+    },
+    {
+      "text": "The weather is lovely",
+      "expected": "other",
+      "baseline": "other",
+      "laya": {
+        "status": "advisory",
+        "intent": "other",
+        "probabilities": {
+          "hours": 0.005,
+          "contact": 0.0053,
+          "inventory": 0.0051,
+          "service": 0.0108,
+          "appointment": 0.0272,
+          "other": 0.9465
+        },
+        "model": "convaiinnovations/laya",
+        "calibration": "not_validated_for_dealership"
+      },
+      "milliseconds": 694.52
+    }
+  ]
+}

@@ -40,7 +40,7 @@ pip install pandas matplotlib plotly redis celery
 
 ### Environment Variables
 ```
-ANTHROPIC_API_KEY=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
+ANTHROPIC_API_KEY=REMOVED_USE_ENVIRONMENT
 DATABASE_URL=postgresql://username:password@hostname:port/database
 REDIS_URL=redis://hostname:port/database
 DEBUG=False

@@ -1,166 +1,95 @@
-"""
-API Router to manage requests between UI and endpoints
-"""
+"""Deterministic useful demo responses; generation is an explicit opt-in."""
 
-import logging
-import asyncio
-from datetime import datetime
-import pytz
-from typing import Dict, Any, Optional
-from api_gateway import APIGateway
-from claude_client import ClaudeClient
-from realtime_client import RealtimeClient
-from knowledge_base import KnowledgeBase
+import re
+
+from .api_gateway import APIGateway
+from .config import DEALERSHIP_INFO
+from .knowledge_base import KnowledgeBase
+from .routing import baseline
+
 
 class APIRouter:
-    """Router for managing API requests"""
-    
-    def __init__(self):
-        self.logger = logging.getLogger(__name__)
+    def __init__(self, provider=None, laya=None):
+        self.provider = provider
+        self.laya = laya
         self.gateway = APIGateway()
-        self.claude = ClaudeClient()
-        self.realtime = RealtimeClient()
         self.knowledge = KnowledgeBase()
-        
-    async def process_request(
-        self,
-        message: str,
-        context: Optional[Dict[str, Any]] = None
-    ) -> Dict[str, Any]:
-        """
-        Process incoming requests and route to appropriate endpoints
-        
-        Args:
-            message: User's message
-            context: Additional context like session info
-            
-        Returns:
-            Combined response from all endpoints
-        """
-        try:
-            # Check cache for common queries
-            cached_response = self.knowledge.get_cached_response(message.lower())
-            if cached_response:
-                return {"response": cached_response, "source": "cache"}
-                
-            # Extract query parameters
-            query = self.extract_vehicle_params(message)
-            
-            # Get dealership info if relevant
-            dealership_info = {}
-            brand = query.get("make") if query else None
-            
-            if any(keyword in message.lower() for keyword in ["hours", "location", "contact", "about", "services"]):
-                category = next((k for k in ["hours", "services"] if k in message.lower()), "main")
-                dealership_info = self.knowledge.get_dealership_info(category, brand)
-                
-                # Cache and return formatted dealership info
-                if dealership_info:
-                    response = self.format_dealership_response(dealership_info, category)
-                    self.knowledge.cache_response(message.lower(), response)
-                    return {"response": response, "source": "knowledge_base"}
-            
-            # Get data from multiple sources
-            vehicle_data = {}
-            perplexity_data = {}
-            
-            if query:
-                # Run API calls concurrently
-                vehicle_data = await self.gateway.get_vehicle_data(query)
-                perplexity_data = await self.perplexity.get_realtime_info(message)
-            
-            # Enhance Claude prompt with real-time data
-            enhanced_context = {
-                "vehicle_data": vehicle_data,
-                "realtime_info": perplexity_data,
-                "session": context.get("session", {}) if context else {}
-            }
-            
-            # Get real-time data and Claude response concurrently
-            realtime_data, claude_response = await asyncio.gather(
-                self.realtime.get_realtime_info(message),
-                self.claude.send_message(message, context=enhanced_context)
+
+    def extract_vehicle_params(self, message):
+        makes = ("nissan", "audi", "mercedes", "porsche", "volkswagen", "volvo")
+        lowered = message.lower()
+        make = next((make for make in makes if re.search(r"\b" + make + r"\b", lowered)), None)
+        model = None
+        for candidate_make in [make] if make else makes:
+            for candidate_model in self.knowledge.get_brand_models(candidate_make):
+                if re.search(r"\b" + re.escape(candidate_model.lower()) + r"\b", lowered):
+                    make, model = candidate_make, candidate_model
+                    break
+            if model:
+                break
+        body_style = next(
+            (style for style in ("suv", "sedan", "truck") if re.search(r"\b" + style + r"s?\b", lowered)),
+            None,
+        )
+        return {"make": make, "model": model, "body_style": body_style}
+
+    def process_request(self, message, history):
+        intent = baseline(message)
+        query = self.extract_vehicle_params(message)
+        if intent == "other" and query["make"]:
+            intent = "inventory"
+        result = {
+            "intent": intent,
+            "brand": query["make"] or "all",
+            "source": "repository_reference",
+            "usage": {},
+            "data_status": "demo_not_live",
+        }
+        if intent == "hours":
+            text = self.knowledge.format_hours("sales") + "\n" + self.knowledge.format_hours("service")
+            text += "\nThese are repository reference hours. Please confirm before visiting."
+        elif intent == "contact":
+            text = f"Contact Jack Ingram Motors at {DEALERSHIP_INFO['phone']}.\n"
+            text += f"Reference address: {DEALERSHIP_INFO['main_address']}.\n"
+            text += DEALERSHIP_INFO["website"]
+        elif intent == "appointment":
+            text = (
+                "To arrange a test drive or service appointment, call "
+                + DEALERSHIP_INFO["phone"]
+                + " or visit "
+                + DEALERSHIP_INFO["website"]
+                + "\nThis demo has no booking connection; no appointment has been reserved."
             )
-            
-            # Use real-time data for time-sensitive queries
-            if "date" in message.lower() or "time" in message.lower():
-                return {
-                    "response": f"Today's date and time is {realtime_data['current_time']}",
-                    "source": "realtime"
-                }
-            
-            # Combine responses with priority to real-time info
-            final_response = {
-                "response": claude_response.get("response", ""),
-                "conversation_id": claude_response.get("conversation_id", ""),
-                "realtime_data": perplexity_response.get("response", ""),
-                "timestamp": datetime.now(pytz.timezone('America/Chicago')).strftime('%B %d, %Y %H:%M:%S %Z')
-            }
-            
-            # Combine LLM responses with real-time info
-            current_time = datetime.now(pytz.timezone('America/Chicago'))
-            
-            if "date" in message.lower() or "time" in message.lower():
-                final_response["response"] = f"Today's date is {current_time.strftime('%B %d, %Y')} {current_time.strftime('%Z')}"
-            
-            return final_response
-            
-        except Exception as e:
-            self.logger.error(f"Error processing request: {str(e)}")
-            return {
-                "error": "Failed to process request",
-                "details": str(e)
-            }
-            
-    def format_dealership_response(self, info: Dict[str, Any], category: str) -> str:
-        """Format dealership information into a response"""
-        if category == "hours":
-            return f"""
-Sales Hours:
-{self.knowledge.format_hours('sales')}
-
-Service Hours:
-{self.knowledge.format_hours('service')}
-"""
-        elif category == "services":
-            services = info.get("services", {})
-            response = "Our services include:\n"
-            for dept, service_list in services.items():
-                response += f"\n{dept.title()}:\n"
-                response += "\n".join(f"- {service}" for service in service_list)
-            return response
+            result["source"] = "handoff"
+        elif intent == "inventory":
+            data = self.gateway.get_vehicle_data(query)
+            text = "Demonstration inventory — sample 2024 vehicles, not live stock or current prices.\n"
+            if data["inventory"]:
+                text += "\n".join(
+                    f"{car['year']} {car['make']} {car['model']} {car['trim']} — "
+                    f"sample price ${car['price']:,.0f}"
+                    for car in data["inventory"]
+                )
+            else:
+                text += "No matching sample vehicles."
+            text += "\nFor current availability and offers, contact " + DEALERSHIP_INFO["phone"] + "."
+            result["source"] = "demo_inventory"
+        elif intent == "service":
+            services = self.knowledge.DEALERSHIP_INFO["services"]["service"]
+            text = "Repository service reference:\n" + "\n".join("- " + item for item in services)
+            text += "\nConfirm services and availability at " + DEALERSHIP_INFO["phone"] + "."
+        elif self.provider:
+            context = {"dealership": DEALERSHIP_INFO, "inventory": self.gateway.get_vehicle_data(query)}
+            result.update(self.provider.send_message(message, history, context))
+            text = result["response"]
         else:
-            main_info = info.get("main", {})
-            return f"""
-{main_info.get('name', 'Jack Ingram Motors')}
-{main_info.get('about', '')}
-
-Location: {main_info.get('location', '')}
-Phone: {main_info.get('phone', '')}
-Website: {main_info.get('website', '')}
-"""
-
-    def extract_vehicle_params(self, message: str) -> Dict[str, Any]:
-        """Extract vehicle-related parameters from message"""
-        params = {}
-        message = message.lower()
-        
-        # Extract brand/make
-        makes = ["nissan", "audi", "mercedes", "porsche", "volkswagen", "volvo"]
-        for make in makes:
-            if make in message:
-                params["make"] = make
-                # Get brand-specific tone for responses
-                params["tone"] = self.knowledge.get_brand_tone(make)
-                # Get popular models for the brand
-                params["models"] = self.knowledge.get_brand_models(make)
-                break
-        
-        # Extract common topics
-        topics = ["inventory", "price", "test drive", "service", "special", "offer"]
-        for topic in topics:
-            if topic in message:
-                params["topic"] = topic
-                break
-        
-        return params
+            text = (
+                "Welcome! I can help you explore six brands, view sample vehicles, check reference hours, "
+                "or contact the dealership. Try “Audi inventory”, “Service hours”, or “Book a test drive”. "
+                "Open-ended AI answers require an explicitly configured provider."
+            )
+            result["source"] = "local"
+        result["response"] = text.strip()
+        if self.laya:
+            result["routing_advice"] = self.laya.classify(message)
+        return result

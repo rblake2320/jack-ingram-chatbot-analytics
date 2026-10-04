@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Conversation insights · Jack Ingram</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+  <script src="{{ url_for('static', filename='analytics.js') }}" defer></script>
+</head>
+<body>
+<header class="masthead"><a class="wordmark" href="/">JACK INGRAM <span>MOTORS</span></a>
+  <nav aria-label="Main"><a href="/">Assistant</a><a href="/analytics" aria-current="page">Insights</a></nav>
+</header>
+<main class="analytics-layout">
+  <p class="eyebrow">DEALERSHIP INSIGHTS</p><h1>Every conversation.<br>A clearer picture.</h1>
+  <p class="lede">Aggregate activity from visitors who choose to share analytics. Messages and contact details are excluded.</p>
+  <form id="authForm" class="auth-panel">
+    <label for="adminToken">Admin access token</label>
+    <div class="auth-row"><input id="adminToken" type="password" autocomplete="off" required aria-describedby="authHelp">
+      <button type="submit">View insights <span aria-hidden="true">→</span></button></div>
+    <p id="authHelp" class="muted">Your token stays in this tab's memory. Configure ADMIN_TOKEN on the server first.</p>
+  </form>
+  <p id="dashboardStatus" role="status" class="muted">Sign in to view analytics.</p>
+  <section id="dashboard" hidden aria-label="Analytics">
+    <div class="insight-toolbar"><div class="windows" role="group" aria-label="Time range">
+      <button type="button" data-window="all" aria-pressed="true">All time</button>
+      <button type="button" data-window="30" aria-pressed="false">30 days</button>
+      <button type="button" data-window="7" aria-pressed="false">7 days</button>
+    </div><button id="signOut" type="button" class="quiet">Sign out</button></div>
+    <p id="coverage" class="muted"></p>
+    <div class="metric-grid" id="metrics"></div>
+    <div class="breakdown-grid">
+      <section class="breakdown"><h2>Customer intent</h2><div id="intents"></div></section>
+      <section class="breakdown"><h2>Brand interest</h2><div id="brands"></div></section>
+      <section class="breakdown"><h2>Answer sources</h2><div id="sources"></div></section>
+    </div>
+    <p class="muted">Counts describe consented requests, not sales, bookings or verified leads. Retention: up to 90 days; expired records are removed on activity.</p>
+  </section>
+</main>
+<footer>Jack Ingram Motors · Local demonstration · Reference data requires dealership confirmation.</footer>
+</body></html>

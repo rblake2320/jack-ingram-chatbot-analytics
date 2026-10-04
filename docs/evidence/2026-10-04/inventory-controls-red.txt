@@ -1,0 +1,42 @@
+FF                                                                       [100%]
+================================== FAILURES ===================================
+_____________________ test_suv_request_filters_body_style _____________________
+
+app = <Flask 'src.demo.app'>
+
+    def test_suv_request_filters_body_style(app):
+        response = app.test_client().post("/api/chat", json={"message": "Do you have any SUVs?"})
+>       assert "Rogue" in response.json["response"] and "Altima" not in response.json["response"]
+E       AssertionError: assert ('Rogue' in 'Demonstration inventory � sample 2024 vehicles, not live stock or current prices.\n2024 Nissan Altima SR � sample pri...2024 Mercedes-Benz GLE 450 4MATIC � sample price $67,800\nFor current availability and offers, contact (334) 277-5700.' and 'Altima' not in 'Demonstrati...4) 277-5700.'
+E         
+E         'Altima' is contained here:
+E           24 Nissan Altima SR � sample price $26,890
+E         ?           ++++++
+E           2024 Nissan Rogue SV � sample price $29,990
+E           2024 Audi Q5 Premium Plus � sample price $49,800
+E           2024 Mercedes-Benz GLE 450 4MATIC � sample price $67,800
+E           For current availability and offers, contact (334) 277-5700.)
+
+src\demo\tests\test_chatbot.py:237: AssertionError
+______________________ test_model_request_without_brand _______________________
+
+app = <Flask 'src.demo.app'>
+
+    def test_model_request_without_brand(app):
+        response = app.test_client().post("/api/chat", json={"message": "Q5 inventory"})
+>       assert "Audi Q5" in response.json["response"] and "Altima" not in response.json["response"]
+E       AssertionError: assert ('Audi Q5' in 'Demonstration inventory � sample 2024 vehicles, not live stock or current prices.\n2024 Nissan Altima SR � sample pri...2024 Mercedes-Benz GLE 450 4MATIC � sample price $67,800\nFor current availability and offers, contact (334) 277-5700.' and 'Altima' not in 'Demonstrati...4) 277-5700.'
+E         
+E         'Altima' is contained here:
+E           24 Nissan Altima SR � sample price $26,890
+E         ?           ++++++
+E           2024 Nissan Rogue SV � sample price $29,990
+E           2024 Audi Q5 Premium Plus � sample price $49,800
+E           2024 Mercedes-Benz GLE 450 4MATIC � sample price $67,800
+E           For current availability and offers, contact (334) 277-5700.)
+
+src\demo\tests\test_chatbot.py:242: AssertionError
+=========================== short test summary info ===========================
+FAILED src/demo/tests/test_chatbot.py::test_suv_request_filters_body_style - ...
+FAILED src/demo/tests/test_chatbot.py::test_model_request_without_brand - Ass...
+2 failed, 47 deselected in 1.04s

@@ -1,0 +1,24 @@
+E
+======================================================================
+ERROR: test_chatbot (unittest.loader._FailedTest.test_chatbot)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_chatbot
+Traceback (most recent call last):
+  File "C:\Python312\Lib\unittest\loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\unittest\loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\techai\Documents\Codex\2026-10-04\https-github-com-rblake2320-jack-ingram\work\jack-ingram-chatbot-analytics\src\demo\tests\test_chatbot.py", line 16, in <module>
+    from src.demo.claude_client import ClaudeClient
+  File "C:\Users\techai\Documents\Codex\2026-10-04\https-github-com-rblake2320-jack-ingram\work\jack-ingram-chatbot-analytics\src\demo\__init__.py", line 5, in <module>
+    from .app import run_app
+  File "C:\Users\techai\Documents\Codex\2026-10-04\https-github-com-rblake2320-jack-ingram\work\jack-ingram-chatbot-analytics\src\demo\app.py", line 13, in <module>
+    from api_router import APIRouter
+ModuleNotFoundError: No module named 'api_router'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
