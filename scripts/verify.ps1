@@ -6,6 +6,8 @@ try {
     if ($Install) {
         python -m venv .venv
         if ($LASTEXITCODE -ne 0) { throw 'Virtual environment creation failed' }
+        & .venv/Scripts/python.exe -m pip install --require-hashes -r requirements.lock
+        if ($LASTEXITCODE -ne 0) { throw 'Locked runtime installation failed' }
         & .venv/Scripts/python.exe -m pip install -r requirements-dev.txt
         if ($LASTEXITCODE -ne 0) { throw 'Dependency installation failed' }
     }
