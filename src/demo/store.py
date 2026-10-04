@@ -11,6 +11,10 @@ class ConversationChanged(Exception):
     pass
 
 
+class SessionExpired(Exception):
+    pass
+
+
 class Store:
     def __init__(self, path):
         self.path = str(path)
@@ -47,12 +51,24 @@ class Store:
         db.execute("DELETE FROM events WHERE at < ?", (now - 90 * 86400,))
         db.execute("DELETE FROM limits WHERE started < ?", (now - 60,))
 
-    def history(self, conversation):
+    def active(self, conversation):
+        with self.connect() as db:
+            return (
+                db.execute(
+                    "SELECT 1 FROM conversations WHERE id=? AND updated>=?",
+                    (conversation, time.time() - 3600),
+                ).fetchone()
+                is not None
+            )
+
+    def history(self, conversation, require_existing=False):
         with self.connect() as db:
             db.execute("BEGIN IMMEDIATE")
             self.prune(db)
             row = db.execute("SELECT * FROM conversations WHERE id=?", (conversation,)).fetchone()
             if row is None:
+                if require_existing:
+                    raise SessionExpired()
                 db.execute("INSERT INTO conversations VALUES(?,0,?,'[]')", (conversation, time.time()))
                 return 0, []
             db.execute("UPDATE conversations SET updated=? WHERE id=?", (time.time(), conversation))

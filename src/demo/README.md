@@ -15,6 +15,8 @@ See the [main guide](../../README.md) for configuration, privacy, analytics, opt
 Laya evaluation, container startup and verification. See the
 [review](../../docs/review-2026-10-04.md) for findings and acceptance evidence.
 
-The assistant serves local reference data and labeled sample inventory. Real
-booking, CRM and inventory feeds require operator configuration. The old widget
-and CDN embed examples were proposals; no widget.js is shipped.
+The assistant serves a reviewed directory for all eight locations and links to
+their official inventory, scheduling, finance and contact pages.
+Open /website-demo to present the installable /static/embed.js widget.
+See [website integration](../../docs/website-integration-2026-10-04.md) for installation.
+Booking confirmations, CRM delivery and in-chat live stock require configured adapters.

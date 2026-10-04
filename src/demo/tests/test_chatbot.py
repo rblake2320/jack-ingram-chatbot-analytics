@@ -39,7 +39,7 @@ def test_entry_and_assets(app):
     for path in ("/", "/analytics", "/static/app.css", "/static/chat.js", "/static/analytics.js"):
         assert client.get(path).status_code == 200
     health = client.get("/health").json
-    assert health["status"] == "healthy" and health["inventory"] == "demo"
+    assert health["status"] == "healthy" and health["inventory"] == "official_website_links"
     assert "unsafe-inline" not in client.get("/").headers["Content-Security-Policy"]
 
 
@@ -124,18 +124,18 @@ def test_privacy_wins_failed_provider(app):
 def test_local_routes(app):
     c = app.test_client()
     cases = [
-        ("hours", "Monday-Friday", "hours"),
-        ("Audi inventory", "Q5", "inventory"),
-        ("Volvo inventory", "No matching sample", "inventory"),
+        ("Nissan hours", "Monday–Friday", "hours"),
+        ("Sample Audi inventory", "Q5", "inventory"),
+        ("Sample Volvo inventory", "No matching sample", "inventory"),
         ("Where are you located?", "Eastern Blvd", "contact"),
-        ("service", "Factory authorized", "service"),
-        ("Book a test drive", "no appointment has been reserved", "appointment"),
+        ("Nissan service", "Service scheduling", "service"),
+        ("Book a Nissan test drive", "No appointment has been reserved", "appointment"),
         ("Hello", "Welcome", "other"),
     ]
     for message, needle, intent in cases:
         result = c.post("/api/chat", json={"message": message})
         assert result.status_code == 200 and needle in result.json["response"]
-        assert result.json["intent"] == intent and result.json["data_status"] == "demo_not_live"
+        assert result.json["intent"] == intent
 
 
 def test_receiving_session_isolation_and_reset(app):
@@ -233,12 +233,12 @@ def test_expired_offers_and_model_filter():
 
 
 def test_suv_request_filters_body_style(app):
-    response = app.test_client().post("/api/chat", json={"message": "Do you have any SUVs?"})
+    response = app.test_client().post("/api/chat", json={"message": "Show sample SUVs"})
     assert "Rogue" in response.json["response"] and "Altima" not in response.json["response"]
 
 
 def test_model_request_without_brand(app):
-    response = app.test_client().post("/api/chat", json={"message": "Q5 inventory"})
+    response = app.test_client().post("/api/chat", json={"message": "Sample Q5 inventory"})
     assert "Audi Q5" in response.json["response"] and "Altima" not in response.json["response"]
 
 

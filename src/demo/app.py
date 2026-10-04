@@ -10,14 +10,37 @@ import time
 from datetime import timedelta
 from urllib.parse import urlsplit
 
-from flask import Flask, jsonify, render_template, request, session
+from flask import Flask, g, jsonify, render_template, request, session
+from itsdangerous import BadSignature, URLSafeTimedSerializer
 from werkzeug.exceptions import HTTPException
 
 from .api_router import APIRouter
 from .claude_client import ClaudeClient, ProviderError
 from .config import DEALERSHIP_INFO, defaults
+from .knowledge_base import LOCATIONS
 from .routing import LayaRouter
-from .store import ConversationChanged, Store
+from .store import ConversationChanged, SessionExpired, Store
+
+
+def canonical_origin(value):
+    try:
+        parsed = urlsplit(value)
+        if (
+            parsed.scheme not in ("https", "http")
+            or not parsed.hostname
+            or parsed.username
+            or parsed.password
+            or parsed.path
+            or parsed.query
+            or parsed.fragment
+        ):
+            return None
+        if parsed.scheme == "http" and parsed.hostname not in ("localhost", "127.0.0.1", "::1"):
+            return None
+        parsed.port  # validates malformed ports
+        return parsed.scheme + "://" + parsed.netloc
+    except ValueError:
+        return None
 
 
 def create_app(overrides=None, router=None):
@@ -46,8 +69,27 @@ def create_app(overrides=None, router=None):
         provider = ClaudeClient(app.config["ANTHROPIC_API_KEY"], app.config["ANTHROPIC_MODEL"])
     router = router or APIRouter(provider, laya)
     app.extensions["router"] = router
+    signer = URLSafeTimedSerializer(app.secret_key, salt="jack-ingram-widget-v1")
+    official_origins = {
+        urlsplit(row["website"]).scheme + "://" + urlsplit(row["website"]).netloc
+        for row in LOCATIONS.values()
+    } | {"https://www.jackingram.com", "https://jackingram.com"}
+    configured = [value.strip() for value in app.config["WIDGET_ORIGINS"] if value.strip()]
+    if any(canonical_origin(value) != value for value in configured):
+        raise ValueError(
+            "WIDGET_ORIGINS must contain exact origins; HTTPS except loopback, no paths or wildcards"
+        )
+    allowed_origins = official_origins | set(configured)
+    demo_origin = app.config["DEMO_WIDGET_ORIGIN"]
+    if demo_origin and canonical_origin(demo_origin) != demo_origin:
+        raise ValueError("DEMO_WIDGET_ORIGIN must be an exact HTTPS or loopback origin")
+
+    def visitor():
+        return g.widget_identity["visitor"] if getattr(g, "widget_identity", None) else session["visitor"]
 
     def identity():
+        if getattr(g, "widget_identity", None):
+            return g.widget_identity["conversation_id"]
         session.permanent = True
         if "conversation_id" not in session:
             session["conversation_id"] = secrets.token_urlsafe(32)
@@ -60,6 +102,23 @@ def create_app(overrides=None, router=None):
 
     @app.before_request
     def guard():
+        supplied = request.headers.get("X-Chat-Session")
+        if supplied is not None:
+            try:
+                data = signer.loads(supplied, max_age=3600)
+                if (
+                    not isinstance(data, dict)
+                    or set(data) != {"conversation_id", "visitor"}
+                    or any(not isinstance(v, str) or not 32 <= len(v) <= 64 for v in data.values())
+                    or not store.active(data["conversation_id"])
+                ):
+                    raise BadSignature("invalid_session")
+                g.widget_identity = data
+            except BadSignature:
+                return jsonify(
+                    error="session_expired",
+                    response="This chat session expired. Close and reopen the assistant.",
+                ), 401
         if request.method == "POST":
             origin = request.headers.get("Origin")
             if origin:
@@ -82,11 +141,28 @@ def create_app(overrides=None, router=None):
         response.headers["Cache-Control"] = "no-store"
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["Referrer-Policy"] = "no-referrer"
+        ancestors = getattr(g, "widget_parent", "'self'")
         response.headers["Content-Security-Policy"] = (
             "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; "
-            "connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'self'; form-action 'self'"
+            "connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors "
+            + ancestors
+            + "; form-action 'self'"
         )
+        if request.path == "/website-demo":
+            origin = demo_origin or "'self'"
+            response.headers["Content-Security-Policy"] = (
+                response.headers["Content-Security-Policy"]
+                .replace("script-src 'self'", "script-src 'self' " + origin)
+                .replace("style-src 'self'", "style-src 'self' " + origin)
+                .replace("default-src 'self'", "default-src 'self'; frame-src 'self' " + origin)
+            )
         return response
+
+    @app.errorhandler(SessionExpired)
+    def expired_session(error):
+        return jsonify(
+            error="session_expired", response="This chat session expired. Close and reopen the assistant."
+        ), 401
 
     @app.errorhandler(HTTPException)
     def http_error(error):
@@ -106,7 +182,32 @@ def create_app(overrides=None, router=None):
             "index.html",
             dealership_info=DEALERSHIP_INFO,
             ai_enabled=bool(provider and app.config["ANTHROPIC_API_KEY"]),
+            embedded=False,
         )
+
+    @app.route("/widget")
+    def widget():
+        parent = canonical_origin(request.args.get("parent", ""))
+        if not parent or parent not in allowed_origins | {request.host_url.rstrip("/")}:
+            return jsonify(error="embedding_origin_not_allowed"), 403
+        selected = request.args.get("location", "")
+        if selected and selected not in LOCATIONS:
+            return jsonify(error="invalid_location"), 400
+        g.widget_parent = parent
+        data = {"conversation_id": secrets.token_urlsafe(32), "visitor": secrets.token_urlsafe(32)}
+        store.history(data["conversation_id"])
+        return render_template(
+            "index.html",
+            dealership_info=DEALERSHIP_INFO,
+            embedded=True,
+            selected_location=selected,
+            session_token=signer.dumps(data),
+            ai_enabled=bool(provider and app.config["ANTHROPIC_API_KEY"]),
+        )
+
+    @app.route("/website-demo")
+    def website_demo():
+        return render_template("website_demo.html", dealership_info=DEALERSHIP_INFO, embed_origin=demo_origin)
 
     @app.route("/api/chat", methods=["POST"])
     def chat():
@@ -118,11 +219,16 @@ def create_app(overrides=None, router=None):
             return jsonify(error="message_must_be_1_to_2000_characters"), 400
         if type(data.get("analytics_consent", False)) is not bool:
             return jsonify(error="analytics_consent_must_be_boolean"), 400
+        selected = data.get("location_id")
+        if selected is not None and (not isinstance(selected, str) or selected not in LOCATIONS):
+            return jsonify(error="invalid_location"), 400
         conversation = identity()
-        revision, history = store.history(conversation)
+        revision, history = store.history(
+            conversation, require_existing=bool(getattr(g, "widget_identity", None))
+        )
         started = time.perf_counter()
         event = {
-            "visitor": digest(session["visitor"]),
+            "visitor": digest(visitor()),
             "intent": "other",
             "brand": "all",
             "source": "none",
@@ -133,7 +239,11 @@ def create_app(overrides=None, router=None):
         }
         consenting = app.config["ENABLE_ANALYTICS"] and data.get("analytics_consent", False)
         try:
-            result = router.process_request(message.strip(), history)
+            result = (
+                router.process_request(message.strip(), history, location_id=selected)
+                if selected
+                else router.process_request(message.strip(), history)
+            )
             event.update({key: result[key] for key in ("intent", "brand", "source")})
             event.update(outcome="success", latency_ms=round((time.perf_counter() - started) * 1000, 2))
             usage = result.get("usage", {})
@@ -174,7 +284,16 @@ def create_app(overrides=None, router=None):
         if not isinstance(data, dict):
             return jsonify(error="json_object_required"), 400
         forget = request.path == "/api/privacy"
-        store.reset(identity(), digest(session["visitor"]) if forget else None)
+        store.reset(identity(), digest(visitor()) if forget else None)
+        if getattr(g, "widget_identity", None):
+            data = {
+                "conversation_id": secrets.token_urlsafe(32),
+                "visitor": secrets.token_urlsafe(32) if forget else visitor(),
+            }
+            store.history(data["conversation_id"])
+            return jsonify(
+                status="success", conversation_id=data["conversation_id"], session_token=signer.dumps(data)
+            )
         session["conversation_id"] = secrets.token_urlsafe(32)
         if forget:
             session["visitor"] = secrets.token_urlsafe(32)
@@ -192,7 +311,7 @@ def create_app(overrides=None, router=None):
             status="healthy",
             provider=app.config["CHAT_PROVIDER"],
             provider_configured=bool(app.config["ANTHROPIC_API_KEY"]) if provider else True,
-            inventory="demo",
+            inventory="official_website_links",
             booking="unconfigured",
             crm="unconfigured",
             laya=laya.status if laya else "disabled",

@@ -21,8 +21,11 @@ QUESTIONS = {
 PATTERNS = [
     ("appointment", r"\b(book|booking|schedule|appointment)\b|test drive"),
     ("hours", r"\b(hours|open|opening|close|closing)\b"),
-    ("contact", r"\b(contact|phone|telephone|address|location|where|human|representative|person)\b"),
-    ("service", r"\b(service|maintenance|repair|oil|tire|brake)\b"),
+    (
+        "contact",
+        r"\b(contact|phone|telephone|address|locations?|directions|where|human|representative|person)\b",
+    ),
+    ("service", r"\b(service|maintenance|repair|oil|tire|brake|parts|collision|body ?shop)\b"),
     ("inventory", r"\b(inventory|vehicle|vehicles|car|cars|price|pricing|stock|suvs?)\b"),
 ]
 

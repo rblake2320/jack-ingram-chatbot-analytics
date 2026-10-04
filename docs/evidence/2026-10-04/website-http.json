@@ -1,0 +1,38 @@
+{
+  "server": "Waitress shipped module",
+  "paid_calls": 0,
+  "receipts": [
+    {
+      "scenario": "shipped Waitress boot and two sessions",
+      "outcome": "Worked"
+    },
+    {
+      "scenario": "invalid body and origin controls",
+      "outcome": "Worked"
+    },
+    {
+      "scenario": "consent, admin protection and deletion",
+      "outcome": "Worked"
+    },
+    {
+      "scenario": "reset and honest booking handoff",
+      "outcome": "Worked"
+    },
+    {
+      "scenario": "embedded session without cookies, contextual follow-up, deletion and token revocation",
+      "outcome": "Worked"
+    },
+    {
+      "scenario": "8 concurrent local inventory requests",
+      "outcome": "Worked",
+      "successful": 8,
+      "maximum_ms": 556.59,
+      "median_ms": 446.87
+    },
+    {
+      "scenario": "real HTTP provider success, truncation and failure fixture",
+      "outcome": "Worked",
+      "vendor_inference": false
+    }
+  ]
+}

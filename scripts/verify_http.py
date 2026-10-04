@@ -3,6 +3,7 @@
 import argparse
 import json
 import os
+import re
 import socket
 import subprocess
 import sys
@@ -105,8 +106,11 @@ def main():
                         raise RuntimeError("Waitress startup deadline exceeded")
                     assert a.get("/").status_code == a.get("/static/chat.js").status_code == 200
                     ra = a.post("/api/chat", json={"message": "Audi inventory"})
-                    rb = b.post("/api/chat", json={"message": "hours"})
-                    assert "Q5" in ra.json()["response"] and "Monday-Friday" in rb.json()["response"]
+                    rb = b.post("/api/chat", json={"message": "Nissan hours"})
+                    assert (
+                        ra.json()["links"][0]["kind"] == "inventory"
+                        and "Monday–Friday" in rb.json()["response"]
+                    )
                     assert ra.json()["conversation_id"] != rb.json()["conversation_id"]
                     if args.laya_model_path:
                         assert a.get("/health").json()["laya"] == "ready_advisory"
@@ -145,10 +149,50 @@ def main():
                     old = b.post("/api/chat", json={"message": "service"}).json()["conversation_id"]
                     assert b.post("/api/reset", json={}).json()["conversation_id"] != old
                     assert (
-                        b.post("/api/chat", json={"message": "Book a test drive"}).json()["source"]
-                        == "handoff"
+                        "No appointment has been reserved"
+                        in b.post("/api/chat", json={"message": "Book a Nissan test drive"}).json()[
+                            "response"
+                        ]
                     )
                     receipts.append({"scenario": "reset and honest booking handoff", "outcome": "Worked"})
+
+                    # Simulate third-party cookies being unavailable; the widget uses its scoped token.
+                    with httpx.Client(base_url=base, timeout=10, trust_env=False) as widget_client:
+                        page = widget_client.get("/widget", params={"parent": base})
+                        token = re.search(r'data-session-token="([^"]+)"', page.text).group(1)
+                        widget_client.cookies.clear()
+                        headers = {"X-Chat-Session": token, "Origin": base}
+                        first = widget_client.post(
+                            "/api/chat",
+                            headers=headers,
+                            json={"message": "Porsche address", "analytics_consent": True},
+                        )
+                        assert first.status_code == 200 and "245 Eastern" in first.json()["response"]
+                        assert not widget_client.cookies
+                        second = widget_client.post(
+                            "/api/chat", headers=headers, json={"message": "Service hours"}
+                        )
+                        assert "Porsche" in second.json()["response"]
+                        deleted = widget_client.post("/api/privacy", headers=headers, json={})
+                        assert deleted.status_code == 200 and deleted.json()["session_token"] != token
+                        assert (
+                            widget_client.post(
+                                "/api/chat", headers=headers, json={"message": "hello"}
+                            ).status_code
+                            == 401
+                        )
+                        assert (
+                            widget_client.get(
+                                "/widget", params={"parent": "https://evil.invalid"}
+                            ).status_code
+                            == 403
+                        )
+                    receipts.append(
+                        {
+                            "scenario": "embedded session without cookies, contextual follow-up, deletion and token revocation",
+                            "outcome": "Worked",
+                        }
+                    )
 
                     def turn(index):
                         start = time.perf_counter()

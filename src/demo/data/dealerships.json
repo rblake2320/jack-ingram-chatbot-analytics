@@ -1,0 +1,534 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-10-04",
+  "group": {
+    "name": "Jack Ingram Motors",
+    "phone": "(334) 277-5700",
+    "website": "https://www.jackingram.com/",
+    "brands": [
+      "Audi",
+      "Mercedes-Benz",
+      "Nissan",
+      "Porsche",
+      "Volkswagen",
+      "Volvo"
+    ],
+    "inventory_url": "https://www.jackingram.com/all-inventory/index.htm",
+    "finance_url": "https://www.jackingram.com/apply-for-financing.htm",
+    "trade_url": "https://www.jackingram.com/value-your-trade.htm"
+  },
+  "locations": [
+    {
+      "id": "audi",
+      "name": "Audi Montgomery",
+      "website": "https://www.audimontgomery.com/en/",
+      "models": [
+        "A3",
+        "A4",
+        "A5",
+        "A6",
+        "Q3",
+        "Q5",
+        "Q7",
+        "Q8",
+        "e-tron"
+      ],
+      "departments": {
+        "parts": {
+          "phone": "334-578-0466",
+          "hours": {
+            "Monday": "07:00–17:30",
+            "Tuesday": "07:00–17:30",
+            "Wednesday": "07:00–17:30",
+            "Thursday": "07:00–17:30",
+            "Friday": "07:00–17:30",
+            "Saturday": "Closed",
+            "Sunday": "Closed"
+          },
+          "hours_source": "published JSON-LD on official homepage"
+        },
+        "sales": {
+          "phone": "334-578-0470",
+          "hours": {
+            "Monday": "08:30–19:00",
+            "Tuesday": "08:30–19:00",
+            "Wednesday": "08:30–19:00",
+            "Thursday": "08:30–19:00",
+            "Friday": "08:30–19:00",
+            "Saturday": "08:30–18:00",
+            "Sunday": "Closed"
+          },
+          "hours_source": "visible official homepage; JSON-LD disagrees"
+        },
+        "service": {
+          "phone": "334-578-0575",
+          "hours": {
+            "Monday": "07:00–17:30",
+            "Tuesday": "07:00–17:30",
+            "Wednesday": "07:00–17:30",
+            "Thursday": "07:00–17:30",
+            "Friday": "07:00–17:30",
+            "Saturday": "Closed",
+            "Sunday": "Closed"
+          },
+          "hours_source": "published JSON-LD on official homepage"
+        }
+      },
+      "links": {
+        "inventory": "https://www.audimontgomery.com/en/inventory/new/",
+        "service": "https://www.audimontgomery.com/en/service/service-scheduling/",
+        "contact": "https://www.audimontgomery.com/en/contact-us/",
+        "trade": "https://www.audimontgomery.com/en/specials-and-finance/value-my-trade/",
+        "finance": "https://www.audimontgomery.com/en/specials-and-finance/finance-application/"
+      },
+      "sources": [
+        {
+          "url": "https://www.audimontgomery.com/en/",
+          "retrieved_at": "2026-10-04T13:01:36.559983+00:00",
+          "sha256": "dbb11ab9029d8338401e25c70f42daa26e736659a1960a6a0c998cc4dcc113c9",
+          "method": "HTML and JSON-LD"
+        }
+      ],
+      "notes": [
+        "Audi visible sales hours differ from its structured data (18:00 weekdays / 17:30 Saturday). Confirm sales hours by phone before visiting."
+      ],
+      "address": "241 Eastern Blvd, Montgomery, AL 36117",
+      "phone": "334-578-0470"
+    },
+    {
+      "id": "mercedes",
+      "name": "Jack Ingram Mercedes-Benz",
+      "website": "https://www.jackingrammercedes.com/",
+      "models": [
+        "C-Class",
+        "E-Class",
+        "GLE",
+        "GLC",
+        "S-Class",
+        "Sprinter"
+      ],
+      "departments": {
+        "parts": {
+          "phone": "+13342744900",
+          "hours": {
+            "Monday": "07:00–17:30",
+            "Tuesday": "07:00–17:30",
+            "Wednesday": "07:00–17:30",
+            "Thursday": "07:00–17:30",
+            "Friday": "07:00–17:30",
+            "Saturday": "08:00–12:00"
+          },
+          "hours_source": "published JSON-LD on official homepage"
+        },
+        "service": {
+          "phone": "+13342744900",
+          "hours": {
+            "Monday": "07:00–17:30",
+            "Tuesday": "07:00–17:30",
+            "Wednesday": "07:00–17:30",
+            "Thursday": "07:00–17:30",
+            "Friday": "07:00–17:30",
+            "Saturday": "08:00–12:00"
+          },
+          "hours_source": "published JSON-LD on official homepage"
+        },
+        "sales": {
+          "phone": "+13342744900",
+          "hours": {
+            "Monday": "08:00–19:00",
+            "Tuesday": "08:00–19:00",
+            "Wednesday": "08:00–19:00",
+            "Thursday": "08:00–19:00",
+            "Friday": "08:00–19:00",
+            "Saturday": "08:00–18:00",
+            "Sunday": "Closed"
+          },
+          "hours_source": "published JSON-LD on official homepage"
+        }
+      },
+      "links": {
+        "service": "https://www.jackingrammercedes.com/service/schedule-service.htm",
+        "inventory": "https://www.jackingrammercedes.com/new-inventory/index.htm",
+        "trade": "https://www.jackingrammercedes.com/edmunds-trade.htm",
+        "finance": "https://www.jackingrammercedes.com/financing/application.htm",
+        "parts": "https://www.jackingrammercedes.com/parts/index.htm",
+        "contact": "https://www.jackingrammercedes.com/contact.htm"
+      },
+      "sources": [
+        {
+          "url": "https://www.jackingrammercedes.com/",
+          "retrieved_at": "2026-10-04T13:01:38.215150+00:00",
+          "sha256": "75c55b35d54bbb6dbc4a95de9bed0d7622289d85ba58587e3d15cb69ce6e1a3e",
+          "method": "HTML and JSON-LD"
+        }
+      ],
+      "notes": [],
+      "address": "217 Eastern Blvd, Montgomery, AL 36117-2009",
+      "phone": "+13342744900"
+    },
+    {
+      "id": "nissan",
+      "name": "Jack Ingram Nissan",
+      "website": "https://www.jackingramnissan.com/",
+      "models": [
+        "Altima",
+        "Rogue",
+        "Sentra",
+        "Armada",
+        "Kicks",
+        "Murano",
+        "Pathfinder",
+        "Frontier",
+        "Titan"
+      ],
+      "departments": {
+        "parts": {
+          "phone": "+13342706000",
+          "hours": {
+            "Monday": "07:00–17:30",
+            "Tuesday": "07:00–17:30",
+            "Wednesday": "07:00–17:30",
+            "Thursday": "07:00–17:30",
+            "Friday": "07:00–17:30",
+            "Saturday": "08:00–14:00"
+          },
+          "hours_source": "published JSON-LD on official homepage"
+        },
+        "service": {
+          "phone": "+13342706000",
+          "hours": {
+            "Monday": "07:00–17:30",
+            "Tuesday": "07:00–17:30",
+            "Wednesday": "07:00–17:30",
+            "Thursday": "07:00–17:30",
+            "Friday": "07:00–17:30",
+            "Saturday": "08:00–14:00"
+          },
+          "hours_source": "published JSON-LD on official homepage"
+        },
+        "sales": {
+          "phone": "+13342706000",
+          "hours": {
+            "Monday": "08:30–19:00",
+            "Tuesday": "08:30–19:00",
+            "Wednesday": "08:30–19:00",
+            "Thursday": "08:30–19:00",
+            "Friday": "08:30–19:00",
+            "Saturday": "08:30–18:00",
+            "Sunday": "Closed"
+          },
+          "hours_source": "published JSON-LD on official homepage"
+        }
+      },
+      "links": {
+        "inventory": "https://www.jackingramnissan.com/new-inventory/index.htm",
+        "trade": "https://www.jackingramnissan.com/value-your-trade.htm",
+        "finance": "https://www.jackingramnissan.com/financing/application.htm",
+        "service": "https://www.jackingramnissan.com/schedule-service.htm",
+        "parts": "https://www.jackingramnissan.com/parts/index.htm",
+        "contact": "https://www.jackingramnissan.com/contact.htm"
+      },
+      "sources": [
+        {
+          "url": "https://www.jackingramnissan.com/",
+          "retrieved_at": "2026-10-04T13:01:40.325789+00:00",
+          "sha256": "cbe08ec52b21c728ee5e1e68098369123560cffd518aa201df6e8a4f2d811bed",
+          "method": "HTML and JSON-LD"
+        }
+      ],
+      "notes": [],
+      "address": "227 Eastern Blvd, Montgomery, AL 36117",
+      "phone": "+13342706000"
+    },
+    {
+      "id": "porsche",
+      "name": "Jack Ingram Porsche",
+      "website": "https://jackingrammotors.porsche.com/en",
+      "models": [
+        "911",
+        "718",
+        "Cayenne",
+        "Macan",
+        "Taycan",
+        "Panamera"
+      ],
+      "departments": {
+        "sales": {
+          "phone": "(334) 420-9902",
+          "hours": {
+            "Monday": "08:30–18:00",
+            "Tuesday": "08:30–18:00",
+            "Wednesday": "08:30–18:00",
+            "Thursday": "08:30–18:00",
+            "Friday": "08:30–18:00",
+            "Saturday": "08:00–18:00",
+            "Sunday": "Closed"
+          },
+          "hours_source": "visible official homepage Hours section"
+        },
+        "service": {
+          "phone": "(334) 420-9902",
+          "hours": {
+            "Monday": "07:00–17:30",
+            "Tuesday": "07:00–17:30",
+            "Wednesday": "07:00–17:30",
+            "Thursday": "07:00–17:30",
+            "Friday": "07:00–17:30",
+            "Saturday": "Closed",
+            "Sunday": "Closed"
+          },
+          "hours_source": "visible official homepage Hours section"
+        },
+        "parts": {
+          "phone": "(334) 420-9902",
+          "hours": {
+            "Monday": "08:00–17:00",
+            "Tuesday": "08:00–17:00",
+            "Wednesday": "08:00–17:00",
+            "Thursday": "08:00–17:00",
+            "Friday": "08:00–17:00",
+            "Saturday": "Closed",
+            "Sunday": "Closed"
+          },
+          "hours_source": "visible official homepage Hours section"
+        }
+      },
+      "links": {
+        "inventory": "https://jackingrammotors.porsche.com/en/inventory/porsche/search?condition=new",
+        "service": "https://service-booking.aftersales.porsche.com/us/en_US?partnerId=4500813&referrer=https%3A%2F%2Fjackingrammotors.porsche.com%2Fen&tag=pcw",
+        "contact": "https://jackingrammotors.porsche.com/en/contact"
+      },
+      "sources": [
+        {
+          "url": "https://jackingrammotors.porsche.com/en",
+          "retrieved_at": "2026-10-04T13:01:42.658537+00:00",
+          "sha256": null,
+          "method": "Official page read with web tool; collector robots request returned HTTP 429"
+        }
+      ],
+      "notes": [],
+      "address": "245 Eastern Boulevard, Montgomery, AL 36117",
+      "phone": "(334) 420-9902"
+    },
+    {
+      "id": "volkswagen",
+      "name": "Jack Ingram Volkswagen of Montgomery",
+      "website": "https://www.jackingramvolkswagen.com/",
+      "models": [
+        "Jetta",
+        "Tiguan",
+        "Atlas",
+        "Golf",
+        "Taos",
+        "ID.4"
+      ],
+      "departments": {
+        "service": {
+          "phone": "+13344207700",
+          "hours": {
+            "Monday": "07:00–17:30",
+            "Tuesday": "07:00–17:30",
+            "Wednesday": "07:00–17:30",
+            "Thursday": "07:00–17:30",
+            "Friday": "07:00–17:30",
+            "Saturday": "08:00–14:00"
+          },
+          "hours_source": "published JSON-LD on official homepage"
+        },
+        "parts": {
+          "phone": "+13344207700",
+          "hours": {
+            "Monday": "07:00–17:30",
+            "Tuesday": "07:00–17:30",
+            "Wednesday": "07:00–17:30",
+            "Thursday": "07:00–17:30",
+            "Friday": "07:00–17:30",
+            "Saturday": "08:00–14:00"
+          },
+          "hours_source": "published JSON-LD on official homepage"
+        },
+        "sales": {
+          "phone": "+13344207700",
+          "hours": {
+            "Monday": "08:30–19:00",
+            "Tuesday": "08:30–19:00",
+            "Wednesday": "08:30–19:00",
+            "Thursday": "08:30–19:00",
+            "Friday": "08:30–19:00",
+            "Saturday": "08:30–18:00",
+            "Sunday": "Closed"
+          },
+          "hours_source": "published JSON-LD on official homepage"
+        }
+      },
+      "links": {
+        "inventory": "https://www.jackingramvolkswagen.com/new-inventory/index.htm",
+        "trade": "https://www.jackingramvolkswagen.com/edmunds-trade.htm",
+        "parts": "https://www.jackingramvolkswagen.com/parts/index.htm",
+        "finance": "https://www.jackingramvolkswagen.com/financing/application.htm",
+        "contact": "https://www.jackingramvolkswagen.com/contact.htm",
+        "service": "https://www.jackingramvolkswagen.com/schedule-service.htm"
+      },
+      "sources": [
+        {
+          "url": "https://www.jackingramvolkswagen.com/",
+          "retrieved_at": "2026-10-04T13:01:42.836361+00:00",
+          "sha256": "7bf12d3fcd3b5776b3f63e3147ed522d8c661ffe8369c8d8b736edb3d746abaa",
+          "method": "HTML and JSON-LD"
+        }
+      ],
+      "notes": [],
+      "address": "255 Eastern Blvd, Montgomery, AL 36117",
+      "phone": "+13344207700"
+    },
+    {
+      "id": "volvo",
+      "name": "Jack Ingram Volvo Cars",
+      "website": "https://www.jackingramvolvocars.com/",
+      "models": [
+        "XC90",
+        "XC60",
+        "XC40",
+        "V60",
+        "EX30",
+        "EX40",
+        "EX60",
+        "EX90"
+      ],
+      "departments": {
+        "parts": {
+          "phone": "+13344207701",
+          "hours": {
+            "Monday": "07:00–17:30",
+            "Tuesday": "07:00–17:30",
+            "Wednesday": "07:00–17:30",
+            "Thursday": "07:00–17:30",
+            "Friday": "07:00–17:30"
+          },
+          "hours_source": "published JSON-LD on official homepage"
+        },
+        "service": {
+          "phone": "+13344207701",
+          "hours": {
+            "Monday": "07:00–17:30",
+            "Tuesday": "07:00–17:30",
+            "Wednesday": "07:00–17:30",
+            "Thursday": "07:00–17:30",
+            "Friday": "07:00–17:30"
+          },
+          "hours_source": "published JSON-LD on official homepage"
+        },
+        "sales": {
+          "phone": "334-420-7701",
+          "hours": {
+            "Monday": "08:30–19:00",
+            "Tuesday": "08:30–19:00",
+            "Wednesday": "08:30–19:00",
+            "Thursday": "08:30–19:00",
+            "Friday": "08:30–19:00",
+            "Saturday": "08:30–18:00",
+            "Sunday": "Not published; call to confirm"
+          },
+          "hours_source": "published JSON-LD on official homepage"
+        }
+      },
+      "links": {
+        "inventory": "https://www.jackingramvolvocars.com/new-inventory/index.htm",
+        "trade": "https://www.jackingramvolvocars.com/edmunds-trade.htm",
+        "finance": "https://www.jackingramvolvocars.com/financing/application.htm",
+        "service": "https://www.jackingramvolvocars.com/schedule-service.htm",
+        "parts": "https://www.jackingramvolvocars.com/ourpartscenter.htm",
+        "contact": "https://www.jackingramvolvocars.com/contact.htm"
+      },
+      "sources": [
+        {
+          "url": "https://www.jackingramvolvocars.com/",
+          "retrieved_at": "2026-10-04T13:01:44.765472+00:00",
+          "sha256": "7a71c7545df2856d13293715487c80ce42f71b39b67a68b0e7abdae152d7f1d9",
+          "method": "HTML and JSON-LD"
+        }
+      ],
+      "notes": [
+        "Volvo publishes different sales phone numbers in its page header, structured data and dynamically replaced display. This directory uses the official header number 334-420-7701; check the linked contact page for the current display."
+      ],
+      "address": "267 Eastern Blvd, Montgomery, AL 36117-2074",
+      "phone": "334-420-7701"
+    },
+    {
+      "id": "signature",
+      "name": "Jack Ingram Signature Used Cars",
+      "website": "https://www.jackingramsignatureusedcars.com/",
+      "models": [],
+      "departments": {
+        "sales": {
+          "phone": "+13344209900",
+          "hours": {
+            "Monday": "08:30–19:00",
+            "Tuesday": "08:30–19:00",
+            "Wednesday": "08:30–19:00",
+            "Thursday": "08:30–19:00",
+            "Friday": "08:30–19:00",
+            "Saturday": "08:30–18:00",
+            "Sunday": "Closed"
+          },
+          "hours_source": "published JSON-LD on official homepage"
+        }
+      },
+      "links": {
+        "finance": "https://www.jackingramsignatureusedcars.com/get-financing.htm",
+        "contact": "https://www.jackingramsignatureusedcars.com/contact.htm",
+        "trade": "https://www.jackingramsignatureusedcars.com/value-your-trade.htm",
+        "inventory": "https://www.jackingramsignatureusedcars.com/used-inventory/index.htm"
+      },
+      "sources": [
+        {
+          "url": "https://www.jackingramsignatureusedcars.com/",
+          "retrieved_at": "2026-10-04T13:01:47.075467+00:00",
+          "sha256": "27eccbc19a6c411d96d0367a41ddb9bdbf0ae77972102936805f266b4dd0b135",
+          "method": "HTML and JSON-LD"
+        }
+      ],
+      "notes": [],
+      "address": "235 N Eastern Blvd, Montgomery, AL 36117",
+      "phone": "+13344209900"
+    },
+    {
+      "id": "body-shop",
+      "name": "Jack Ingram Body Shop",
+      "website": "https://www.jackingrambodyshop.com/",
+      "models": [],
+      "departments": {
+        "body-shop": {
+          "phone": "+13342710638",
+          "hours": {
+            "Monday": "07:30–17:00",
+            "Tuesday": "07:30–17:00",
+            "Wednesday": "07:30–17:00",
+            "Thursday": "07:30–17:00",
+            "Friday": "07:30–17:00",
+            "Sunday": "Closed",
+            "Saturday": "Closed"
+          },
+          "hours_source": "published JSON-LD on official homepage"
+        }
+      },
+      "links": {
+        "service": "https://www.jackingrambodyshop.com/bodyshop/index.htm",
+        "contact": "https://www.jackingrambodyshop.com/contact.htm",
+        "services": "https://www.jackingrambodyshop.com/body-shop-services.htm",
+        "inventory": "https://www.jackingrambodyshop.com/"
+      },
+      "sources": [
+        {
+          "url": "https://www.jackingrambodyshop.com/",
+          "retrieved_at": "2026-10-04T13:01:49.272795+00:00",
+          "sha256": "9e5f3ceeeebab94f4f71200327a186f0ac830e90f48f2b4a743daf9a659d50d4",
+          "method": "HTML and JSON-LD"
+        }
+      ],
+      "notes": [],
+      "address": "5648 Eddins Road, Montgomery, AL 36117",
+      "phone": "+13342710638"
+    }
+  ]
+}

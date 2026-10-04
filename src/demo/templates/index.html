@@ -2,54 +2,63 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Find your next chapter · Jack Ingram Motors</title>
+  <title>Jack Ingram Motors · Dealership Assistant</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
   <script src="{{ url_for('static', filename='chat.js') }}" defer></script>
 </head>
-<body>
-<header class="masthead"><a class="wordmark" href="/">JACK INGRAM <span>MOTORS</span></a>
-  <nav aria-label="Main"><a href="/" aria-current="page">Assistant</a><a href="/analytics">Insights</a></nav>
+<body class="{{ 'embedded' if embedded else 'demo' }}" data-session-token="{{ session_token|default('') }}">
+{% if not embedded %}
+<div class="top-strip">Montgomery, Alabama <a href="tel:+13342775700">334-277-5700</a></div>
+<header class="masthead"><a class="wordmark" href="/">Jack Ingram Motors <span>IT'S TIME TO LOVE WHAT YOU DRIVE.</span></a>
+  <nav aria-label="Main"><a href="/website-demo">Website demo</a><a href="/analytics">Insights</a></nav>
 </header>
 <main class="showroom">
   <section class="intro">
-    <p class="eyebrow">SIX BRANDS. ONE PLACE TO START.</p>
-    <h1>Your next chapter<br>starts with a<br>conversation.</h1>
-    <p class="lede">Explore a brand, plan your visit, or find the right person to help. Tell us what you're looking for.</p>
-    <p class="section-label">Explore a brand</p>
-    <div class="brand-grid" aria-label="Brand inventory">
-      {% for brand in dealership_info.brands %}
-      <button type="button" data-question="{{ brand }} inventory">{{ brand }} <span aria-hidden="true">↗</span></button>
+    <p class="eyebrow">SIX BRANDS. EIGHT DESTINATIONS.</p>
+    <h1>Your dealership.<br>Your next move.</h1>
+    <p class="lede">Find your showroom, plan a service visit, or explore your next vehicle. Start with the right Jack Ingram team.</p>
+    <div class="brand-grid" aria-label="Explore our locations">
+      {% for location in dealership_info.locations %}
+      <button type="button" data-question="{{ location.name }} address">{{ location.name|replace('Jack Ingram ', '') }} <span aria-hidden="true">↗</span></button>
       {% endfor %}
     </div>
-    <div class="contact"><strong>Jack Ingram Motors</strong>
-      <a href="tel:+13342775700">{{ dealership_info.phone }}</a><br>
-      <a href="{{ dealership_info.website }}" target="_blank" rel="noopener noreferrer">Visit the official dealership website ↗</a>
-    </div>
-    <p class="notice"><span class="status-pill">LOCAL DEMONSTRATION</span><br>
-      Inventory is sample data. Hours and dealership details are repository references; confirm before visiting.
-      {% if not ai_enabled %}Open-ended AI is currently off.{% endif %}
-    </p>
+    <p class="notice">Official dealership information reviewed {{ dealership_info.reviewed_at }}. Sources appear with each answer. Holiday hours and vehicle availability require confirmation.</p>
+    <a class="demo-link" href="/website-demo">Preview the chat on a dealership website →</a>
   </section>
+{% endif %}
   <section class="chat-card" aria-label="Dealership assistant">
-    <div class="chat-head"><div><h2>Your dealership assistant</h2><small>Vehicles · service · planning your visit</small></div>
+    <div class="chat-head"><div><h2>Jack Ingram Assistant</h2><small>Vehicles · service · all locations</small></div>
       <button type="button" id="reset">New chat</button></div>
+    <div class="location-picker"><label for="location">Your location</label>
+      <select id="location"><option value="">Help me choose</option>
+      {% for location in dealership_info.locations %}
+      <option value="{{ location.id }}" {{ 'selected' if selected_location|default('') == location.id else '' }}>{{ location.name }}</option>
+      {% endfor %}
+      </select>
+    </div>
     <div class="messages" id="messages" role="log" aria-live="polite" aria-relevant="additions text" tabindex="0" aria-label="Conversation">
-      <div class="message assistant">Welcome to Jack Ingram Motors. What brings you in today?<br>Ask about sample vehicles, reference hours, or getting in touch.</div>
+      <div class="message assistant">Welcome to Jack Ingram Motors. How can we help?<br>Choose a location, or ask about hours, inventory or service.</div>
     </div>
     <div class="quick-questions" aria-label="Suggested questions">
-      <button type="button" data-question="What are your sales hours?">Plan my visit</button>
-      <button type="button" data-question="What service do you offer?">Service &amp; care</button>
-      <button type="button" data-question="Book a test drive">Arrange a test drive</button>
+      <button type="button" data-question="Sales hours">Hours</button>
+      <button type="button" data-question="Schedule service">Service</button>
+      <button type="button" data-question="Current inventory">Inventory</button>
+      <button type="button" data-question="All locations">Locations</button>
     </div>
     <form id="chatForm" class="composer">
       <label for="message">How can we help?</label>
-      <div class="input-row"><input id="message" type="text" placeholder="Ask about a vehicle or your visit…" maxlength="2000" required autocomplete="off">
-        <button type="submit" aria-label="Send message">Send <span aria-hidden="true">→</span></button></div>
-      <div class="consent"><input type="checkbox" id="consent"><label for="consent">Share anonymous usage counts to improve this demo. Message text is excluded from analytics.</label></div>
+      <div class="input-row"><input id="message" type="text" placeholder="Ask about your vehicle or visit…" maxlength="2000" required autocomplete="off">
+        <button type="submit" aria-label="Send message">Send →</button></div>
+      <div class="consent"><input type="checkbox" id="consent"><label for="consent">Share anonymous usage counts to improve the assistant. Message text is excluded from analytics.</label></div>
       <p class="chat-status" id="chatStatus" role="status"></p>
       <button type="button" id="forget" class="privacy-btn">Delete my conversation &amp; session analytics</button>
     </form>
+    <p class="chat-disclosure">AI can make mistakes. Confirm bookings and availability with the dealership.
+      {% if ai_enabled %}Open-ended questions use Anthropic. Avoid sharing sensitive information.{% endif %}
+    </p>
   </section>
+{% if not embedded %}
 </main>
-<footer>Reference information only · No appointments or purchases are completed in this demo · Conversations expire after one hour of inactivity and are removed on activity.</footer>
+<footer>Website integration demonstration · Official sources reviewed {{ dealership_info.reviewed_at }} · Conversations expire after one hour and are removed on activity.</footer>
+{% endif %}
 </body></html>

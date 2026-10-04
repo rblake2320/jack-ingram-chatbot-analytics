@@ -1,0 +1,18 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jack Ingram · Website chat demonstration</title>
+<link rel="stylesheet" href="/static/app.css">
+<script src="{{ embed_origin }}/static/embed.js" defer></script>
+</head><body class="website-demo">
+<div class="top-strip">DEMONSTRATION WEBSITE <a href="/">Full assistant preview ↗</a></div>
+<header class="masthead"><a class="wordmark" href="{{ dealership_info.website }}" target="_blank" rel="noopener">Jack Ingram Motors <span>IT'S TIME TO LOVE WHAT YOU DRIVE.</span></a>
+<nav aria-label="Main"><a href="{{ dealership_info.inventory_url }}" target="_blank" rel="noopener">Shop inventory</a><a href="{{ dealership_info.trade_url }}" target="_blank" rel="noopener">Value your trade</a></nav></header>
+<main class="host-content">
+<p class="eyebrow">JACK INGRAM MOTORS · MONTGOMERY, AL</p>
+<h1>It's time to love<br>what you drive.</h1>
+<p class="lede">Six automotive brands, Signature Used Cars, and the Body Shop.<br>Explore every location with the assistant in the corner.</p>
+<a class="primary-link" href="{{ dealership_info.inventory_url }}" target="_blank" rel="noopener">Shop official inventory ↗</a>
+<p class="demo-note">Presentation demo using the official site's red, black and white palette.<br>The chat launcher below is the installable website widget.</p>
+<div class="host-locations">{% for location in dealership_info.locations %}<a href="{{ location.website }}" target="_blank" rel="noopener">{{ location.name|replace('Jack Ingram ', '') }} <span>↗</span><small>{{ location.address }}</small></a>{% endfor %}</div>
+</main>
+</body></html>

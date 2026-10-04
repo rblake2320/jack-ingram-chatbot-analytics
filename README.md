@@ -1,7 +1,8 @@
 # Jack Ingram Motors chatbot and analytics demo
 
-A runnable local dealership assistant for six brands. It answers reference questions,
-shows clearly labeled sample inventory, and produces consent-based usage analytics.
+A website-embeddable dealership assistant covering six brands, Signature Used Cars
+and the Body Shop. It answers from reviewed official sources, links to the stores'
+current inventory and scheduling tools, and produces consent-based usage analytics.
 The repository also contains historical proposals; their revenue and conversion
 numbers are estimates, not measured results.
 
@@ -25,7 +26,8 @@ Waitress's transport buffer is bounded to 64 KiB.
 
 | Capability | Implementation | Acceptance |
 | --- | --- | --- |
-| Reference hours, service, contacts, six brands | src/demo/api_router.py | test_local_routes |
+| Eight official locations, department hours, contact and action links | src/demo/data/dealerships.json; src/demo/api_router.py | test_website.py |
+| Website widget with isolated styles and cookie-independent sessions | /static/embed.js; /widget | browser acceptance; no-cookie HTTP test |
 | Labeled 2024 sample vehicles; expired offers excluded | src/demo/inventory_db.py | test_expired_offers_and_model_filter |
 | Isolated history and reset; stale replies rejected | src/demo/store.py | test_receiving_session_isolation_and_reset; test_reset_wins_inflight |
 | Consented metadata, deletion, protected dashboard | src/demo/app.py; /analytics | test_consent_summary_and_forget; browser receipt |
@@ -37,7 +39,8 @@ Local responses are deterministic. To enable paid generation, explicitly set
 CHAT_PROVIDER=anthropic and supply a **new** ANTHROPIC_API_KEY in .env or a secret store.
 ANTHROPIC_MODEL is configurable (default claude-sonnet-5-5, checked against the
 [current provider catalog](https://platform.claude.com/docs/en/models/overview)).
-Reference, sample inventory and handoff routes remain local. The provider adapter
+Official facts and handoff routes remain local. Sample inventory is available only
+when explicitly requested with “sample”. The provider adapter
 has bounded timeouts, no retries, and rejects empty, malformed or unfinished replies.
 Provider contract tests use synthetic local responses; vendor inference requires
 the operator's configured account and spending authorization.
@@ -114,8 +117,9 @@ the app publicly.
 
 ## Receiving integrations
 
-/health reports inventory=demo, booking=unconfigured and crm=unconfigured.
-Real inventory requires an authorized current feed. Actual appointment scheduling
+/health reports inventory=official_website_links, booking=unconfigured and crm=unconfigured.
+The assistant links to current inventory on the official websites. Returning live
+stock or prices inside chat requires an authorized current feed. Actual appointment scheduling
 requires a booking API and confirmation receipt; CRM requires an approved destination
 and delivery receipt. The demo provides a phone/website handoff and never reports a
 reservation, lead delivery, financing approval or current offer.
@@ -126,10 +130,19 @@ Firecrawl keys**; deletion from the current tree does not remove public Git hist
 
 ## Project map
 
-- src/demo: Flask application, deterministic knowledge and sample inventory.
+- src/demo: Flask application, sourced dealership catalog, installable widget and demonstration page.
 - scripts: source gates, Waitress acceptance, optional Laya evaluation.
 - docs/review-2026-10-04.md: findings, registered checks and retained results.
 - Other documentation: historical plans, not deployment evidence.
 - Existing PRs #2/#3: separate repository hygiene/fleet proposals.
 
-MIT license. Reference business details must be confirmed with the dealership.
+MIT license. Business facts are a dated snapshot; confirm holiday changes with the dealership.
+
+## Website integration and recent technology
+
+Open /website-demo for a dealership presentation, or / for the larger assistant preview.
+Install the widget through the dealership's CMS using an external script from your
+deployed HTTPS chat service. See [installation and source review](docs/website-integration-2026-10-04.md)
+for the concrete snippet, CSP, store selection, data refresh and acceptance results.
+See [July–October technology review](docs/recent-technology-2026-10-04.md) for dated
+primary sources and adoption decisions.
