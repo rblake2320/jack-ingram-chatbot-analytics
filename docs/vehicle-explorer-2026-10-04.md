@@ -37,6 +37,9 @@ Retained [source-surface layout](evidence/2026-10-04/porsche-source-surfaces-des
 and [individual mesh inspection](evidence/2026-10-04/porsche-source-surface-isolated.png)
 show the actual browser result. The [geometry audit receipt](evidence/2026-10-04/porsche-geometry-audit.json)
 records desktop, mobile, selection, reset and labeled concept checks.
+The refreshed user-facing `:8090` preview passed the
+[same shipped HTTP acceptance](evidence/2026-10-04/porsche-live-preview-after.json)
+after its template cache was restarted.
 
 ## Recognizable exterior and internal exploration
 
