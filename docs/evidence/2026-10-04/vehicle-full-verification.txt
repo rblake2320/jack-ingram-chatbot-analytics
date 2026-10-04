@@ -8,16 +8,16 @@ Worked: 7 component groups, 45 meshes, 652660 triangles; licensed asset verified
 > jack-ingram-vehicle-atlas@0.1.0 test
 > node --test frontend/*.test.mjs
 
-✔ licensed model manifest accounts for every mesh including repeated source names (1.5577ms)
-✔ rotated world bounds pack without overlapping at aspect 0.46 (0.9269ms)
-✔ rotated world bounds pack without overlapping at aspect 1.8 (0.2356ms)
-✔ viewer executes only bounded component actions (0.2366ms)
-✔ continuous exploded poses restore rest, reach endpoints and never accumulate (1.0689ms)
-✔ F15-style render, camera and animation actions are bounded (0.2039ms)
-✔ exported systems geometry has owned meshes, checked sources and distinct MY2026 identity (2.2584ms)
-✔ actual GLB vertices preserve vehicle dimensions, axle spacing, tires and rotors in meters (4.1242ms)
-✔ all exported systems parts pack without overlap at aspect 0.46 (1.3181ms)
-✔ all exported systems parts pack without overlap at aspect 1.8 (0.5581ms)
+✔ licensed model manifest accounts for every mesh including repeated source names (2.1093ms)
+✔ rotated world bounds pack without overlapping at aspect 0.46 (0.8414ms)
+✔ rotated world bounds pack without overlapping at aspect 1.8 (0.4289ms)
+✔ viewer executes only bounded component actions (0.196ms)
+✔ continuous exploded poses restore rest, reach endpoints and never accumulate (1.25ms)
+✔ F15-style render, camera and animation actions are bounded (0.3327ms)
+✔ exported systems geometry has owned meshes, checked sources and distinct MY2026 identity (2.808ms)
+✔ actual GLB vertices preserve vehicle dimensions, axle spacing, tires and rotors in meters (1.2878ms)
+✔ all exported systems parts pack without overlap at aspect 0.46 (4.0674ms)
+✔ all exported systems parts pack without overlap at aspect 1.8 (1.0148ms)
 ℹ tests 10
 ℹ suites 0
 ℹ pass 10
@@ -25,13 +25,13 @@ Worked: 7 component groups, 45 meshes, 652660 triangles; licensed asset verified
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 174.6337
+ℹ duration_ms 265.5912
 found 0 vulnerabilities
 Worked: Python compiles, no credential-shaped literals, local Markdown links resolve.
 All checks passed!
-........................................................................ [ 74%]
-.........................                                                [100%]
-97 passed in 2.15s
+........................................................................ [ 73%]
+..........................                                               [100%]
+98 passed in 2.39s
 {
   "server": "Waitress shipped module",
   "paid_calls": 0,
@@ -71,8 +71,8 @@ All checks passed!
       "scenario": "8 concurrent local inventory requests",
       "outcome": "Worked",
       "successful": 8,
-      "maximum_ms": 465.64,
-      "median_ms": 428.22
+      "maximum_ms": 617.88,
+      "median_ms": 456.36
     },
     {
       "scenario": "real HTTP provider success, truncation and failure fixture",

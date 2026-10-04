@@ -1,5 +1,40 @@
 # Vehicle explorer and useful in-chat advice — October 4, 2026
 
+## Recognizable exterior and internal exploration
+
+**Failed, repaired, retested:** the first MY2026 systems page opened on its
+original box-shaped representative shell. The owner's screenshot showed the
+result was not a persuasive Porsche showroom demo. The combined page now opens
+on the separately licensed, recognizable Carrera 4S exterior. Its source file
+remains unchanged, 44 vehicle surfaces are displayed, and its model year is
+explicitly unknown. A click on the car or the X-ray button reveals the original
+MY2026 illustrative internal scene. The licensed exterior becomes a faint
+silhouette; its wheels and underbody are suppressed in cutaway so they do not
+duplicate the internal wheel and brake assemblies. Explode, part selection,
+isolation, tour and recall links use the 77-component systems scene. Reset
+returns to the recognizable exterior.
+
+Both GLBs are verified by size and SHA-256 before parsing. The runtime measured
+their world-space bounding boxes and aligned the licensed visual shell to the
+systems envelope with zero reported center/size registration error. This is
+visual registration, not proof that the reference is a 2026 configuration or
+that the two assets' parts physically fit. The source-model wheels, body shape
+and model year remain separate from the public-fact internal reconstruction.
+The notice and footer name the artist and CC BY-SA 4.0 rights for the exterior.
+
+**Worked:** a real browser loaded 44 licensed exterior surfaces on the combined
+page, switched to X-ray with 165 system meshes, reached 50% spatial explosion,
+and reset to the exterior. Clicking the displayed car itself opened cutaway.
+The official 2025 camera recall deep link still selected the representative
+rear camera region and showed the issue, consequence and remedy. Compare the
+[owner's box-shaped first view](evidence/2026-10-04/porsche-boxy-before-owner.png),
+the [corrected exterior](evidence/2026-10-04/porsche-corrected-exterior.png),
+and the [licensed-shell cutaway](evidence/2026-10-04/porsche-corrected-cutaway.png).
+The [browser and Linux receipt](evidence/2026-10-04/porsche-visual-acceptance.json)
+retains the exact UI transitions. The packaged Linux build also rendered the
+[corrected exterior](evidence/2026-10-04/porsche-visual-linux.png) as uid 1000, exercised X-ray and 50% explosion, and
+passed its [HTTP acceptance](evidence/2026-10-04/vehicle-visual-container-http.json).
+
 ## Current systems and recall addition
 
 The MY2026 992.2 reconstruction is a separate original asset at
@@ -81,7 +116,7 @@ require a usable authorized source; public dimension tables do not supply them.
 `detailed-asset-acquisition.json` records the attempts. The original explanatory
 model above was built and tested with the available public facts.
 
-Current checks: **97 Python tests, 10 Node tests**, real Waitress HTTP and a Linux
+Current checks: **98 Python tests, 10 Node tests**, real Waitress HTTP and a Linux
 container running as uid 1000. Python and npm dependency audits report no known
 vulnerabilities. Browser scenarios and snapshots are retained with this report.
 Earlier-stage exterior observations below retain their original measurements.

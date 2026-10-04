@@ -36,6 +36,24 @@ def test_asset_identity_license_and_every_component_is_real():
     assert ATLAS["model_year"] is None
 
 
+def test_combined_showroom_uses_the_licensed_exterior_and_separate_systems(client):
+    response = client.get("/api/vehicle-atlas?subject=systems")
+    assert response.status_code == 200
+    systems = response.json
+    visual = systems["visual_reference"]
+    exterior = (Path(__file__).parents[1] / "static/models/porsche-911-carrera-4s.glb").read_bytes()
+    assert visual["sha256"] == hashlib.sha256(exterior).hexdigest() == ATLAS["sha256"]
+    assert visual["bytes"] == len(exterior) and visual["mesh_count"] == ATLAS["mesh_count"]
+    assert visual["model_year"] is None and visual["license"] == "CC BY-SA 4.0"
+    omitted = {i for component in ATLAS["components"] if component["id"] in {"front-wheels", "rear-wheels", "underbody"} for i in component["mesh_indices"]}
+    cutaway = set(visual["cutaway_mesh_indices"])
+    assert cutaway and cutaway.isdisjoint(omitted)
+    assert cutaway | omitted | {12} == set(range(ATLAS["mesh_count"]))
+    page = client.get("/vehicle-atlas?subject=systems").get_data(as_text=True)
+    assert "LICENSED EXTERIOR · ILLUSTRATIVE INTERNALS" in page
+    assert "Its model year is unknown" in page
+
+
 def test_atlas_and_decoders_ship_with_scoped_csp(client):
     for path in (
         "/vehicle-atlas",

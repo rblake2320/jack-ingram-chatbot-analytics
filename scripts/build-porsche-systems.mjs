@@ -2,7 +2,7 @@
 // internal shapes and positions are representative, never OEM CAD or VIN data.
 import * as T from 'three';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
-import {writeFile,mkdir} from 'node:fs/promises';
+import {writeFile,mkdir,readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 
 globalThis.FileReader=class {
@@ -124,6 +124,9 @@ function assign(nodeIndex,owner){const n=json.nodes[nodeIndex];owner=n.extras?.c
 for(const index of json.scenes[json.scene || 0].nodes)assign(index,null);
 const spec={length:4.542,width:1.852,height:1.303,wheelbase:2.450,front_axle_z:1.245,rear_axle_z:-1.205,front_tire:'245/35 ZR20',rear_tire:'305/30 ZR21',front_disc:.408,rear_disc:.380};
 const manifest={id:'porsche-9922-c4s-systems',name:'2026 Porsche 911 Carrera 4S · Systems',model_year:2026,generation:'992.2',body_style:'Coupe',market:'US explanatory baseline',hybrid:false,transmission:'8-speed PDK',drivetrain:'PTM AWD',geometry_type:'representative_systems',native_units:'meters',envelope:spec,asset_url:'/static/models/porsche-9922-systems.glb',bytes:asset.length,sha256:createHash('sha256').update(asset).digest('hex'),mesh_count:json.meshes.length,ignored_meshes:[],author:'Jack Ingram demo contributors',author_url:'https://github.com/rblake2320/jack-ingram-chatbot-analytics',license:'MIT · original explanatory geometry',license_url:'https://opensource.org/license/mit',source_url:release,publisher_url:release,scope:'Original representative systems reconstruction. Public specification envelope; illustrative component shapes and positions. No OEM CAD, VIN stock, crash solver, wiring route or repair procedure.',sources,components};
+const exterior=JSON.parse(await readFile('src/demo/data/vehicle_atlas.json','utf8'));
+manifest.visual_reference={asset_url:exterior.asset_url,bytes:exterior.bytes,sha256:exterior.sha256,mesh_count:exterior.mesh_count,ignored_meshes:exterior.ignored_meshes,author:exterior.author,author_url:exterior.author_url,license:exterior.license,license_url:exterior.license_url,source_url:exterior.source_url,model_year:null,scope:'Licensed Carrera 4S exterior reference; model year and exact match to the MY2026 systems are unverified. Aligned by bounding box for visual explanation only.'};
+manifest.visual_reference.cutaway_mesh_indices=exterior.components.filter(component=>!['front-wheels','rear-wheels','underbody'].includes(component.id)).flatMap(component=>component.mesh_indices).sort((a,b)=>a-b);
 await mkdir('src/demo/static/models',{recursive:true});
 await writeFile('src/demo/static/models/porsche-9922-systems.glb',asset);
 await writeFile('src/demo/data/porsche_9922_systems.json',JSON.stringify(manifest,null,2)+'\n');

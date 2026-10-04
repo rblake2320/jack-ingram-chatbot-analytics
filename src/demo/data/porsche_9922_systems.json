@@ -2608,5 +2608,60 @@
         164
       ]
     }
-  ]
+  ],
+  "visual_reference": {
+    "asset_url": "/static/models/porsche-911-carrera-4s.glb",
+    "bytes": 4055076,
+    "sha256": "421fdabf0da312edb3c22dc0fc915bcc75551ff0db7374a7ebac8af80efc5ea2",
+    "mesh_count": 45,
+    "ignored_meshes": [
+      {
+        "index": 12,
+        "reason": "Source presentation backdrop: flat ground plane, not a vehicle component. Preserved in original GLB; hidden in viewer."
+      }
+    ],
+    "author": "Karol Miklas",
+    "author_url": "https://sketchfab.com/karolmiklas",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "source_url": "https://sketchfab.com/3d-models/free-porsche-911-carrera-4s-d01b254483794de3819786d93e0e1ebf",
+    "model_year": null,
+    "scope": "Licensed Carrera 4S exterior reference; model year and exact match to the MY2026 systems are unverified. Aligned by bounding box for visual explanation only.",
+    "cutaway_mesh_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44
+    ]
+  }
 }

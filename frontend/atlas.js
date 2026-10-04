@@ -18,11 +18,27 @@ let lastDown=null, selectionBox;
 let rendering='solid', explosion=0, motion=null, cameraView='perspective', rotating=false, tracing=false, showLabels=true;
 let tourStarted=null, tourStep=-1, lastFrame=performance.now(), leaf=null;
 const displayMaterials=new Map(), restWorld=new Map(), labels=new Map(), hidden=new Set();
-let connections, vehicleBounds, cameraMotion=null;
+let connections, vehicleBounds, cameraMotion=null, shellModel=null, shellState='none';
+const shellMeshes=[], shellMaterials=new Map();
 const palette={body:'#d52330','front-wheels':'#007b83','rear-wheels':'#375fa3',glass:'#7896c8','front-fascia':'#b66a16',details:'#7961a6',underbody:'#4e7855'};
 const directions={body:[0,.85,0],'front-wheels':[0,-.25,1.6],'rear-wheels':[0,-.25,-1.6],glass:[0,1.85,0],'front-fascia':[0,.25,2.75],details:[2.1,.3,0],underbody:[0,-1.2,0]};
 const related={body:['glass','front-fascia','underbody'],glass:['body','details'],'front-wheels':['rear-wheels','underbody'],'rear-wheels':['front-wheels','underbody'],'front-fascia':['body','details'],details:['body','glass'],underbody:['body','front-wheels','rear-wheels']};
 const isShell=id=>manifest.components.find(c=>c.id===id)?.system==='BODY' || ['body','glass'].includes(id);
+
+function updatePresentation(){
+  if(!shellModel)return;
+  const atRest=(mode==='assembled' || mode==='exploded') && explosion<.005;
+  const exterior=rendering==='solid' && !selected && atRest;
+  const cutaway=atRest && (rendering==='xray' || (rendering==='solid' && !!selected));
+  const next=exterior?'exterior':cutaway?'cutaway':'systems';
+  model.visible=next!=='exterior';shellModel.visible=next!=='systems';
+  if(next!==shellState){
+    for(const mesh of shellMeshes){mesh.material=shellMaterials.get(mesh)[next==='cutaway'?'ghost':'solid'];mesh.visible=next!=='cutaway' || mesh.userData.cutaway;}
+    shellState=next;
+    if($('parts').childElementCount)updateList();
+  }
+  viewport.dataset.presentation=next;
+}
 
 function fail(error) {
   status.textContent=`3D unavailable: ${error.message}. Reload to retry.`;
@@ -40,8 +56,8 @@ function draw() {
     tick(now);
     if(selectionBox && selected) selectionBox.box.copy(unionBounds(groups.get(selected)));
     renderer.render(scene,camera); frames++;
-    const visible=[...groups.values()].flat().filter(m=>m.visible).length;
-    $('model-metrics').textContent=`${visible}/${manifest.mesh_count-manifest.ignored_meshes.length} vehicle meshes visible · ${renderer.info.render.triangles.toLocaleString()} rendered triangles · ${renderer.info.render.calls} draw calls`;
+    const visible=shellState==='exterior'?shellMeshes.length:[...groups.values()].flat().filter(m=>m.visible).length;
+    $('model-metrics').textContent=shellState==='exterior'?`${visible} licensed exterior surfaces · ${manifest.mesh_count} illustrative system meshes ready`:`${visible}/${manifest.mesh_count-manifest.ignored_meshes.length} system meshes visible · ${renderer.info.render.triangles.toLocaleString()} rendered triangles · ${renderer.info.render.calls} draw calls`;
     viewport.dataset.visibleMeshes=String(visible);
     viewport.dataset.drawCalls=String(renderer.info.render.calls);
     viewport.dataset.frames=String(frames);
@@ -57,7 +73,7 @@ function draw() {
 }
 
 function extentOf(box) {return projectedExtent(box,right,up);}
-function fit(box, fixed=false, animate=false) {
+function fit(box, fixed=false, animate=false, returningExterior=false) {
   const center=box.getCenter(new THREE.Vector3());
   const aspect=viewport.clientWidth/viewport.clientHeight;
   let size, direction;
@@ -73,6 +89,7 @@ function fit(box, fixed=false, animate=false) {
     const e=projectedExtent(box,r,u); size=Math.max(e.height,e.width/aspect)*.61;
     controls.enableRotate=true;
   }
+  if(shellModel && rendering==='solid' && !selected && (mode==='assembled' || returningExterior) && cameraView==='perspective' && aspect>1.7)size*=.78;
   size=Math.max(size,.05);
   const position=center.clone().addScaledVector(direction,box.getSize(new THREE.Vector3()).length()*2+10);
   if(animate && !matchMedia('(prefers-reduced-motion: reduce)').matches) cameraMotion={started:performance.now(),from:camera.position.clone(),to:position,fromTarget:controls.target.clone(),target:center,fromUp:camera.up.clone(),up:nextUp,fromSize:camera.top/camera.zoom,size,aspect};
@@ -94,6 +111,7 @@ function pose(amount){
   explosion=amount;
   for(const [id,meshes] of groups) for(const mesh of meshes){const p=restWorld.get(mesh).clone().add(explodeOffset(directions[id],amount));mesh.position.copy(mesh.parent.worldToLocal(p));}
   model.updateMatrixWorld(true);
+  updatePresentation();
   $('explode').value=String(Math.round(amount*100));$('explode-value').textContent=Math.round(amount*100)+'%';
   updateConnections();
 }
@@ -106,7 +124,7 @@ function explodeTo(amount,animate=true){
   if(mode==='separate' || mode==='isolated'){restoreTransforms();hidden.clear();for(const meshes of groups.values())for(const mesh of meshes)mesh.visible=true;pose(0);}
   mode='exploded';leaf=null;viewport.dataset.mode=mode;controls.enableRotate=true;
   if(animate && !matchMedia('(prefers-reduced-motion: reduce)').matches)motion={from:explosion,to:amount,started:performance.now()};else{motion=null;pose(amount);}
-  fit(amount>0 ? explodedBounds() : vehicleBounds,false,true);
+  fit(amount>0 ? explodedBounds() : vehicleBounds,false,true,amount===0 && !selected && rendering==='solid');
   $('view-state').textContent='Spatial exploded view · drag to orbit · slide to reassemble';
   document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-pressed','false'));updateList();draw();
 }
@@ -118,10 +136,11 @@ function appearance(){
     if(active){mat.emissive?.set(0x60151c);if(!mat.emissive)mat.color?.set(palette[id]);}
     mat.needsUpdate=true;mesh.material=mat;
   }
+  updatePresentation();
   document.querySelectorAll('[data-render]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.render===rendering)));
   draw();
 }
-function renderMode(next){rendering=next;appearance();$('view-state').textContent={solid:'Exterior · select a part to explore',xray:'X-ray · transparent body reveals supplied surfaces',systems:'Systems · colors identify component groups',wire:'Wireframe · inspect the actual surface geometry'}[next];}
+function renderMode(next){rendering=next;appearance();$('view-state').textContent={solid:'Exterior · select a part to explore',xray:'X-ray · licensed silhouette over illustrative internals',systems:'Systems · colors identify component groups',wire:'Wireframe · inspect the supplied surface geometry'}[next];}
 function setCamera(view){if(mode==='separate')setMode('assembled');cameraView=view;rotating=false;$('rotate').setAttribute('aria-pressed','false');document.querySelectorAll('[data-camera]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.camera===view)));fit(unionBounds(currentMeshes()),false,true);}
 function updateConnections(){
   if(!connections)return;
@@ -221,7 +240,7 @@ function updateList() {
   for(const button of $('parts').querySelectorAll('[data-component]')) {
     button.setAttribute('aria-pressed',String(button.dataset.component===selected));
     const visible=groups.get(button.dataset.component).some(m=>m.visible);
-    button.querySelector('small').textContent=visible ? 'Visible' : 'Hidden';
+    button.querySelector('small').textContent=shellState==='exterior' ? 'Inside' : visible ? 'Visible' : 'Hidden';
   }
 }
 
@@ -302,6 +321,17 @@ function showRecall(card){
   viewport.dataset.recallCampaign=card.campaign;
   $('view-state').textContent=card.campaign+' · '+card.year+' notice · 2026 representative system region';
 }
+async function verifiedAsset(asset){
+  if(!asset || !Number.isInteger(asset.bytes) || !/^[a-f0-9]{64}$/.test(asset.sha256))throw new Error('Vehicle asset information is incomplete.');
+  const response=await fetch(asset.asset_url);
+  if(!response.ok)throw new Error('Vehicle asset unavailable.');
+  const bytes=await response.arrayBuffer();
+  if(bytes.byteLength!==asset.bytes)throw new Error('Vehicle asset was truncated.');
+  const digest=await crypto.subtle.digest('SHA-256',bytes);
+  const hash=Array.from(new Uint8Array(digest)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  if(hash!==asset.sha256)throw new Error('Vehicle asset integrity check failed.');
+  return bytes;
+}
 async function loadRecalls(campaign){
   $('recall-status').textContent='Checking official NHTSA model-year records…';$('recall-submit').disabled=true;
   try{const r=await fetch('/api/recalls?'+new URLSearchParams({vehicle:$('recall-vehicle').value,year:$('recall-year').value}),{signal:AbortSignal.timeout(20000)});if(!r.ok)throw new Error('Recall lookup unavailable. Retry or check NHTSA directly.');const data=await r.json();
@@ -317,20 +347,15 @@ async function init() {
   manifest=await manifestResponse.json(); validateManifest(manifest,manifest.mesh_count);
   for(const c of manifest.components){palette[c.id]=c.color || palette[c.id];directions[c.id]=c.explode || directions[c.id];related[c.id]=c.related || related[c.id] || [];}
   if(systems){tour=[
-    {at:0,title:'01 / A 2026 systems reconstruction',text:'Public specifications constrain this original explanatory model. Shapes and placement are representative.',run:()=>{setMode('assembled');rotating=!matchMedia('(prefers-reduced-motion: reduce)').matches;}},
-    {at:3.5,title:'02 / The rear-mounted boxer',text:'Transparent panels reveal the opposed six-cylinder engine and two turbocharger regions.',run:()=>{rotating=false;renderMode('xray');select('engine');}},
+    {at:0,title:'01 / Meet the Carrera 4S',text:'The licensed exterior shows a recognizable car. Its model year is unverified; the internal demonstration is labeled separately.',run:()=>{setMode('assembled');rotating=!matchMedia('(prefers-reduced-motion: reduce)').matches;}},
+    {at:3.5,title:'02 / The rear-mounted boxer',text:'X-ray fades the licensed exterior and reveals illustrative six-cylinder and twin-turbo regions.',run:()=>{rotating=false;renderMode('xray');select('engine');}},
     {at:7,title:'03 / Follow the power path',text:'Eight-speed PDK feeds the rear axle and the front PTM connection. Trace curves explain functional links.',run:()=>{renderMode('systems');select('pdk');tracing=true;$('trace').setAttribute('aria-pressed','true');updateConnections();}},
     {at:10.5,title:'04 / Explore the assemblies',text:'Separate body, engine, drivetrain, brakes and cabin using the continuous exploded-view slider.',run:()=>{cameraView='perspective';explodeTo(1);}},
     {at:15,title:'05 / Inspect wheels and brakes',text:'The 408 mm front steel rotor and 20-inch wheel envelope have public specification sources in the inspector.',run:()=>{select('front-left-brake');renderMode('systems');}},
     {at:19,title:'06 / Restore the complete model',text:'Reassembly restores every component to its starting position. Search a part, isolate it, or ask the assistant.',run:()=>{tracing=false;updateConnections();explodeTo(0);}}
   ];}
-  const assetResponse=await fetch(manifest.asset_url);
-  if(!assetResponse.ok) throw new Error('Vehicle asset unavailable.');
-  const bytes=await assetResponse.arrayBuffer();
-  if(bytes.byteLength!==manifest.bytes) throw new Error('Vehicle asset was truncated.');
-  const digest=await crypto.subtle.digest('SHA-256',bytes);
-  const hash=Array.from(new Uint8Array(digest)).map(b=>b.toString(16).padStart(2,'0')).join('');
-  if(hash!==manifest.sha256) throw new Error('Vehicle asset integrity check failed.');
+  if(systems && !manifest.visual_reference)throw new Error('Licensed exterior reference missing.');
+  const [bytes,shellBytes]=await Promise.all([verifiedAsset(manifest),systems?verifiedAsset(manifest.visual_reference):Promise.resolve(null)]);
   renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});
   renderer.setPixelRatio(Math.min(window.devicePixelRatio,2)); renderer.setSize(viewport.clientWidth,viewport.clientHeight);
   renderer.outputColorSpace=THREE.SRGBColorSpace; renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.1;
@@ -349,8 +374,8 @@ async function init() {
   // JS decoder keeps CSP free of eval/WASM exceptions. Pin this compatibility API until a tested migration.
   const draco=new DRACOLoader(manager).setDecoderPath('/static/atlas/draco/').setDecoderConfig({type:'js'}).setWorkerLimit(2);
   const loader=new GLTFLoader(manager).setDRACOLoader(draco);
-  let gltf;
-  try {gltf=await loader.parseAsync(bytes,'/static/models/');} finally {draco.dispose();}
+  let gltf,shellGltf;
+  try {gltf=await loader.parseAsync(bytes,'/static/models/');if(shellBytes)shellGltf=await loader.parseAsync(shellBytes,'/static/models/');} finally {draco.dispose();}
   if(failedAssets.length) throw new Error('An embedded texture or decoder failed to load');
   validateManifest(manifest,gltf.parser.json.meshes.length);
   model=gltf.scene; scene.add(model); model.updateMatrixWorld(true);
@@ -369,6 +394,34 @@ async function init() {
   });
   if(seen.size!==manifest.mesh_count) throw new Error('The model has missing geometry.');
   vehicleBounds=unionBounds(currentMeshes()).clone();
+  if(shellGltf){
+    const reference=manifest.visual_reference;
+    if(!Number.isInteger(reference.mesh_count) || reference.mesh_count<1 || !Array.isArray(reference.ignored_meshes) || !Array.isArray(reference.cutaway_mesh_indices))throw new Error('Exterior reference manifest is invalid.');
+    shellModel=shellGltf.scene;scene.add(shellModel);shellModel.updateMatrixWorld(true);
+    const excluded=new Set(reference.ignored_meshes.map(item=>item.index)),cutaway=new Set(reference.cutaway_mesh_indices),matched=new Set();
+    if(!cutaway.size || [...cutaway].some(index=>!Number.isInteger(index) || index<0 || index>=reference.mesh_count || excluded.has(index)))throw new Error('Exterior cutaway mapping is invalid.');
+    shellModel.traverse(obj=>{
+      if(!obj.isMesh)return;
+      const index=shellGltf.parser.associations.get(obj)?.meshes;
+      if(!Number.isInteger(index) || index<0 || index>=reference.mesh_count || matched.has(index))throw new Error('Exterior source geometry identity mismatch.');
+      matched.add(index);
+      if(excluded.has(index)){obj.visible=false;return;}
+      obj.userData.cutaway=cutaway.has(index);
+      shellMeshes.push(obj);
+      const ghostMaterial=material=>{const ghost=material.clone();ghost.transparent=true;ghost.opacity=.10;ghost.depthWrite=false;ghost.needsUpdate=true;return ghost;};
+      shellMaterials.set(obj,{solid:obj.material,ghost:Array.isArray(obj.material)?obj.material.map(ghostMaterial):ghostMaterial(obj.material)});
+    });
+    if(matched.size!==reference.mesh_count || !shellMeshes.length)throw new Error('Exterior reference is incomplete.');
+    const shellBounds=unionBounds(shellMeshes),shellSize=shellBounds.getSize(new THREE.Vector3()),targetSize=vehicleBounds.getSize(new THREE.Vector3());
+    const shellCenter=shellBounds.getCenter(new THREE.Vector3()),targetCenter=vehicleBounds.getCenter(new THREE.Vector3());
+    shellModel.scale.set(targetSize.x/shellSize.x,targetSize.y/shellSize.y,targetSize.z/shellSize.z);
+    shellModel.position.copy(targetCenter).sub(shellCenter.multiply(shellModel.scale));
+    shellModel.updateMatrixWorld(true);
+    const aligned=unionBounds(shellMeshes),delta=aligned.getCenter(new THREE.Vector3()).distanceTo(targetCenter),span=aligned.getSize(new THREE.Vector3()).sub(targetSize).length();
+    if(delta>.005 || span>.005)throw new Error('Exterior and systems visual alignment failed.');
+    viewport.dataset.shellMeshes=String(shellMeshes.length);
+    viewport.dataset.shellAlignmentError=(delta+span).toFixed(5);
+  }
   const directories=new Map();
   for(const c of manifest.components) {
     const button=document.createElement('button'); button.type='button'; button.dataset.component=c.id;
@@ -390,6 +443,7 @@ async function init() {
     if(!lastDown || Math.hypot(e.clientX-lastDown.x,e.clientY-lastDown.y)>6) {lastDown=null;return;}
     lastDown=null; const rect=renderer.domElement.getBoundingClientRect();
     raycaster.setFromCamera(new THREE.Vector2((e.clientX-rect.left)/rect.width*2-1,-(e.clientY-rect.top)/rect.height*2+1),camera);
+    if(shellState==='exterior'){if(raycaster.intersectObjects(shellMeshes,false).length)renderMode('xray');return;}
     const hit=raycaster.intersectObjects(currentMeshes(),false)[0]; if(hit) select(hit.object.userData.componentId);
   });
   document.querySelectorAll('[data-view]').forEach(button=>{button.disabled=false;button.addEventListener('click',()=>{stopTour();setMode(button.dataset.view);});});
@@ -425,6 +479,6 @@ async function init() {
   $('recall-form').addEventListener('submit',e=>{e.preventDefault();loadRecalls();});
   $('recall-example').addEventListener('click',()=>{$('recall-vehicle').value='porsche-911';$('recall-year').value='2025';$('recall-panel').open=true;loadRecalls('25V896000');});
   const query=new URLSearchParams(location.search);if(query.has('recall')){$('recall-panel').open=true;$('recall-year').value=query.get('year') || '2026';loadRecalls(query.get('recall'));}
-  status.textContent=`Ready · ${(bytes.byteLength/1e6).toFixed(2)} MB · loaded in ${((performance.now()-started)/1000).toFixed(1)}s · asset verified`;
+  status.textContent=`Ready · ${((bytes.byteLength+(shellBytes?.byteLength||0))/1e6).toFixed(2)} MB · loaded in ${((performance.now()-started)/1000).toFixed(1)}s · assets verified`;
 }
 init().catch(fail);

@@ -104,6 +104,11 @@ def main():
         systems = client.get("/api/vehicle-atlas?subject=systems").raise_for_status().json()
         raw = client.get(systems["asset_url"]).raise_for_status().content
         assert hashlib.sha256(raw).hexdigest() == systems["sha256"]
+        exterior_visual = systems["visual_reference"]
+        exterior_raw = client.get(exterior_visual["asset_url"]).raise_for_status().content
+        assert hashlib.sha256(exterior_raw).hexdigest() == exterior_visual["sha256"]
+        assert exterior_visual["model_year"] is None and exterior_visual["license"] == "CC BY-SA 4.0"
+        assert len(exterior_visual["cutaway_mesh_indices"]) >= 20
         assert systems["model_year"] == 2026 and systems["hybrid"] is False
         reply = (
             client.post(
@@ -128,6 +133,8 @@ def main():
                 "components": len(systems["components"]),
                 "mesh_count": systems["mesh_count"],
                 "sha256": systems["sha256"],
+                "licensed_exterior_sha256": exterior_visual["sha256"],
+                "licensed_exterior_model_year": exterior_visual["model_year"],
                 "recall_status": notice["status"],
                 "campaign": camera["campaign"],
             }

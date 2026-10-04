@@ -155,13 +155,18 @@ primary sources and adoption decisions.
 
 ## Interactive showroom and buying assistant
 
-Open `/vehicle-atlas?subject=systems` for the MY2026 non-hybrid 992.2
-systems reconstruction: 77 selectable components, 165 meshes, 45,644 source
-triangles and a 1.53 MB GLB. Explode continuously, switch x-ray/system/wireframe
-modes, choose camera views, isolate parts, trace functional links or play the
-guided tour. Sources and evidence grades accompany every component. Geometry
-is original and representative; the public specifications constrain the envelope,
-wheelbase, tires and brake diameters. It is not OEM manufacturing CAD.
+Open `/vehicle-atlas?subject=systems` for the combined visual experience. It
+starts on the licensed, recognizable Carrera 4S exterior (44 displayed surfaces;
+model year unverified). Click the car or press X-ray to reveal the separate MY2026
+non-hybrid 992.2 systems reconstruction: 77 selectable components, 165 meshes,
+45,644 source triangles and a 1.53 MB internal GLB. Explode continuously, switch
+system/wireframe modes, choose camera views, isolate parts, trace functional links
+or play the guided tour. The two assets are hash verified and visually aligned by
+their bounding envelopes. The licensed shell's own wheels and underbody disappear
+in cutaway so they do not duplicate the illustrative assemblies. Sources and
+evidence grades accompany every internal component. Their geometry is original
+and representative; public specifications constrain the envelope, wheelbase,
+tires and brake diameters. Neither asset is OEM manufacturing CAD or an exact VIN.
 
 Ask `2025 Porsche 911 recalls` or `2026 Atlas recalls` in the website chat.
 Official NHTSA issue, consequence and remedy appear inside the product. Reviewed
@@ -173,7 +178,7 @@ live lookup has a bounded cache and dated official-response fallback. A failed
 lookup is shown as unavailable, never as zero recalls. Manufacturer do-not-drive
 and park-outside flags are preserved. Service links are requests, not reservations.
 
-Open /vehicle-atlas to rotate the licensed Carrera 4S model. Select geometry directly
+Open `/vehicle-atlas` for the licensed Carrera 4S model by itself. Select geometry directly
 or use its searchable component list. Separate parts, hide body panels, isolate a
 component, focus it and restore the vehicle. The connected assistant applies bounded
 viewer actions: try “show me the rear wheels” or “isolate the glass”.
