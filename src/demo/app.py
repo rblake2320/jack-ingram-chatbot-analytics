@@ -18,8 +18,10 @@ from .api_router import APIRouter
 from .claude_client import ClaudeClient, ProviderError
 from .config import DEALERSHIP_INFO, defaults
 from .knowledge_base import LOCATIONS
+from .recalls import VEHICLES, lookup
 from .routing import LayaRouter
 from .store import ConversationChanged, SessionExpired, Store
+from .vehicle_atlas import ATLAS, SYSTEMS_ATLAS, valid_context
 
 
 def canonical_origin(value):
@@ -156,6 +158,12 @@ def create_app(overrides=None, router=None):
                 .replace("style-src 'self'", "style-src 'self' " + origin)
                 .replace("default-src 'self'", "default-src 'self'; frame-src 'self' " + origin)
             )
+        if request.path == "/vehicle-atlas":
+            response.headers["Content-Security-Policy"] = (
+                response.headers["Content-Security-Policy"].replace("img-src 'self'", "img-src 'self' blob:")
+                .replace("connect-src 'self'", "connect-src 'self' blob:")
+                + "; worker-src 'self' blob:"
+            )
         return response
 
     @app.errorhandler(SessionExpired)
@@ -209,6 +217,24 @@ def create_app(overrides=None, router=None):
     def website_demo():
         return render_template("website_demo.html", dealership_info=DEALERSHIP_INFO, embed_origin=demo_origin)
 
+    @app.route("/vehicle-atlas")
+    def vehicle_atlas():
+        identity()
+        return render_template("vehicle_atlas.html", atlas=SYSTEMS_ATLAS if request.args.get("subject") == "systems" else ATLAS)
+
+    @app.route("/api/vehicle-atlas")
+    def vehicle_manifest():
+        return jsonify(SYSTEMS_ATLAS if request.args.get("subject") == "systems" else ATLAS)
+
+    @app.route("/api/recalls")
+    def vehicle_recalls():
+        if not store.allow("recalls:" + digest(request.remote_addr or "unknown"), app.config["RATE_LIMIT"]):
+            return jsonify(error="rate_limited"), 429
+        vehicle, year = request.args.get("vehicle", "porsche-911"), request.args.get("year", "2026")
+        if vehicle not in VEHICLES or not year.isdigit() or not 2019 <= int(year) <= 2027:
+            return jsonify(error="invalid_recall_vehicle_or_year"), 400
+        return jsonify(lookup(vehicle, int(year)))
+
     @app.route("/api/chat", methods=["POST"])
     def chat():
         data = request.get_json()
@@ -222,6 +248,9 @@ def create_app(overrides=None, router=None):
         selected = data.get("location_id")
         if selected is not None and (not isinstance(selected, str) or selected not in LOCATIONS):
             return jsonify(error="invalid_location"), 400
+        vehicle_context = data.get("vehicle_context")
+        if vehicle_context is not None and not valid_context(vehicle_context):
+            return jsonify(error="invalid_vehicle_context"), 400
         conversation = identity()
         revision, history = store.history(
             conversation, require_existing=bool(getattr(g, "widget_identity", None))
@@ -239,11 +268,12 @@ def create_app(overrides=None, router=None):
         }
         consenting = app.config["ENABLE_ANALYTICS"] and data.get("analytics_consent", False)
         try:
-            result = (
-                router.process_request(message.strip(), history, location_id=selected)
-                if selected
-                else router.process_request(message.strip(), history)
-            )
+            options = {}
+            if selected:
+                options["location_id"] = selected
+            if vehicle_context is not None:
+                options["vehicle_context"] = vehicle_context
+            result = router.process_request(message.strip(), history, **options)
             event.update({key: result[key] for key in ("intent", "brand", "source")})
             event.update(outcome="success", latency_ms=round((time.perf_counter() - started) * 1000, 2))
             usage = result.get("usage", {})

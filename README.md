@@ -1,8 +1,9 @@
 # Jack Ingram Motors chatbot and analytics demo
 
 A website-embeddable dealership assistant covering six brands, Signature Used Cars
-and the Body Shop. It answers from reviewed official sources, links to the stores'
-current inventory and scheduling tools, and produces consent-based usage analytics.
+and the Body Shop. It compares reviewed vehicle model guides inside chat, includes
+an interactive Porsche 911 component explorer, links to the stores' current inventory
+and scheduling tools, and produces consent-based usage analytics.
 The repository also contains historical proposals; their revenue and conversion
 numbers are estimates, not measured results.
 
@@ -28,6 +29,8 @@ Waitress's transport buffer is bounded to 64 KiB.
 | --- | --- | --- |
 | Eight official locations, department hours, contact and action links | src/demo/data/dealerships.json; src/demo/api_router.py | test_website.py |
 | Website widget with isolated styles and cookie-independent sessions | /static/embed.js; /widget | browser acceptance; no-cookie HTTP test |
+| In-chat model comparisons and passenger-capacity follow-ups | src/demo/advisor.py; vehicle_guides.json | test_advisor.py; owner question in actual widget |
+| Licensed Porsche 911 visual explorer, picking, separation, peel, focus and chat controls | /vehicle-atlas; frontend/atlas.js | test_atlas.py; Node geometry controls; desktop/mobile/container browser receipts |
 | Labeled 2024 sample vehicles; expired offers excluded | src/demo/inventory_db.py | test_expired_offers_and_model_filter |
 | Isolated history and reset; stale replies rejected | src/demo/store.py | test_receiving_session_isolation_and_reset; test_reset_wins_inflight |
 | Consented metadata, deletion, protected dashboard | src/demo/app.py; /analytics | test_consent_summary_and_forget; browser receipt |
@@ -136,7 +139,10 @@ Firecrawl keys**; deletion from the current tree does not remove public Git hist
 - Other documentation: historical plans, not deployment evidence.
 - Existing PRs #2/#3: separate repository hygiene/fleet proposals.
 
-MIT license. Business facts are a dated snapshot; confirm holiday changes with the dealership.
+Application code uses the MIT license. The unchanged Carrera 4S model and its
+presentation adaptations use CC BY-SA 4.0, credited to Karol Miklas; Three.js uses
+MIT and Draco uses Apache 2.0. See [asset notices](src/demo/static/models/NOTICE.txt).
+Business facts are a dated snapshot; confirm holiday changes with the dealership.
 
 ## Website integration and recent technology
 
@@ -146,3 +152,53 @@ deployed HTTPS chat service. See [installation and source review](docs/website-i
 for the concrete snippet, CSP, store selection, data refresh and acceptance results.
 See [July–October technology review](docs/recent-technology-2026-10-04.md) for dated
 primary sources and adoption decisions.
+
+## Interactive showroom and buying assistant
+
+Open `/vehicle-atlas?subject=systems` for the MY2026 non-hybrid 992.2
+systems reconstruction: 77 selectable components, 165 meshes, 45,644 source
+triangles and a 1.53 MB GLB. Explode continuously, switch x-ray/system/wireframe
+modes, choose camera views, isolate parts, trace functional links or play the
+guided tour. Sources and evidence grades accompany every component. Geometry
+is original and representative; the public specifications constrain the envelope,
+wheelbase, tires and brake diameters. It is not OEM manufacturing CAD.
+
+Ask `2025 Porsche 911 recalls` or `2026 Atlas recalls` in the website chat.
+Official NHTSA issue, consequence and remedy appear inside the product. Reviewed
+Porsche camera and lighting notices open the systems viewer with the notice and
+component selected. A MY2025 notice retains MY2025 coverage even when the
+illustration is the MY2026 reconstruction. Results require a manufacturer/VIN
+check; they do not establish an individual car's recall or repair status. The
+live lookup has a bounded cache and dated official-response fallback. A failed
+lookup is shown as unavailable, never as zero recalls. Manufacturer do-not-drive
+and park-outside flags are preserved. Service links are requests, not reservations.
+
+Open /vehicle-atlas to rotate the licensed Carrera 4S model. Select geometry directly
+or use its searchable component list. Separate parts, hide body panels, isolate a
+component, focus it and restore the vehicle. The connected assistant applies bounded
+viewer actions: try “show me the rear wheels” or “isolate the glass”.
+The asset contains 45 meshes; 44 are vehicle surfaces in seven reviewed component
+groups. A nonphysical source ground plane is preserved in the file and hidden in
+the viewer. The model year is unspecified; it is not a VIN-specific listing or a
+mechanical cutaway. Missing engine/transmission internals are stated explicitly.
+
+Try “what is the best selling cars you have”, “compare Rogue and Atlas”, then
+“I need 7 seats”. The assistant answers inside chat, distinguishes five-seat models
+from three-row alternatives, and asks about budget. Manufacturer guides are marked
+separately from dealer stock; unpublished sales rankings and counts are never invented.
+
+The commercial and inventory browser on jackingram.com belong to the dealership.
+This repository supplies the demo host page, installable chat widget, buying guides,
+original systems reconstruction, interactive explorer, recall connections, backend
+and private analytics. External website
+handoffs are labeled; the demo's primary action now opens our explorer.
+
+The compiled viewer is committed for Python-only startup and container use. To
+rebuild it, install Node.js 24, then run `npm ci --ignore-scripts` and `npm run build`.
+`npm test` checks component identity and projected part packing. CI rebuilds and
+rejects generated-file drift on Windows and Ubuntu. The viewer loads all runtime
+assets from its own server, with no frontend CDN. /vehicle-atlas has scoped blob
+permissions for embedded texture decoding and Draco workers; other routes retain
+their existing policy.
+
+See [showroom acceptance and provenance](docs/vehicle-explorer-2026-10-04.md).

@@ -1,5 +1,7 @@
 # Preserve machine-generated transcripts, including diagnostic whitespace.
 docs/evidence/** -whitespace
+# Preserve upstream GLSL whitespace inside the generated Three.js bundle.
+src/demo/static/atlas/atlas.js -whitespace
 *.py text eol=lf
 *.js text eol=lf
 *.css text eol=lf

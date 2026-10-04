@@ -1,0 +1,14 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+__________ test_model_choice_after_comparison_uses_its_own_showroom ___________
+
+    def test_model_choice_after_comparison_uses_its_own_showroom():
+        result = APIRouter().process_request("I want the Atlas", [{"role":"user", "content":"compare Rogue and Atlas"}], location_id="nissan")
+>       assert result["vehicle_cards"][0]["id"] == "atlas"
+               ^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'vehicle_cards'
+
+src\demo\tests\test_advisor.py:34: KeyError
+=========================== short test summary info ===========================
+FAILED src/demo/tests/test_advisor.py::test_model_choice_after_comparison_uses_its_own_showroom
+1 failed in 0.16s

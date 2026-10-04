@@ -2,9 +2,12 @@
 
 import re
 
+from .advisor import advise
 from .api_gateway import APIGateway
-from .knowledge_base import CATALOG, GROUP, KnowledgeBase
+from .knowledge_base import CATALOG, GROUP, LOCATIONS, KnowledgeBase
+from .recalls import advise_recall
 from .routing import baseline
+from .vehicle_atlas import answer as atlas_answer
 
 
 class APIRouter:
@@ -27,7 +30,13 @@ class APIRouter:
         style = next((s for s in ("suv", "sedan", "truck") if re.search(r"\b" + s + r"s?\b", lowered)), None)
         return {"make": make, "model": model, "body_style": style}
 
-    def process_request(self, message, history, location_id=None):
+    def process_request(self, message, history, location_id=None, vehicle_context=None):
+        recall = advise_recall(message, vehicle_context, history)
+        if recall:
+            recall.setdefault("brand", "all")
+            return recall
+        if vehicle_context:
+            return atlas_answer(message, vehicle_context)
         intent = baseline(message)
         query = self.extract_vehicle_params(message)
         lowered = message.lower()
@@ -54,6 +63,11 @@ class APIRouter:
         def link(label, url, kind):
             result["links"].append({"label": label, "url": url, "kind": kind})
 
+        advice = (
+            advise(message, history, location_id)
+            if intent not in ("hours", "contact", "service", "appointment")
+            else None
+        )
         if "finance" in lowered or "financing" in lowered or "credit" in lowered:
             text = "The finance team can explain applications and available options. Approval, rates and payments require a lender decision. Please use the official secure application; avoid sharing financial or identity details here."
             link(
@@ -130,6 +144,23 @@ class APIRouter:
                         action,
                     )
                 text += "\nNo appointment has been reserved. Complete your request on the dealership's official page."
+        elif advice:
+            result.update(advice)
+            result["intent"] = "inventory"
+            text = result["response"]
+            guide_stores = list(dict.fromkeys(v["location_id"] for v in result["vehicle_cards"]))
+            if guide_stores:
+                locations = [LOCATIONS[key] for key in guide_stores]
+                result["location_id"] = guide_stores[0] if len(guide_stores) == 1 else None
+                result["brand"] = guide_stores[0] if len(guide_stores) == 1 else "all"
+            if re.search(r"\b(stock|available|availability|inventory)\b", lowered):
+                for row in locations:
+                    if row["id"] != "body-shop":
+                        link(
+                            row["name"] + " — verify current inventory",
+                            row["links"]["inventory"],
+                            "inventory",
+                        )
         elif intent == "inventory":
             if re.search(r"\b(sample|demonstration)\b", lowered):
                 data = self.gateway.get_vehicle_data(query)
@@ -154,7 +185,7 @@ class APIRouter:
             result.update(self.provider.send_message(message, history, context))
             text = result["response"]
         else:
-            text = "Welcome to Jack Ingram Motors. I can help with eight locations, sales and service hours, current inventory links, financing, trade-ins and dealership contacts. Select a store or ask “Where is Porsche?”"
+            text = "Welcome to Jack Ingram Motors. I can compare reviewed vehicle models, help you choose by passenger needs, explore a Porsche in 3D, and answer questions about eight locations, hours and contacts. Ask “Compare Rogue and Atlas” or “I need 7 seats”."
             result["source"] = "local"
         for row in locations:
             link(row["name"] + " — location & contact", row["links"]["contact"], "contact")

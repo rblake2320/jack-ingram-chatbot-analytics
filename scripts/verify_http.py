@@ -1,6 +1,7 @@
 """Exercise the actual Waitress entry point and a real local Messages API fixture."""
 
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -124,6 +125,40 @@ def main():
                         )
                     receipts.append(
                         {"scenario": "shipped Waitress boot and two sessions", "outcome": "Worked"}
+                    )
+                    manifest = a.get("/api/vehicle-atlas").json()
+                    model = a.get(manifest["asset_url"]).content
+                    assert hashlib.sha256(model).hexdigest() == manifest["sha256"]
+                    assert len(model) == manifest["bytes"]
+                    page = a.get("/vehicle-atlas")
+                    assert (
+                        page.status_code == 200
+                        and "connect-src 'self' blob:" in page.headers["Content-Security-Policy"]
+                    )
+                    assert a.get("/static/atlas/atlas.js").status_code == 200
+                    context = {"vehicle_id": manifest["id"]}
+                    action = a.post(
+                        "/api/chat", json={"message": "show me the rear wheels", "vehicle_context": context}
+                    ).json()
+                    assert action["explorer_action"] == {"operation": "select", "component_id": "rear-wheels"}
+                    missing = a.post(
+                        "/api/chat", json={"message": "show engine", "vehicle_context": context}
+                    ).json()
+                    assert "does not contain" in missing["response"] and "explorer_action" not in missing
+                    shortlist = a.post(
+                        "/api/chat", json={"message": "what is the best selling cars you have"}
+                    ).json()
+                    assert "sales ranking" in shortlist["response"] and len(shortlist["vehicle_cards"]) >= 2
+                    family = a.post("/api/chat", json={"message": "I need 7 seats"}).json()
+                    assert all(v["seats_max"] >= 7 for v in family["vehicle_cards"])
+                    receipts.append(
+                        {
+                            "scenario": "vehicle asset integrity, exact component actions, honest missing engine and buying follow-up through shipped HTTP",
+                            "outcome": "Worked",
+                            "sha256": manifest["sha256"],
+                            "model_bytes": len(model),
+                            "shortlist": [v["id"] for v in family["vehicle_cards"]],
+                        }
                     )
                     assert a.post("/api/chat", json={"message": []}).status_code == 400
                     assert a.post("/api/chat", json={"message": "a" * 20000}).status_code == 413

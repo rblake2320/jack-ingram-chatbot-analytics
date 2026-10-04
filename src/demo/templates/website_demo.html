@@ -4,15 +4,16 @@
 <link rel="stylesheet" href="/static/app.css">
 <script src="{{ embed_origin }}/static/embed.js" defer></script>
 </head><body class="website-demo">
-<div class="top-strip">DEMONSTRATION WEBSITE <a href="/">Full assistant preview ↗</a></div>
-<header class="masthead"><a class="wordmark" href="{{ dealership_info.website }}" target="_blank" rel="noopener">Jack Ingram Motors <span>IT'S TIME TO LOVE WHAT YOU DRIVE.</span></a>
-<nav aria-label="Main"><a href="{{ dealership_info.inventory_url }}" target="_blank" rel="noopener">Shop inventory</a><a href="{{ dealership_info.trade_url }}" target="_blank" rel="noopener">Value your trade</a></nav></header>
+<div class="top-strip">OUR WEBSITE INTEGRATION DEMO <a href="{{ dealership_info.website }}" target="_blank" rel="noopener">Their official website ↗</a></div>
+<header class="masthead"><a class="wordmark" href="/website-demo">Jack Ingram Motors <span>IT'S TIME TO LOVE WHAT YOU DRIVE.</span></a>
+<nav aria-label="Main"><a href="/vehicle-atlas?subject=systems">Interactive 3D</a><a href="/">Vehicle assistant</a></nav></header>
 <main class="host-content">
 <p class="eyebrow">JACK INGRAM MOTORS · MONTGOMERY, AL</p>
 <h1>It's time to love<br>what you drive.</h1>
-<p class="lede">Six automotive brands, Signature Used Cars, and the Body Shop.<br>Explore every location with the assistant in the corner.</p>
-<a class="primary-link" href="{{ dealership_info.inventory_url }}" target="_blank" rel="noopener">Shop official inventory ↗</a>
-<p class="demo-note">Presentation demo using the official site's red, black and white palette.<br>The chat launcher below is the installable website widget.</p>
+<p class="lede">Compare vehicles in the assistant. Explore a Porsche in 3D.<br>Find the right Jack Ingram location for your next step.</p>
+<div class="demo-actions"><a class="primary-link" href="/vehicle-atlas?subject=systems">Explore the Porsche systems in 3D →</a><a class="secondary-link" href="/">Help me choose a vehicle →</a></div>
+<p class="demo-note">We built this demo, the systems reconstruction, interactive explorer and assistant.<br>The separate exterior reference is a credited licensed asset. Commercials and inventory on the official sites belong to the dealership.</p>
+<h2 class="external-heading">Official dealership websites <small>These open their existing sites ↗</small></h2>
 <div class="host-locations">{% for location in dealership_info.locations %}<a href="{{ location.website }}" target="_blank" rel="noopener">{{ location.name|replace('Jack Ingram ', '') }} <span>↗</span><small>{{ location.address }}</small></a>{% endfor %}</div>
 </main>
 </body></html>

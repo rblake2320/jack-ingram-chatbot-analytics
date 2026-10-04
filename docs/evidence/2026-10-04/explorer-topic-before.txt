@@ -1,0 +1,25 @@
+.....F                                                                   [100%]
+================================== FAILURES ===================================
+________ test_explorer_question_switches_from_family_shopping_context _________
+
+    def test_explorer_question_switches_from_family_shopping_context():
+        result = APIRouter().process_request(
+            "Tell me about the Porsche 911 in 3D", [{"role": "user", "content": "I need 7 seats"}]
+        )
+        assert [card["id"] for card in result["vehicle_cards"]] == ["911"]
+>       assert "For 7 passengers" not in result["response"]
+E       AssertionError: assert 'For 7 passengers' not in 'Here is how...new or used?'
+E         
+E         'For 7 passengers' is contained here:
+E           Here is how the reviewed models differ:
+E           
+E           For 7 passengers, check the exact seat configuration before choosing.
+E         ? ++++++++++++++++
+E           ...
+E         
+E         ...Full output truncated (5 lines hidden), use '-vv' to show
+
+src\demo\tests\test_advisor.py:48: AssertionError
+=========================== short test summary info ===========================
+FAILED src/demo/tests/test_advisor.py::test_explorer_question_switches_from_family_shopping_context
+1 failed, 5 passed in 0.18s

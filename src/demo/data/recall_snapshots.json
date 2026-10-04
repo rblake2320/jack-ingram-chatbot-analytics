@@ -1,0 +1,78 @@
+{
+  "porsche-911:2025": {
+    "source_url": "https://api.nhtsa.gov/recalls/recallsByVehicle?make=PORSCHE&model=911&modelYear=2025",
+    "checked_at": "2026-10-04T14:57:58.292476+00:00",
+    "recalls": [
+      {
+        "Manufacturer": "Porsche Cars North America, Inc.",
+        "NHTSACampaignNumber": "25V079000",
+        "parkIt": false,
+        "parkOutSide": false,
+        "overTheAirUpdate": false,
+        "ReportReceivedDate": "12/02/2025",
+        "Component": "EXTERIOR LIGHTING:LIGHTING CONTROL MODULE:SOFTWARE",
+        "Summary": "Porsche Cars North America, Inc. (Porsche) is recalling certain 2025 911 vehicles.  A software error in the front-end electronics control module may result in the low beam headlights creating a glare for oncoming traffic.  As such, these vehicles fail to comply with the requirements of Federal Motor Vehicle Safety Standard (FMVSS) number 108, \"Lamps, Reflective Devices, and Associated Equipment.\"",
+        "Consequence": "Excessive glare can decrease the visibility to oncoming drivers, increasing the risk of a crash.",
+        "Remedy": "Dealers will update the front-end electronics control module software, free of charge.  Owner notification letters were mailed April 1, 2025.  Owners may contact Porsche customer service at 1-800-767-7243.  Porsche's number for this recall is ASA1.",
+        "Notes": "Owners may also contact the National Highway Traffic Safety Administration Vehicle Safety Hotline at 1-888-327-4236 (TTY 1-888-275-9153) or go to nhtsa.gov.",
+        "ModelYear": "2025",
+        "Make": "PORSCHE",
+        "Model": "911"
+      },
+      {
+        "Manufacturer": "Porsche Cars North America, Inc.",
+        "NHTSACampaignNumber": "25V896000",
+        "parkIt": false,
+        "parkOutSide": false,
+        "overTheAirUpdate": false,
+        "ReportReceivedDate": "19/12/2025",
+        "Component": "BACK OVER PREVENTION: SENSING SYSTEM: CAMERA",
+        "Summary": "Porsche Cars North America, Inc. (Porsche) is recalling certain 2019-2025 Cayenne, Cayenne E-Hybrid, 2020-2025 911, Taycan, 2024-2025 Panamera, and 2025 Panamera E-Hybrid vehicles. The rearview camera image may not display when the vehicle is placed in reverse. As such, these vehicles fail to comply with the requirements of Federal Motor Vehicle Safety Standard (FMVSS) number 111, \"Rear Visibility.\"",
+        "Consequence": "A rearview image that does not display properly reduces the driver's view behind the vehicle, increasing the risk of a crash.",
+        "Remedy": "Dealers will update the driver assistance software, free of charge. Owner notification letters were mailed February 13, 2026. Owners may contact Porsche customer service at 1-800-767-7243. Porsche's number for this recall is ASB2. Vehicle Identification Numbers (VINs) involved in this recall will be searchable on NHTSA.gov beginning January 19, 2026.",
+        "Notes": null,
+        "ModelYear": "2025",
+        "Make": "PORSCHE",
+        "Model": "911"
+      }
+    ]
+  },
+  "vw-atlas:2026": {
+    "source_url": "https://api.nhtsa.gov/recalls/recallsByVehicle?make=VOLKSWAGEN&model=ATLAS&modelYear=2026",
+    "checked_at": "2026-10-04T14:57:58.826953+00:00",
+    "recalls": [
+      {
+        "Manufacturer": "Volkswagen Group of America, Inc.",
+        "NHTSACampaignNumber": "25V835000",
+        "parkIt": true,
+        "parkOutSide": false,
+        "overTheAirUpdate": false,
+        "ReportReceivedDate": "03/12/2025",
+        "Component": "WHEELS:LUGS/NUTS/BOLTS/STUDS",
+        "Summary": "Volkswagen Group of America, Inc. (Volkswagen) is recalling certain 2026 Atlas, Atlas Cross Sport, and ID.4 vehicles. The incorrect wheel bolts may have been installed during vehicle manufacturing.",
+        "Consequence": "Incorrect wheel bolts can allow a wheel to detach from the vehicle, increasing the risk of a crash.",
+        "Remedy": "Owners are advised not to drive their vehicles until they have been repaired. Dealers will inspect and replace the wheel bolts as necessary, free of charge. Owner notification letters were mailed December 12, 2025. Owners may contact Volkswagen customer service at 1-800-893-5298. Volkswagen's number for this recall is 44BW. Vehicle Identification Numbers (VINs) involved in this recall became searchable on NHTSA.gov on December 5, 2025.",
+        "Notes": null,
+        "ModelYear": "2026",
+        "Make": "VOLKSWAGEN",
+        "Model": "ATLAS"
+      },
+      {
+        "Manufacturer": "Volkswagen Group of America, Inc.",
+        "NHTSACampaignNumber": "26V473000",
+        "parkIt": false,
+        "parkOutSide": false,
+        "overTheAirUpdate": false,
+        "ReportReceivedDate": "22/07/2026",
+        "Component": "BACK OVER PREVENTION:SOFTWARE",
+        "Summary": "Volkswagen Group of America, Inc. (Volkswagen) is recalling 2024-2026 Atlas Cross Sport and Atlas vehicles.  The vehicles may experience a low-voltage electrical event that affects display screen functions. As a result, the rearview camera image may fail to display as intended.",
+        "Consequence": "A rearview camera that fails to display an image can reduce the driver\u2019s view behind the vehicle, increasing the risk of a crash.",
+        "Remedy": "Dealers will update the rearview camera software, free of charge. Owner notification letters were mailed August 4, 2026. Owners may contact Volkswagen customer service at 1-800-893-5298. Volkswagen's number for this recall is 91TV. Vehicle Identification Numbers (VINs) involved in this recall became searchable on NHTSA.gov on July 28, 2026.",
+        "Notes": null,
+        "ModelYear": "2026",
+        "Make": "VOLKSWAGEN",
+        "Model": "ATLAS"
+      }
+    ]
+  }
+}

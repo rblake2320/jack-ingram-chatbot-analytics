@@ -1,0 +1,2612 @@
+{
+  "id": "porsche-9922-c4s-systems",
+  "name": "2026 Porsche 911 Carrera 4S · Systems",
+  "model_year": 2026,
+  "generation": "992.2",
+  "body_style": "Coupe",
+  "market": "US explanatory baseline",
+  "hybrid": false,
+  "transmission": "8-speed PDK",
+  "drivetrain": "PTM AWD",
+  "geometry_type": "representative_systems",
+  "native_units": "meters",
+  "envelope": {
+    "length": 4.542,
+    "width": 1.852,
+    "height": 1.303,
+    "wheelbase": 2.45,
+    "front_axle_z": 1.245,
+    "rear_axle_z": -1.205,
+    "front_tire": "245/35 ZR20",
+    "rear_tire": "305/30 ZR21",
+    "front_disc": 0.408,
+    "rear_disc": 0.38
+  },
+  "asset_url": "/static/models/porsche-9922-systems.glb",
+  "bytes": 1525460,
+  "sha256": "5cabbc7f6d75563d14f16ae4ea43c9199f73019c805e2a9d9fa39af46031153a",
+  "mesh_count": 165,
+  "ignored_meshes": [],
+  "author": "Jack Ingram demo contributors",
+  "author_url": "https://github.com/rblake2320/jack-ingram-chatbot-analytics",
+  "license": "MIT · original explanatory geometry",
+  "license_url": "https://opensource.org/license/mit",
+  "source_url": "https://newsroom.porsche.com/en_US/2025/products/911-Carrera-4S-Cabriolet-Targa-2026-39921.html",
+  "publisher_url": "https://newsroom.porsche.com/en_US/2025/products/911-Carrera-4S-Cabriolet-Targa-2026-39921.html",
+  "scope": "Original representative systems reconstruction. Public specification envelope; illustrative component shapes and positions. No OEM CAD, VIN stock, crash solver, wiring route or repair procedure.",
+  "sources": [
+    {
+      "id": "my26",
+      "title": "Porsche MY2026 Carrera 4S announcement",
+      "url": "https://newsroom.porsche.com/en_US/2025/products/911-Carrera-4S-Cabriolet-Targa-2026-39921.html",
+      "publisher": "Porsche",
+      "checked_at": "2026-10-04",
+      "scope": "2026 non-hybrid Carrera 4S: engine, PDK, PTM, brakes, wheels and seating. Facts only; no media imported."
+    },
+    {
+      "id": "envelope",
+      "title": "2026 Carrera 4S technical specifications",
+      "url": "https://finder.porsche.com/lt/en-LT/details/porsche-911-carrera-4s-new-QVKM62",
+      "publisher": "Porsche Finder",
+      "checked_at": "2026-10-04",
+      "scope": "Dimensions and engine figures; this European listing is not Jack Ingram stock."
+    },
+    {
+      "id": "ptm",
+      "title": "Porsche Traction Management architecture",
+      "url": "https://newsroom.porsche.com/en/innovation/engineering/porsche-traction-management-ptm-all-wheel-drive-agility-stability-traction-driving-dynamics-15050.html",
+      "publisher": "Porsche",
+      "checked_at": "2026-10-04",
+      "scope": "General functional architecture; exact 992.2 routing and torque maps are not published here."
+    },
+    {
+      "id": "wheels",
+      "title": "Porsche 11/26 wheel and tire certificate",
+      "url": "https://static.nhtsa.gov/odi/tsbs/2026/MC-11033626-0001.pdf",
+      "publisher": "Porsche via NHTSA",
+      "page": 1,
+      "checked_at": "2026-10-04",
+      "scope": "Non-hybrid 992PA 20/21-inch summer row. Wheel option and VIN still govern exact fitment."
+    },
+    {
+      "id": "body",
+      "title": "Type 992 mixed-material body production",
+      "url": "https://newsroom.porsche.com/en/2019/technology/porsche-body-production-911-composite-design-technology-17111.html",
+      "publisher": "Porsche",
+      "checked_at": "2026-10-04",
+      "scope": "2019 architecture reference. Geometry, material gauges and 2026 effectivity are not certified."
+    },
+    {
+      "id": "rear-noise",
+      "title": "992.II rear drive shaft rattle · 2509",
+      "url": "https://static.nhtsa.gov/odi/tsbs/2025/MC-11016772-0001.pdf",
+      "publisher": "Porsche via NHTSA",
+      "page": 1,
+      "checked_at": "2026-10-04",
+      "scope": "As of MY2025, listed model types; noise condition, not a stated loss of drivability. Applicability requires model/equipment checks."
+    },
+    {
+      "id": "gpf",
+      "title": "Unapproved engine oil and GPF ash",
+      "url": "https://static.nhtsa.gov/odi/tsbs/2025/MC-11016770-0001.pdf",
+      "publisher": "Porsche via NHTSA",
+      "page": 1,
+      "checked_at": "2026-10-04",
+      "scope": "992.II OPF-equipped cars as of MY2025. Explanatory context, not a diagnosis."
+    },
+    {
+      "id": "recall-camera",
+      "title": "NHTSA 25V896000 / Porsche ASB2",
+      "url": "https://www.nhtsa.gov/recalls?nhtsaId=25V896000",
+      "publisher": "NHTSA",
+      "checked_at": "2026-10-04",
+      "scope": "Certain 2020–2025 911 vehicles; rear-view camera software recall. A 2026 illustration does not establish applicability."
+    },
+    {
+      "id": "recall-lighting",
+      "title": "NHTSA 25V079000 / Porsche ASA1",
+      "url": "https://www.nhtsa.gov/recalls?nhtsaId=25V079000",
+      "publisher": "NHTSA",
+      "checked_at": "2026-10-04",
+      "scope": "Certain MY2025 911 vehicles; lighting-control software recall. Confirm VIN and repair status."
+    }
+  ],
+  "components": [
+    {
+      "id": "body",
+      "label": "Floor & occupant structure",
+      "system": "BODY",
+      "system_label": "Body & closures",
+      "color": "#ba2b36",
+      "explode": [
+        0,
+        1.008,
+        0
+      ],
+      "aliases": [
+        "floor & occupant structure",
+        "body",
+        "shell",
+        "panels"
+      ],
+      "description": "A simplified floor and sill structure provides context for the assemblies. Original representative geometry; position and shape are illustrative, not measured OEM parts.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "body"
+      ],
+      "related": [
+        "engine",
+        "pdk",
+        "front-differential"
+      ],
+      "mesh_indices": [
+        0
+      ]
+    },
+    {
+      "id": "left-sill",
+      "label": "left sill",
+      "system": "BODY",
+      "system_label": "Body & closures",
+      "color": "#ba2b36",
+      "explode": [
+        -0.902,
+        1.112,
+        0
+      ],
+      "aliases": [
+        "left sill"
+      ],
+      "description": "Original representative geometry; position and shape are illustrative, not measured OEM parts.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "body"
+      ],
+      "related": [],
+      "mesh_indices": [
+        1
+      ]
+    },
+    {
+      "id": "left-door",
+      "label": "left door",
+      "system": "BODY",
+      "system_label": "Body & closures",
+      "color": "#ba2b36",
+      "explode": [
+        -0.9570000000000001,
+        1.376,
+        0.025
+      ],
+      "aliases": [
+        "left door",
+        "left door"
+      ],
+      "description": "Original representative geometry; position and shape are illustrative, not measured OEM parts.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "body"
+      ],
+      "related": [],
+      "mesh_indices": [
+        2
+      ]
+    },
+    {
+      "id": "left-front-fender",
+      "label": "left front fender",
+      "system": "BODY",
+      "system_label": "Body & closures",
+      "color": "#ba2b36",
+      "explode": [
+        -0.8910000000000001,
+        1.256,
+        0.31125
+      ],
+      "aliases": [
+        "left front fender"
+      ],
+      "description": "Original representative geometry; position and shape are illustrative, not measured OEM parts.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "body"
+      ],
+      "related": [],
+      "mesh_indices": [
+        3
+      ]
+    },
+    {
+      "id": "left-rear-fender",
+      "label": "left rear fender",
+      "system": "BODY",
+      "system_label": "Body & closures",
+      "color": "#ba2b36",
+      "explode": [
+        -0.8910000000000001,
+        1.256,
+        -0.30125
+      ],
+      "aliases": [
+        "left rear fender"
+      ],
+      "description": "Original representative geometry; position and shape are illustrative, not measured OEM parts.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "body"
+      ],
+      "related": [],
+      "mesh_indices": [
+        4
+      ]
+    },
+    {
+      "id": "right-sill",
+      "label": "right sill",
+      "system": "BODY",
+      "system_label": "Body & closures",
+      "color": "#ba2b36",
+      "explode": [
+        0.902,
+        1.112,
+        0
+      ],
+      "aliases": [
+        "right sill"
+      ],
+      "description": "Original representative geometry; position and shape are illustrative, not measured OEM parts.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "body"
+      ],
+      "related": [],
+      "mesh_indices": [
+        5
+      ]
+    },
+    {
+      "id": "right-door",
+      "label": "right door",
+      "system": "BODY",
+      "system_label": "Body & closures",
+      "color": "#ba2b36",
+      "explode": [
+        0.9570000000000001,
+        1.376,
+        0.025
+      ],
+      "aliases": [
+        "right door",
+        "right door"
+      ],
+      "description": "Original representative geometry; position and shape are illustrative, not measured OEM parts.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "body"
+      ],
+      "related": [],
+      "mesh_indices": [
+        6
+      ]
+    },
+    {
+      "id": "right-front-fender",
+      "label": "right front fender",
+      "system": "BODY",
+      "system_label": "Body & closures",
+      "color": "#ba2b36",
+      "explode": [
+        0.8910000000000001,
+        1.256,
+        0.31125
+      ],
+      "aliases": [
+        "right front fender"
+      ],
+      "description": "Original representative geometry; position and shape are illustrative, not measured OEM parts.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "body"
+      ],
+      "related": [],
+      "mesh_indices": [
+        7
+      ]
+    },
+    {
+      "id": "right-rear-fender",
+      "label": "right rear fender",
+      "system": "BODY",
+      "system_label": "Body & closures",
+      "color": "#ba2b36",
+      "explode": [
+        0.8910000000000001,
+        1.256,
+        -0.30125
+      ],
+      "aliases": [
+        "right rear fender"
+      ],
+      "description": "Original representative geometry; position and shape are illustrative, not measured OEM parts.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "body"
+      ],
+      "related": [],
+      "mesh_indices": [
+        8
+      ]
+    },
+    {
+      "id": "roof",
+      "label": "Roof panel",
+      "system": "BODY",
+      "system_label": "Body & closures",
+      "color": "#ba2b36",
+      "explode": [
+        0,
+        1.8216,
+        -0.0325
+      ],
+      "aliases": [
+        "roof panel",
+        "roof"
+      ],
+      "description": "Original representative geometry; position and shape are illustrative, not measured OEM parts.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "body"
+      ],
+      "related": [],
+      "mesh_indices": [
+        9
+      ]
+    },
+    {
+      "id": "hood",
+      "label": "Front luggage lid",
+      "system": "BODY",
+      "system_label": "Body & closures",
+      "color": "#ba2b36",
+      "explode": [
+        0,
+        1.336,
+        0.385
+      ],
+      "aliases": [
+        "front luggage lid",
+        "hood"
+      ],
+      "description": "Original representative geometry; position and shape are illustrative, not measured OEM parts.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "body"
+      ],
+      "related": [],
+      "mesh_indices": [
+        10
+      ]
+    },
+    {
+      "id": "rear-lid",
+      "label": "Rear engine lid",
+      "system": "BODY",
+      "system_label": "Body & closures",
+      "color": "#ba2b36",
+      "explode": [
+        0,
+        1.4400000000000002,
+        -0.4125
+      ],
+      "aliases": [
+        "rear engine lid",
+        "engine lid"
+      ],
+      "description": "Original representative geometry; position and shape are illustrative, not measured OEM parts.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "body"
+      ],
+      "related": [],
+      "mesh_indices": [
+        11
+      ]
+    },
+    {
+      "id": "windshield",
+      "label": "Windshield",
+      "system": "BODY",
+      "system_label": "Body & closures",
+      "color": "#ba2b36",
+      "explode": [
+        0,
+        1.6400000000000001,
+        0.1975
+      ],
+      "aliases": [
+        "windshield",
+        "glass",
+        "windshield"
+      ],
+      "description": "Original representative geometry; position and shape are illustrative, not measured OEM parts.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "body"
+      ],
+      "related": [],
+      "mesh_indices": [
+        12
+      ]
+    },
+    {
+      "id": "rear-glass",
+      "label": "Rear glazing",
+      "system": "BODY",
+      "system_label": "Body & closures",
+      "color": "#ba2b36",
+      "explode": [
+        0,
+        1.624,
+        -0.24
+      ],
+      "aliases": [
+        "rear glazing",
+        "glass",
+        "rear glazing"
+      ],
+      "description": "Original representative geometry; position and shape are illustrative, not measured OEM parts.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "body"
+      ],
+      "related": [],
+      "mesh_indices": [
+        13
+      ]
+    },
+    {
+      "id": "left-side-glass",
+      "label": "left side glazing",
+      "system": "BODY",
+      "system_label": "Body & closures",
+      "color": "#ba2b36",
+      "explode": [
+        -0.803,
+        1.624,
+        -0.03
+      ],
+      "aliases": [
+        "left side glazing",
+        "left window"
+      ],
+      "description": "Original representative geometry; position and shape are illustrative, not measured OEM parts.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "body"
+      ],
+      "related": [],
+      "mesh_indices": [
+        14
+      ]
+    },
+    {
+      "id": "right-side-glass",
+      "label": "right side glazing",
+      "system": "BODY",
+      "system_label": "Body & closures",
+      "color": "#ba2b36",
+      "explode": [
+        0.803,
+        1.624,
+        -0.03
+      ],
+      "aliases": [
+        "right side glazing",
+        "right window"
+      ],
+      "description": "Original representative geometry; position and shape are illustrative, not measured OEM parts.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "body"
+      ],
+      "related": [],
+      "mesh_indices": [
+        15
+      ]
+    },
+    {
+      "id": "front-fascia",
+      "label": "Front fascia",
+      "system": "BODY",
+      "system_label": "Body & closures",
+      "color": "#ba2b36",
+      "explode": [
+        0,
+        1.1920000000000002,
+        0.549
+      ],
+      "aliases": [
+        "front fascia",
+        "front fascia"
+      ],
+      "description": "Original representative geometry; position and shape are illustrative, not measured OEM parts.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "body"
+      ],
+      "related": [],
+      "mesh_indices": [
+        16,
+        17
+      ]
+    },
+    {
+      "id": "rear-fascia",
+      "label": "Rear fascia",
+      "system": "BODY",
+      "system_label": "Body & closures",
+      "color": "#ba2b36",
+      "explode": [
+        0,
+        1.1920000000000002,
+        -0.549
+      ],
+      "aliases": [
+        "rear fascia",
+        "rear fascia"
+      ],
+      "description": "Original representative geometry; position and shape are illustrative, not measured OEM parts.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "body"
+      ],
+      "related": [],
+      "mesh_indices": [
+        18,
+        19
+      ]
+    },
+    {
+      "id": "left-headlight",
+      "label": "left headlight region",
+      "system": "BODY",
+      "system_label": "Body & closures",
+      "color": "#ba2b36",
+      "explode": [
+        -0.6930000000000001,
+        1.3679999999999999,
+        0.48
+      ],
+      "aliases": [
+        "left headlight region",
+        "left headlight"
+      ],
+      "description": "Original representative geometry; position and shape are illustrative, not measured OEM parts.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26"
+      ],
+      "related": [],
+      "mesh_indices": [
+        20
+      ]
+    },
+    {
+      "id": "right-headlight",
+      "label": "right headlight region",
+      "system": "BODY",
+      "system_label": "Body & closures",
+      "color": "#ba2b36",
+      "explode": [
+        0.6930000000000001,
+        1.3679999999999999,
+        0.48
+      ],
+      "aliases": [
+        "right headlight region",
+        "right headlight"
+      ],
+      "description": "Original representative geometry; position and shape are illustrative, not measured OEM parts.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26"
+      ],
+      "related": [],
+      "mesh_indices": [
+        21
+      ]
+    },
+    {
+      "id": "engine",
+      "label": "3.0 L twin-turbo boxer engine",
+      "system": "POWERTRAIN",
+      "system_label": "Boxer engine & turbos",
+      "color": "#db7942",
+      "explode": [
+        0,
+        1.15,
+        -1.0335
+      ],
+      "aliases": [
+        "3.0 l twin-turbo boxer engine",
+        "engine",
+        "motor",
+        "boxer",
+        "flat six"
+      ],
+      "description": "MY2026: six-cylinder rear-mounted boxer, 2,981 cm³, 473 hp and 390 lb-ft. The envelope is representative.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26",
+        "envelope"
+      ],
+      "related": [
+        "pdk",
+        "left-turbo",
+        "right-turbo",
+        "left-cylinder-head",
+        "right-cylinder-head"
+      ],
+      "mesh_indices": [
+        22
+      ]
+    },
+    {
+      "id": "crankshaft",
+      "label": "Crankshaft reference",
+      "system": "POWERTRAIN",
+      "system_label": "Boxer engine & turbos",
+      "color": "#db7942",
+      "explode": [
+        0,
+        1.15,
+        -1.0335
+      ],
+      "aliases": [
+        "crankshaft reference",
+        "crankshaft"
+      ],
+      "description": "A representative crankshaft illustrates the opposed-cylinder arrangement; journal positions and firing order are not certified.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "envelope"
+      ],
+      "related": [],
+      "mesh_indices": [
+        23
+      ]
+    },
+    {
+      "id": "left-cylinder-head",
+      "label": "left cylinder head",
+      "system": "POWERTRAIN",
+      "system_label": "Boxer engine & turbos",
+      "color": "#db7942",
+      "explode": [
+        -0.782,
+        1.15,
+        -1.0335
+      ],
+      "aliases": [
+        "left cylinder head",
+        "left head"
+      ],
+      "description": "Original representative geometry; position and shape are illustrative, not measured OEM parts.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "envelope"
+      ],
+      "related": [],
+      "mesh_indices": [
+        24
+      ]
+    },
+    {
+      "id": "left-cylinder-1",
+      "label": "left cylinder 1",
+      "system": "POWERTRAIN",
+      "system_label": "Boxer engine & turbos",
+      "color": "#db7942",
+      "explode": [
+        -0.49299999999999994,
+        1.15,
+        -1.1635
+      ],
+      "aliases": [
+        "left cylinder 1",
+        "left-cylinder-1"
+      ],
+      "description": "Six opposed cylinder envelopes. Bore 91.0 mm and stroke 76.4 mm are sourced; casting geometry is representative.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "envelope"
+      ],
+      "related": [
+        "crankshaft",
+        "left-cylinder-head"
+      ],
+      "mesh_indices": [
+        25
+      ]
+    },
+    {
+      "id": "left-piston-1",
+      "label": "left piston 1",
+      "system": "POWERTRAIN",
+      "system_label": "Boxer engine & turbos",
+      "color": "#db7942",
+      "explode": [
+        -0.459,
+        1.15,
+        -1.1635
+      ],
+      "aliases": [
+        "left piston 1",
+        "left piston 1"
+      ],
+      "description": "Illustrative piston at the sourced 91 mm bore envelope. No firing-order or physical simulation is claimed.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "envelope"
+      ],
+      "related": [],
+      "mesh_indices": [
+        26
+      ]
+    },
+    {
+      "id": "left-cylinder-2",
+      "label": "left cylinder 2",
+      "system": "POWERTRAIN",
+      "system_label": "Boxer engine & turbos",
+      "color": "#db7942",
+      "explode": [
+        -0.49299999999999994,
+        1.15,
+        -1.0335
+      ],
+      "aliases": [
+        "left cylinder 2",
+        "left-cylinder-2"
+      ],
+      "description": "Six opposed cylinder envelopes. Bore 91.0 mm and stroke 76.4 mm are sourced; casting geometry is representative.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "envelope"
+      ],
+      "related": [
+        "crankshaft",
+        "left-cylinder-head"
+      ],
+      "mesh_indices": [
+        27
+      ]
+    },
+    {
+      "id": "left-piston-2",
+      "label": "left piston 2",
+      "system": "POWERTRAIN",
+      "system_label": "Boxer engine & turbos",
+      "color": "#db7942",
+      "explode": [
+        -0.459,
+        1.15,
+        -1.0335
+      ],
+      "aliases": [
+        "left piston 2",
+        "left piston 2"
+      ],
+      "description": "Illustrative piston at the sourced 91 mm bore envelope. No firing-order or physical simulation is claimed.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "envelope"
+      ],
+      "related": [],
+      "mesh_indices": [
+        28
+      ]
+    },
+    {
+      "id": "left-cylinder-3",
+      "label": "left cylinder 3",
+      "system": "POWERTRAIN",
+      "system_label": "Boxer engine & turbos",
+      "color": "#db7942",
+      "explode": [
+        -0.49299999999999994,
+        1.15,
+        -0.9035000000000001
+      ],
+      "aliases": [
+        "left cylinder 3",
+        "left-cylinder-3"
+      ],
+      "description": "Six opposed cylinder envelopes. Bore 91.0 mm and stroke 76.4 mm are sourced; casting geometry is representative.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "envelope"
+      ],
+      "related": [
+        "crankshaft",
+        "left-cylinder-head"
+      ],
+      "mesh_indices": [
+        29
+      ]
+    },
+    {
+      "id": "left-piston-3",
+      "label": "left piston 3",
+      "system": "POWERTRAIN",
+      "system_label": "Boxer engine & turbos",
+      "color": "#db7942",
+      "explode": [
+        -0.459,
+        1.15,
+        -0.9035000000000001
+      ],
+      "aliases": [
+        "left piston 3",
+        "left piston 3"
+      ],
+      "description": "Illustrative piston at the sourced 91 mm bore envelope. No firing-order or physical simulation is claimed.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "envelope"
+      ],
+      "related": [],
+      "mesh_indices": [
+        30
+      ]
+    },
+    {
+      "id": "left-turbo",
+      "label": "left turbocharger",
+      "system": "POWERTRAIN",
+      "system_label": "Boxer engine & turbos",
+      "color": "#db7942",
+      "explode": [
+        -1.054,
+        1.15,
+        -1.1505
+      ],
+      "aliases": [
+        "left turbocharger",
+        "left turbo",
+        "turbo"
+      ],
+      "description": "One of the two turbocharger envelopes. Internal blades and exact packaging are not reconstructed.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26"
+      ],
+      "related": [
+        "engine",
+        "left-intercooler"
+      ],
+      "mesh_indices": [
+        31
+      ]
+    },
+    {
+      "id": "left-intercooler",
+      "label": "left charge-air cooler",
+      "system": "THERMAL_FLUIDS",
+      "system_label": "Cooling regions",
+      "color": "#6b9baa",
+      "explode": [
+        -1.003,
+        -0.3,
+        -1.04
+      ],
+      "aliases": [
+        "left charge-air cooler",
+        "left intercooler",
+        "intercooler"
+      ],
+      "description": "The model announcement confirms optimized intercooling; this is a representative exchanger envelope.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26"
+      ],
+      "related": [],
+      "mesh_indices": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38
+      ]
+    },
+    {
+      "id": "right-cylinder-head",
+      "label": "right cylinder head",
+      "system": "POWERTRAIN",
+      "system_label": "Boxer engine & turbos",
+      "color": "#db7942",
+      "explode": [
+        0.782,
+        1.15,
+        -1.0335
+      ],
+      "aliases": [
+        "right cylinder head",
+        "right head"
+      ],
+      "description": "Original representative geometry; position and shape are illustrative, not measured OEM parts.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "envelope"
+      ],
+      "related": [],
+      "mesh_indices": [
+        39
+      ]
+    },
+    {
+      "id": "right-cylinder-1",
+      "label": "right cylinder 1",
+      "system": "POWERTRAIN",
+      "system_label": "Boxer engine & turbos",
+      "color": "#db7942",
+      "explode": [
+        0.49299999999999994,
+        1.15,
+        -1.1635
+      ],
+      "aliases": [
+        "right cylinder 1",
+        "right-cylinder-1"
+      ],
+      "description": "Six opposed cylinder envelopes. Bore 91.0 mm and stroke 76.4 mm are sourced; casting geometry is representative.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "envelope"
+      ],
+      "related": [
+        "crankshaft",
+        "right-cylinder-head"
+      ],
+      "mesh_indices": [
+        40
+      ]
+    },
+    {
+      "id": "right-piston-1",
+      "label": "right piston 1",
+      "system": "POWERTRAIN",
+      "system_label": "Boxer engine & turbos",
+      "color": "#db7942",
+      "explode": [
+        0.459,
+        1.15,
+        -1.1635
+      ],
+      "aliases": [
+        "right piston 1",
+        "right piston 1"
+      ],
+      "description": "Illustrative piston at the sourced 91 mm bore envelope. No firing-order or physical simulation is claimed.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "envelope"
+      ],
+      "related": [],
+      "mesh_indices": [
+        41
+      ]
+    },
+    {
+      "id": "right-cylinder-2",
+      "label": "right cylinder 2",
+      "system": "POWERTRAIN",
+      "system_label": "Boxer engine & turbos",
+      "color": "#db7942",
+      "explode": [
+        0.49299999999999994,
+        1.15,
+        -1.0335
+      ],
+      "aliases": [
+        "right cylinder 2",
+        "right-cylinder-2"
+      ],
+      "description": "Six opposed cylinder envelopes. Bore 91.0 mm and stroke 76.4 mm are sourced; casting geometry is representative.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "envelope"
+      ],
+      "related": [
+        "crankshaft",
+        "right-cylinder-head"
+      ],
+      "mesh_indices": [
+        42
+      ]
+    },
+    {
+      "id": "right-piston-2",
+      "label": "right piston 2",
+      "system": "POWERTRAIN",
+      "system_label": "Boxer engine & turbos",
+      "color": "#db7942",
+      "explode": [
+        0.459,
+        1.15,
+        -1.0335
+      ],
+      "aliases": [
+        "right piston 2",
+        "right piston 2"
+      ],
+      "description": "Illustrative piston at the sourced 91 mm bore envelope. No firing-order or physical simulation is claimed.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "envelope"
+      ],
+      "related": [],
+      "mesh_indices": [
+        43
+      ]
+    },
+    {
+      "id": "right-cylinder-3",
+      "label": "right cylinder 3",
+      "system": "POWERTRAIN",
+      "system_label": "Boxer engine & turbos",
+      "color": "#db7942",
+      "explode": [
+        0.49299999999999994,
+        1.15,
+        -0.9035000000000001
+      ],
+      "aliases": [
+        "right cylinder 3",
+        "right-cylinder-3"
+      ],
+      "description": "Six opposed cylinder envelopes. Bore 91.0 mm and stroke 76.4 mm are sourced; casting geometry is representative.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "envelope"
+      ],
+      "related": [
+        "crankshaft",
+        "right-cylinder-head"
+      ],
+      "mesh_indices": [
+        44
+      ]
+    },
+    {
+      "id": "right-piston-3",
+      "label": "right piston 3",
+      "system": "POWERTRAIN",
+      "system_label": "Boxer engine & turbos",
+      "color": "#db7942",
+      "explode": [
+        0.459,
+        1.15,
+        -0.9035000000000001
+      ],
+      "aliases": [
+        "right piston 3",
+        "right piston 3"
+      ],
+      "description": "Illustrative piston at the sourced 91 mm bore envelope. No firing-order or physical simulation is claimed.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "envelope"
+      ],
+      "related": [],
+      "mesh_indices": [
+        45
+      ]
+    },
+    {
+      "id": "right-turbo",
+      "label": "right turbocharger",
+      "system": "POWERTRAIN",
+      "system_label": "Boxer engine & turbos",
+      "color": "#db7942",
+      "explode": [
+        1.054,
+        1.15,
+        -1.1505
+      ],
+      "aliases": [
+        "right turbocharger",
+        "right turbo",
+        "turbo"
+      ],
+      "description": "One of the two turbocharger envelopes. Internal blades and exact packaging are not reconstructed.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26"
+      ],
+      "related": [
+        "engine",
+        "right-intercooler"
+      ],
+      "mesh_indices": [
+        46
+      ]
+    },
+    {
+      "id": "right-intercooler",
+      "label": "right charge-air cooler",
+      "system": "THERMAL_FLUIDS",
+      "system_label": "Cooling regions",
+      "color": "#6b9baa",
+      "explode": [
+        1.003,
+        -0.3,
+        -1.04
+      ],
+      "aliases": [
+        "right charge-air cooler",
+        "right intercooler",
+        "intercooler"
+      ],
+      "description": "The model announcement confirms optimized intercooling; this is a representative exchanger envelope.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26"
+      ],
+      "related": [],
+      "mesh_indices": [
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ]
+    },
+    {
+      "id": "pdk",
+      "label": "Eight-speed PDK",
+      "system": "TRANSMISSION",
+      "system_label": "PDK transmission",
+      "color": "#8760a9",
+      "explode": [
+        0,
+        -0.3,
+        -0.5785
+      ],
+      "aliases": [
+        "eight-speed pdk",
+        "pdk",
+        "gearbox",
+        "transmission"
+      ],
+      "description": "Eight-speed dual-clutch transmission. The case, ribs and clutch shapes are original illustrative geometry, not a teardown of the OEM gearbox.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26"
+      ],
+      "related": [
+        "engine",
+        "rear-differential",
+        "propeller-shaft"
+      ],
+      "mesh_indices": [
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62
+      ]
+    },
+    {
+      "id": "pdk-clutches",
+      "label": "PDK clutch pair",
+      "system": "TRANSMISSION",
+      "system_label": "PDK transmission",
+      "color": "#8760a9",
+      "explode": [
+        0,
+        -0.3,
+        -0.49400000000000005
+      ],
+      "aliases": [
+        "pdk clutch pair",
+        "clutch",
+        "clutches"
+      ],
+      "description": "Representative paired clutches explain dual-clutch operation. Disc count, dimensions and internal placement are not verified.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26"
+      ],
+      "related": [],
+      "mesh_indices": [
+        63,
+        64
+      ]
+    },
+    {
+      "id": "rear-differential",
+      "label": "Rear differential",
+      "system": "AWD_PTM",
+      "system_label": "All-wheel drive / PTM",
+      "color": "#466daf",
+      "explode": [
+        0,
+        -0.3,
+        -0.7832500000000001
+      ],
+      "aliases": [
+        "rear differential",
+        "rear differential"
+      ],
+      "description": "Rear-axle power path shown schematically. PTV Plus functionality is documented; exact case shape is representative.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26",
+        "ptm"
+      ],
+      "related": [
+        "rear-left-halfshaft",
+        "rear-right-halfshaft"
+      ],
+      "mesh_indices": [
+        65
+      ]
+    },
+    {
+      "id": "propeller-shaft",
+      "label": "Propeller shaft",
+      "system": "AWD_PTM",
+      "system_label": "All-wheel drive / PTM",
+      "color": "#466daf",
+      "explode": [
+        0,
+        -0.3,
+        0.052000000000000005
+      ],
+      "aliases": [
+        "propeller shaft",
+        "propeller shaft",
+        "cardan shaft",
+        "drive shaft"
+      ],
+      "description": "Illustrates the second transmission output toward the front axle. Physical routing is schematic.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "ptm"
+      ],
+      "related": [
+        "pdk",
+        "front-differential"
+      ],
+      "mesh_indices": [
+        66
+      ]
+    },
+    {
+      "id": "front-differential",
+      "label": "Front differential & PTM clutch",
+      "system": "AWD_PTM",
+      "system_label": "All-wheel drive / PTM",
+      "color": "#466daf",
+      "explode": [
+        0,
+        -0.3,
+        0.8092500000000001
+      ],
+      "aliases": [
+        "front differential & ptm clutch",
+        "front differential",
+        "ptm",
+        "all wheel drive",
+        "awd"
+      ],
+      "description": "Porsche documents a water-cooled front differential with an electromechanically controlled clutch. Routing and case dimensions are schematic.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26",
+        "ptm"
+      ],
+      "related": [
+        "front-left-halfshaft",
+        "front-right-halfshaft"
+      ],
+      "mesh_indices": [
+        67,
+        68
+      ]
+    },
+    {
+      "id": "front-left-tire",
+      "label": "front-left tire",
+      "system": "BRAKES_WHEELS",
+      "system_label": "Wheels & brakes",
+      "color": "#ac7631",
+      "explode": [
+        -1.343,
+        -0.3,
+        0.8092500000000001
+      ],
+      "aliases": [
+        "front-left tire",
+        "front-left tire",
+        "front tires"
+      ],
+      "description": "Calibrated 245/35 ZR20 envelope for the certificate's non-hybrid 20/21-inch summer configuration; tread pattern is illustrative.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "wheels"
+      ],
+      "related": [
+        "front-left-wheel",
+        "front-left-brake"
+      ],
+      "mesh_indices": [
+        69,
+        70,
+        71
+      ]
+    },
+    {
+      "id": "front-left-wheel",
+      "label": "front-left wheel",
+      "system": "BRAKES_WHEELS",
+      "system_label": "Wheels & brakes",
+      "color": "#ac7631",
+      "explode": [
+        -1.343,
+        -0.3,
+        0.8092500000000001
+      ],
+      "aliases": [
+        "front-left wheel",
+        "front-left wheel",
+        "front wheels",
+        "wheels"
+      ],
+      "description": "Staggered 20/21-inch wheel envelope. Spoke design is original and not a claim of the exact factory wheel option.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26",
+        "wheels"
+      ],
+      "related": [
+        "front-left-tire",
+        "front-left-brake"
+      ],
+      "mesh_indices": [
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83
+      ]
+    },
+    {
+      "id": "front-left-brake",
+      "label": "front-left brake rotor",
+      "system": "BRAKES_WHEELS",
+      "system_label": "Wheels & brakes",
+      "color": "#ac7631",
+      "explode": [
+        -1.2409999999999999,
+        -0.3,
+        0.8092500000000001
+      ],
+      "aliases": [
+        "front-left brake rotor",
+        "front-left brake",
+        "front brakes",
+        "brake rotor"
+      ],
+      "description": "Sourced 408 mm steel brake-disc diameter. Rotor thickness and internal ventilation shown here are representative.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26"
+      ],
+      "related": [
+        "front-left-caliper",
+        "front-left-wheel"
+      ],
+      "mesh_indices": [
+        84
+      ]
+    },
+    {
+      "id": "front-left-caliper",
+      "label": "front-left brake caliper",
+      "system": "BRAKES_WHEELS",
+      "system_label": "Wheels & brakes",
+      "color": "#ac7631",
+      "explode": [
+        -1.224,
+        -0.3,
+        0.8872500000000002
+      ],
+      "aliases": [
+        "front-left brake caliper",
+        "front-left caliper",
+        "caliper"
+      ],
+      "description": "Original fixed-caliper envelope. Exact piston count and casting detail are not promoted from Carrera S documentation.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26"
+      ],
+      "related": [],
+      "mesh_indices": [
+        85
+      ]
+    },
+    {
+      "id": "front-left-halfshaft",
+      "label": "front-left half-shaft",
+      "system": "AWD_PTM",
+      "system_label": "All-wheel drive / PTM",
+      "color": "#466daf",
+      "explode": [
+        -0.697,
+        -0.3,
+        0.8092500000000001
+      ],
+      "aliases": [
+        "front-left half-shaft",
+        "front-left halfshaft",
+        "front halfshaft"
+      ],
+      "description": "Schematic axle connection to the hub. Exact shaft geometry and joints are not measured.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "ptm"
+      ],
+      "related": [
+        "front-left-wheel"
+      ],
+      "mesh_indices": [
+        86
+      ]
+    },
+    {
+      "id": "front-left-damper",
+      "label": "front-left PASM damper",
+      "system": "CHASSIS",
+      "system_label": "Suspension & steering",
+      "color": "#478883",
+      "explode": [
+        -1.139,
+        -0.3,
+        0.8092500000000001
+      ],
+      "aliases": [
+        "front-left pasm damper",
+        "front-left suspension",
+        "suspension",
+        "pasm"
+      ],
+      "description": "PASM damper region. Spring and mount locations are representative, not a suspension travel model.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26"
+      ],
+      "related": [
+        "front-left-wheel"
+      ],
+      "mesh_indices": [
+        87,
+        88
+      ]
+    },
+    {
+      "id": "front-right-tire",
+      "label": "front-right tire",
+      "system": "BRAKES_WHEELS",
+      "system_label": "Wheels & brakes",
+      "color": "#ac7631",
+      "explode": [
+        1.343,
+        -0.3,
+        0.8092500000000001
+      ],
+      "aliases": [
+        "front-right tire",
+        "front-right tire",
+        "front tires"
+      ],
+      "description": "Calibrated 245/35 ZR20 envelope for the certificate's non-hybrid 20/21-inch summer configuration; tread pattern is illustrative.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "wheels"
+      ],
+      "related": [
+        "front-right-wheel",
+        "front-right-brake"
+      ],
+      "mesh_indices": [
+        89,
+        90,
+        91
+      ]
+    },
+    {
+      "id": "front-right-wheel",
+      "label": "front-right wheel",
+      "system": "BRAKES_WHEELS",
+      "system_label": "Wheels & brakes",
+      "color": "#ac7631",
+      "explode": [
+        1.343,
+        -0.3,
+        0.8092500000000001
+      ],
+      "aliases": [
+        "front-right wheel",
+        "front-right wheel",
+        "front wheels",
+        "wheels"
+      ],
+      "description": "Staggered 20/21-inch wheel envelope. Spoke design is original and not a claim of the exact factory wheel option.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26",
+        "wheels"
+      ],
+      "related": [
+        "front-right-tire",
+        "front-right-brake"
+      ],
+      "mesh_indices": [
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103
+      ]
+    },
+    {
+      "id": "front-right-brake",
+      "label": "front-right brake rotor",
+      "system": "BRAKES_WHEELS",
+      "system_label": "Wheels & brakes",
+      "color": "#ac7631",
+      "explode": [
+        1.2409999999999999,
+        -0.3,
+        0.8092500000000001
+      ],
+      "aliases": [
+        "front-right brake rotor",
+        "front-right brake",
+        "front brakes",
+        "brake rotor"
+      ],
+      "description": "Sourced 408 mm steel brake-disc diameter. Rotor thickness and internal ventilation shown here are representative.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26"
+      ],
+      "related": [
+        "front-right-caliper",
+        "front-right-wheel"
+      ],
+      "mesh_indices": [
+        104
+      ]
+    },
+    {
+      "id": "front-right-caliper",
+      "label": "front-right brake caliper",
+      "system": "BRAKES_WHEELS",
+      "system_label": "Wheels & brakes",
+      "color": "#ac7631",
+      "explode": [
+        1.224,
+        -0.3,
+        0.8872500000000002
+      ],
+      "aliases": [
+        "front-right brake caliper",
+        "front-right caliper",
+        "caliper"
+      ],
+      "description": "Original fixed-caliper envelope. Exact piston count and casting detail are not promoted from Carrera S documentation.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26"
+      ],
+      "related": [],
+      "mesh_indices": [
+        105
+      ]
+    },
+    {
+      "id": "front-right-halfshaft",
+      "label": "front-right half-shaft",
+      "system": "AWD_PTM",
+      "system_label": "All-wheel drive / PTM",
+      "color": "#466daf",
+      "explode": [
+        0.697,
+        -0.3,
+        0.8092500000000001
+      ],
+      "aliases": [
+        "front-right half-shaft",
+        "front-right halfshaft",
+        "front halfshaft"
+      ],
+      "description": "Schematic axle connection to the hub. Exact shaft geometry and joints are not measured.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "ptm"
+      ],
+      "related": [
+        "front-right-wheel"
+      ],
+      "mesh_indices": [
+        106
+      ]
+    },
+    {
+      "id": "front-right-damper",
+      "label": "front-right PASM damper",
+      "system": "CHASSIS",
+      "system_label": "Suspension & steering",
+      "color": "#478883",
+      "explode": [
+        1.139,
+        -0.3,
+        0.8092500000000001
+      ],
+      "aliases": [
+        "front-right pasm damper",
+        "front-right suspension",
+        "suspension",
+        "pasm"
+      ],
+      "description": "PASM damper region. Spring and mount locations are representative, not a suspension travel model.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26"
+      ],
+      "related": [
+        "front-right-wheel"
+      ],
+      "mesh_indices": [
+        107,
+        108
+      ]
+    },
+    {
+      "id": "rear-left-tire",
+      "label": "rear-left tire",
+      "system": "BRAKES_WHEELS",
+      "system_label": "Wheels & brakes",
+      "color": "#ac7631",
+      "explode": [
+        -1.3056,
+        -0.3,
+        -0.7832500000000001
+      ],
+      "aliases": [
+        "rear-left tire",
+        "rear-left tire",
+        "rear tires"
+      ],
+      "description": "Calibrated 305/30 ZR21 envelope for the certificate's non-hybrid 20/21-inch summer configuration; tread pattern is illustrative.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "wheels"
+      ],
+      "related": [
+        "rear-left-wheel",
+        "rear-left-brake"
+      ],
+      "mesh_indices": [
+        109,
+        110,
+        111
+      ]
+    },
+    {
+      "id": "rear-left-wheel",
+      "label": "rear-left wheel",
+      "system": "BRAKES_WHEELS",
+      "system_label": "Wheels & brakes",
+      "color": "#ac7631",
+      "explode": [
+        -1.3056,
+        -0.3,
+        -0.7832500000000001
+      ],
+      "aliases": [
+        "rear-left wheel",
+        "rear-left wheel",
+        "rear wheels",
+        "wheels"
+      ],
+      "description": "Staggered 20/21-inch wheel envelope. Spoke design is original and not a claim of the exact factory wheel option.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26",
+        "wheels"
+      ],
+      "related": [
+        "rear-left-tire",
+        "rear-left-brake"
+      ],
+      "mesh_indices": [
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123
+      ]
+    },
+    {
+      "id": "rear-left-brake",
+      "label": "rear-left brake rotor",
+      "system": "BRAKES_WHEELS",
+      "system_label": "Wheels & brakes",
+      "color": "#ac7631",
+      "explode": [
+        -1.2409999999999999,
+        -0.3,
+        -0.7832500000000001
+      ],
+      "aliases": [
+        "rear-left brake rotor",
+        "rear-left brake",
+        "rear brakes",
+        "brake rotor"
+      ],
+      "description": "Sourced 380 mm steel brake-disc diameter. Rotor thickness and internal ventilation shown here are representative.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26"
+      ],
+      "related": [
+        "rear-left-caliper",
+        "rear-left-wheel"
+      ],
+      "mesh_indices": [
+        124
+      ]
+    },
+    {
+      "id": "rear-left-caliper",
+      "label": "rear-left brake caliper",
+      "system": "BRAKES_WHEELS",
+      "system_label": "Wheels & brakes",
+      "color": "#ac7631",
+      "explode": [
+        -1.224,
+        -0.3,
+        -0.70525
+      ],
+      "aliases": [
+        "rear-left brake caliper",
+        "rear-left caliper",
+        "caliper"
+      ],
+      "description": "Original fixed-caliper envelope. Exact piston count and casting detail are not promoted from Carrera S documentation.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26"
+      ],
+      "related": [],
+      "mesh_indices": [
+        125
+      ]
+    },
+    {
+      "id": "rear-left-halfshaft",
+      "label": "rear-left half-shaft",
+      "system": "AWD_PTM",
+      "system_label": "All-wheel drive / PTM",
+      "color": "#466daf",
+      "explode": [
+        -0.697,
+        -0.3,
+        -0.7832500000000001
+      ],
+      "aliases": [
+        "rear-left half-shaft",
+        "rear-left halfshaft",
+        "rear halfshaft"
+      ],
+      "description": "Schematic axle connection to the hub. Exact shaft geometry and joints are not measured.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "ptm"
+      ],
+      "related": [
+        "rear-left-wheel"
+      ],
+      "mesh_indices": [
+        126
+      ]
+    },
+    {
+      "id": "rear-left-damper",
+      "label": "rear-left PASM damper",
+      "system": "CHASSIS",
+      "system_label": "Suspension & steering",
+      "color": "#478883",
+      "explode": [
+        -1.139,
+        -0.3,
+        -0.7832500000000001
+      ],
+      "aliases": [
+        "rear-left pasm damper",
+        "rear-left suspension",
+        "suspension",
+        "pasm"
+      ],
+      "description": "PASM damper region. Spring and mount locations are representative, not a suspension travel model.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26"
+      ],
+      "related": [
+        "rear-left-wheel"
+      ],
+      "mesh_indices": [
+        127,
+        128
+      ]
+    },
+    {
+      "id": "rear-right-tire",
+      "label": "rear-right tire",
+      "system": "BRAKES_WHEELS",
+      "system_label": "Wheels & brakes",
+      "color": "#ac7631",
+      "explode": [
+        1.3056,
+        -0.3,
+        -0.7832500000000001
+      ],
+      "aliases": [
+        "rear-right tire",
+        "rear-right tire",
+        "rear tires"
+      ],
+      "description": "Calibrated 305/30 ZR21 envelope for the certificate's non-hybrid 20/21-inch summer configuration; tread pattern is illustrative.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "wheels"
+      ],
+      "related": [
+        "rear-right-wheel",
+        "rear-right-brake"
+      ],
+      "mesh_indices": [
+        129,
+        130,
+        131
+      ]
+    },
+    {
+      "id": "rear-right-wheel",
+      "label": "rear-right wheel",
+      "system": "BRAKES_WHEELS",
+      "system_label": "Wheels & brakes",
+      "color": "#ac7631",
+      "explode": [
+        1.3056,
+        -0.3,
+        -0.7832500000000001
+      ],
+      "aliases": [
+        "rear-right wheel",
+        "rear-right wheel",
+        "rear wheels",
+        "wheels"
+      ],
+      "description": "Staggered 20/21-inch wheel envelope. Spoke design is original and not a claim of the exact factory wheel option.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26",
+        "wheels"
+      ],
+      "related": [
+        "rear-right-tire",
+        "rear-right-brake"
+      ],
+      "mesh_indices": [
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143
+      ]
+    },
+    {
+      "id": "rear-right-brake",
+      "label": "rear-right brake rotor",
+      "system": "BRAKES_WHEELS",
+      "system_label": "Wheels & brakes",
+      "color": "#ac7631",
+      "explode": [
+        1.2409999999999999,
+        -0.3,
+        -0.7832500000000001
+      ],
+      "aliases": [
+        "rear-right brake rotor",
+        "rear-right brake",
+        "rear brakes",
+        "brake rotor"
+      ],
+      "description": "Sourced 380 mm steel brake-disc diameter. Rotor thickness and internal ventilation shown here are representative.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26"
+      ],
+      "related": [
+        "rear-right-caliper",
+        "rear-right-wheel"
+      ],
+      "mesh_indices": [
+        144
+      ]
+    },
+    {
+      "id": "rear-right-caliper",
+      "label": "rear-right brake caliper",
+      "system": "BRAKES_WHEELS",
+      "system_label": "Wheels & brakes",
+      "color": "#ac7631",
+      "explode": [
+        1.224,
+        -0.3,
+        -0.70525
+      ],
+      "aliases": [
+        "rear-right brake caliper",
+        "rear-right caliper",
+        "caliper"
+      ],
+      "description": "Original fixed-caliper envelope. Exact piston count and casting detail are not promoted from Carrera S documentation.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26"
+      ],
+      "related": [],
+      "mesh_indices": [
+        145
+      ]
+    },
+    {
+      "id": "rear-right-halfshaft",
+      "label": "rear-right half-shaft",
+      "system": "AWD_PTM",
+      "system_label": "All-wheel drive / PTM",
+      "color": "#466daf",
+      "explode": [
+        0.697,
+        -0.3,
+        -0.7832500000000001
+      ],
+      "aliases": [
+        "rear-right half-shaft",
+        "rear-right halfshaft",
+        "rear halfshaft"
+      ],
+      "description": "Schematic axle connection to the hub. Exact shaft geometry and joints are not measured.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "ptm"
+      ],
+      "related": [
+        "rear-right-wheel"
+      ],
+      "mesh_indices": [
+        146
+      ]
+    },
+    {
+      "id": "rear-right-damper",
+      "label": "rear-right PASM damper",
+      "system": "CHASSIS",
+      "system_label": "Suspension & steering",
+      "color": "#478883",
+      "explode": [
+        1.139,
+        -0.3,
+        -0.7832500000000001
+      ],
+      "aliases": [
+        "rear-right pasm damper",
+        "rear-right suspension",
+        "suspension",
+        "pasm"
+      ],
+      "description": "PASM damper region. Spring and mount locations are representative, not a suspension travel model.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26"
+      ],
+      "related": [
+        "rear-right-wheel"
+      ],
+      "mesh_indices": [
+        147,
+        148
+      ]
+    },
+    {
+      "id": "left-gpf",
+      "label": "left exhaust / GPF region",
+      "system": "FUEL_EXHAUST",
+      "system_label": "Fuel & exhaust",
+      "color": "#827550",
+      "explode": [
+        -0.7989999999999999,
+        -0.3,
+        -1.2415
+      ],
+      "aliases": [
+        "left exhaust / gpf region",
+        "left exhaust",
+        "gpf",
+        "exhaust"
+      ],
+      "description": "Representative exhaust-filter region. Public Porsche bulletin explains ash accumulation with unapproved oil on OPF-equipped 992.II cars; applicability must be checked.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "gpf"
+      ],
+      "related": [
+        "engine",
+        "left-turbo"
+      ],
+      "mesh_indices": [
+        149,
+        150
+      ]
+    },
+    {
+      "id": "right-gpf",
+      "label": "right exhaust / GPF region",
+      "system": "FUEL_EXHAUST",
+      "system_label": "Fuel & exhaust",
+      "color": "#827550",
+      "explode": [
+        0.7989999999999999,
+        -0.3,
+        -1.2415
+      ],
+      "aliases": [
+        "right exhaust / gpf region",
+        "right exhaust",
+        "gpf",
+        "exhaust"
+      ],
+      "description": "Representative exhaust-filter region. Public Porsche bulletin explains ash accumulation with unapproved oil on OPF-equipped 992.II cars; applicability must be checked.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "gpf"
+      ],
+      "related": [
+        "engine",
+        "right-turbo"
+      ],
+      "mesh_indices": [
+        151,
+        152
+      ]
+    },
+    {
+      "id": "left-seat",
+      "label": "left front seat",
+      "system": "INTERIOR_RESTRAINTS",
+      "system_label": "Cabin & restraints",
+      "color": "#985e78",
+      "explode": [
+        -0.646,
+        1.5,
+        0.013000000000000001
+      ],
+      "aliases": [
+        "left front seat",
+        "left seat",
+        "seats",
+        "cabin"
+      ],
+      "description": "The MY2026 coupe has two seats as standard, with optional rear seats. These seat shapes are original representative geometry.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26"
+      ],
+      "related": [],
+      "mesh_indices": [
+        153,
+        154
+      ]
+    },
+    {
+      "id": "right-seat",
+      "label": "right front seat",
+      "system": "INTERIOR_RESTRAINTS",
+      "system_label": "Cabin & restraints",
+      "color": "#985e78",
+      "explode": [
+        0.646,
+        1.5,
+        0.013000000000000001
+      ],
+      "aliases": [
+        "right front seat",
+        "right seat",
+        "seats",
+        "cabin"
+      ],
+      "description": "The MY2026 coupe has two seats as standard, with optional rear seats. These seat shapes are original representative geometry.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "A public model specification",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "my26"
+      ],
+      "related": [],
+      "mesh_indices": [
+        155,
+        156
+      ]
+    },
+    {
+      "id": "dashboard",
+      "label": "Dashboard & PCM region",
+      "system": "INTERIOR_RESTRAINTS",
+      "system_label": "Cabin & restraints",
+      "color": "#985e78",
+      "explode": [
+        0,
+        1.5,
+        0.45499999999999996
+      ],
+      "aliases": [
+        "dashboard & pcm region",
+        "dashboard",
+        "pcm",
+        "interior"
+      ],
+      "description": "Cabin layout region only. Screen geometry and switch positions are representative.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "envelope"
+      ],
+      "related": [],
+      "mesh_indices": [
+        157,
+        158
+      ]
+    },
+    {
+      "id": "steering-wheel",
+      "label": "Steering wheel",
+      "system": "INTERIOR_RESTRAINTS",
+      "system_label": "Cabin & restraints",
+      "color": "#985e78",
+      "explode": [
+        -0.68,
+        1.5,
+        0.29900000000000004
+      ],
+      "aliases": [
+        "steering wheel",
+        "steering wheel"
+      ],
+      "description": "Original representative geometry; position and shape are illustrative, not measured OEM parts.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "envelope"
+      ],
+      "related": [],
+      "mesh_indices": [
+        159,
+        160,
+        161,
+        162
+      ]
+    },
+    {
+      "id": "rear-camera",
+      "label": "Rear-view camera region",
+      "system": "ELECTRICAL_NETWORK",
+      "system_label": "Electrical regions",
+      "color": "#797c9e",
+      "explode": [
+        0,
+        -0.3,
+        -1.4235
+      ],
+      "aliases": [
+        "rear-view camera region",
+        "rear camera",
+        "backup camera",
+        "rearview camera"
+      ],
+      "description": "Representative camera region for explaining rear visibility. The reviewed ASB2 safety recall covers certain 2020–2025 911 vehicles, not a verified 2026 VIN. No circuit routing is modeled.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "recall-camera"
+      ],
+      "related": [],
+      "mesh_indices": [
+        163
+      ]
+    },
+    {
+      "id": "front-lighting",
+      "label": "Front lighting control region",
+      "system": "ELECTRICAL_NETWORK",
+      "system_label": "Electrical regions",
+      "color": "#797c9e",
+      "explode": [
+        0,
+        -0.3,
+        1.157
+      ],
+      "aliases": [
+        "front lighting control region",
+        "headlight",
+        "headlights",
+        "lighting"
+      ],
+      "description": "Representative lighting-control region. The reviewed ASA1 software recall is a 2025 911 campaign; this 2026 illustration does not establish applicability.",
+      "question": "Inspect the source and confidence record. Confirm equipment and parts against the actual vehicle before purchase or service.",
+      "geometry_grade": "D representative",
+      "identity_grade": "D architecture reference",
+      "placement_grade": "D illustrative layout",
+      "part_number": null,
+      "source_ids": [
+        "recall-lighting"
+      ],
+      "related": [],
+      "mesh_indices": [
+        164
+      ]
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+
+> jack-ingram-vehicle-atlas@0.1.0 build
+> node scripts/build-atlas.mjs
+
+Worked: original systems twin · 77 components · 165 meshes · 45644 triangles · 1525460 bytes
+Worked: 7 component groups, 45 meshes, 652660 triangles; licensed asset verified and viewer bundled.
+
+> jack-ingram-vehicle-atlas@0.1.0 test
+> node --test frontend/*.test.mjs
+
+✔ licensed model manifest accounts for every mesh including repeated source names (1.5577ms)
+✔ rotated world bounds pack without overlapping at aspect 0.46 (0.9269ms)
+✔ rotated world bounds pack without overlapping at aspect 1.8 (0.2356ms)
+✔ viewer executes only bounded component actions (0.2366ms)
+✔ continuous exploded poses restore rest, reach endpoints and never accumulate (1.0689ms)
+✔ F15-style render, camera and animation actions are bounded (0.2039ms)
+✔ exported systems geometry has owned meshes, checked sources and distinct MY2026 identity (2.2584ms)
+✔ actual GLB vertices preserve vehicle dimensions, axle spacing, tires and rotors in meters (4.1242ms)
+✔ all exported systems parts pack without overlap at aspect 0.46 (1.3181ms)
+✔ all exported systems parts pack without overlap at aspect 1.8 (0.5581ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 174.6337
+found 0 vulnerabilities
+Worked: Python compiles, no credential-shaped literals, local Markdown links resolve.
+All checks passed!
+........................................................................ [ 74%]
+.........................                                                [100%]
+97 passed in 2.15s
+{
+  "server": "Waitress shipped module",
+  "paid_calls": 0,
+  "receipts": [
+    {
+      "scenario": "shipped Waitress boot and two sessions",
+      "outcome": "Worked"
+    },
+    {
+      "scenario": "vehicle asset integrity, exact component actions, honest missing engine and buying follow-up through shipped HTTP",
+      "outcome": "Worked",
+      "sha256": "421fdabf0da312edb3c22dc0fc915bcc75551ff0db7374a7ebac8af80efc5ea2",
+      "model_bytes": 4055076,
+      "shortlist": [
+        "atlas",
+        "xc90",
+        "pathfinder"
+      ]
+    },
+    {
+      "scenario": "invalid body and origin controls",
+      "outcome": "Worked"
+    },
+    {
+      "scenario": "consent, admin protection and deletion",
+      "outcome": "Worked"
+    },
+    {
+      "scenario": "reset and honest booking handoff",
+      "outcome": "Worked"
+    },
+    {
+      "scenario": "embedded session without cookies, contextual follow-up, deletion and token revocation",
+      "outcome": "Worked"
+    },
+    {
+      "scenario": "8 concurrent local inventory requests",
+      "outcome": "Worked",
+      "successful": 8,
+      "maximum_ms": 465.64,
+      "median_ms": 428.22
+    },
+    {
+      "scenario": "real HTTP provider success, truncation and failure fixture",
+      "outcome": "Worked",
+      "vendor_inference": false
+    }
+  ]
+}
+No known vulnerabilities found

@@ -16,7 +16,8 @@
   <section class="intro">
     <p class="eyebrow">SIX BRANDS. EIGHT DESTINATIONS.</p>
     <h1>Your dealership.<br>Your next move.</h1>
-    <p class="lede">Find your showroom, plan a service visit, or explore your next vehicle. Start with the right Jack Ingram team.</p>
+    <p class="lede">Compare models, narrow your choice by seating needs, or inspect a Porsche in our interactive showroom.</p>
+    <a class="primary-link" href="/vehicle-atlas">Explore a Porsche in 3D →</a>
     <div class="brand-grid" aria-label="Explore our locations">
       {% for location in dealership_info.locations %}
       <button type="button" data-question="{{ location.name }} address">{{ location.name|replace('Jack Ingram ', '') }} <span aria-hidden="true">↗</span></button>
@@ -37,12 +38,13 @@
       </select>
     </div>
     <div class="messages" id="messages" role="log" aria-live="polite" aria-relevant="additions text" tabindex="0" aria-label="Conversation">
-      <div class="message assistant">Welcome to Jack Ingram Motors. How can we help?<br>Choose a location, or ask about hours, inventory or service.</div>
+      <div class="message assistant">Welcome. I can compare vehicles and help narrow your choice.<br>Try “compare Rogue and Atlas” or “I need 7 seats”. I can also answer location, hours and service questions.</div>
     </div>
     <div class="quick-questions" aria-label="Suggested questions">
       <button type="button" data-question="Sales hours">Hours</button>
       <button type="button" data-question="Schedule service">Service</button>
-      <button type="button" data-question="Current inventory">Inventory</button>
+      <button type="button" data-question="Compare Rogue and Atlas">Compare SUVs</button>
+      <button type="button" data-question="Tell me about the Porsche 911 in 3D">Porsche 3D</button>
       <button type="button" data-question="All locations">Locations</button>
     </div>
     <form id="chatForm" class="composer">

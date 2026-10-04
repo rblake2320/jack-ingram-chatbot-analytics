@@ -1,0 +1,27 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+____________ test_assistant_actions_and_missing_engine_are_honest _____________
+
+client = <FlaskClient <Flask 'src.demo.app'>>
+
+    def test_assistant_actions_and_missing_engine_are_honest(client):
+        context = {"vehicle_id": ATLAS["id"]}
+        for message, operation, component in (
+            ("show me front wheels", "select", "front-wheels"),
+            ("show me the rear wheels", "select", "rear-wheels"),
+            ("isolate glass", "isolate", "glass"),
+            ("separate parts", "separate", None),
+            ("reset", "reset", None),
+        ):
+            r = client.post("/api/chat", json={"message": message, "vehicle_context": context})
+            assert r.status_code == 200 and r.json["explorer_action"]["operation"] == operation
+>           assert r.json["explorer_action"].get("component_id") == component
+E           AssertionError: assert 'front-wheels' == 'rear-wheels'
+E             
+E             - rear-wheels
+E             + front-wheels
+
+src\demo\tests\test_atlas.py:67: AssertionError
+=========================== short test summary info ===========================
+FAILED src/demo/tests/test_atlas.py::test_assistant_actions_and_missing_engine_are_honest
+1 failed in 0.44s
