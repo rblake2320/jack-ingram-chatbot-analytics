@@ -1,0 +1,13 @@
+{
+  "checked_at_utc": "2026-10-04T15:27:51.0297670Z",
+  "outcome": "Worked",
+  "container_id": "4e91171eee62d86e53cb21cae164b6f5afa128d1b60c11e306b8a848e53fadb4",
+  "image_id": "sha256:4aa6ba05d60b3c4ce07f237b0f804c188f6a25b0b707184960e8db48c4963c58",
+  "operating_system": "linux",
+  "runtime_uid": 1000,
+  "base_url": "http://127.0.0.1:56765",
+  "http_evidence": "vehicle-container-http.json",
+  "browser_evidence": "vehicle-browser.json",
+  "rendering_screenshot": "porsche-systems-container.png",
+  "functional_code": "Final vehicle, recall and advisor implementation; subsequent source whitespace cleanup only"
+}

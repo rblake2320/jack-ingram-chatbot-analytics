@@ -1,0 +1,16 @@
+{
+  "outcome": "Worked",
+  "platform": "Linux container",
+  "health": {
+    "booking": "unconfigured",
+    "crm": "unconfigured",
+    "inventory": "demo",
+    "laya": "disabled",
+    "provider": "local",
+    "provider_configured": true,
+    "status": "healthy"
+  },
+  "inventory": "Q5 returned with demo label",
+  "admin_denied": 401,
+  "consented_messages": 1
+}

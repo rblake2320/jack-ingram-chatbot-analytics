@@ -1,0 +1,6 @@
+*** Error compiling 'src/demo\\claude_client.py'...
+  File "src/demo\claude_client.py", line 50
+    realtime_info = await mcp_client.get_realtime_info(user_message)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: 'await' outside async function
+

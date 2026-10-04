@@ -1,0 +1,47 @@
+[
+  {
+    "id": "group",
+    "status": "worked",
+    "facts_changed": null
+  },
+  {
+    "id": "audi",
+    "status": "worked",
+    "facts_changed": false
+  },
+  {
+    "id": "mercedes",
+    "status": "worked",
+    "facts_changed": false
+  },
+  {
+    "id": "nissan",
+    "status": "worked",
+    "facts_changed": false
+  },
+  {
+    "id": "porsche",
+    "status": "blocked",
+    "facts_changed": null
+  },
+  {
+    "id": "volkswagen",
+    "status": "worked",
+    "facts_changed": false
+  },
+  {
+    "id": "volvo",
+    "status": "worked",
+    "facts_changed": false
+  },
+  {
+    "id": "signature",
+    "status": "worked",
+    "facts_changed": false
+  },
+  {
+    "id": "body-shop",
+    "status": "worked",
+    "facts_changed": false
+  }
+]

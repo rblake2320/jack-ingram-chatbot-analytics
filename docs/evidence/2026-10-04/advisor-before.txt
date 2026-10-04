@@ -1,0 +1,48 @@
+FFFF                                                                     [100%]
+================================== FAILURES ===================================
+_________ test_owner_best_selling_question_has_useful_answer_in_chat __________
+
+    def test_owner_best_selling_question_has_useful_answer_in_chat():
+        result = APIRouter().process_request('what is the best selling cars you have', [])
+>       assert 'sales ranking' in result['response'].lower()
+E       assert 'sales ranking' in "browse the dealership's current inventory using the official links below. stock and prices change; the dealership will confirm availability."
+E        +  where "browse the dealership's current inventory using the official links below. stock and prices change; the dealership will confirm availability." = <built-in method lower of str object at 0x000002D2B5E67930>()
+E        +    where <built-in method lower of str object at 0x000002D2B5E67930> = "Browse the dealership's current inventory using the official links below. Stock and prices change; the dealership will confirm availability.".lower
+
+src\demo\tests\test_advisor.py:6: AssertionError
+__________ test_family_followup_uses_capacity_and_explains_tradeoffs __________
+
+    def test_family_followup_uses_capacity_and_explains_tradeoffs():
+        history = [{'role': 'user', 'content': 'Help me choose an SUV'}]
+        result = APIRouter().process_request('I need 7 seats', history)
+>       assert 'Atlas' in result['response'] and 'XC90' in result['response']
+E       AssertionError: assert ('Atlas' in 'Welcome to Jack Ingram Motors. I can help with eight locations, sales and service hours, current inventory links, financing, trade-ins and dealership contacts. Select a store or ask “Where is Porsche?”')
+
+src\demo\tests\test_advisor.py:15: AssertionError
+________ test_comparison_is_answered_without_asking_customer_to_leave _________
+
+    def test_comparison_is_answered_without_asking_customer_to_leave():
+        result = APIRouter().process_request('compare Rogue and Atlas', [])
+>       assert 'five' in result['response'].lower() and 'three rows' in result['response'].lower()
+E       assert ('five' in "browse the dealership's current inventory using the official links below. stock and prices change; the dealership will confirm availability.")
+E        +  where "browse the dealership's current inventory using the official links below. stock and prices change; the dealership will confirm availability." = <built-in method lower of str object at 0x000002D2B5E67930>()
+E        +    where <built-in method lower of str object at 0x000002D2B5E67930> = "Browse the dealership's current inventory using the official links below. Stock and prices change; the dealership will confirm availability.".lower
+
+src\demo\tests\test_advisor.py:21: AssertionError
+___________ test_unknown_dealer_stock_and_sales_are_never_invented ____________
+
+    def test_unknown_dealer_stock_and_sales_are_never_invented():
+        result = APIRouter().process_request('Which sells most and how many do you have?', [])
+        assert result.get('dealer_sales_rank') is None
+>       assert result.get('stock_verified') is False
+E       AssertionError: assert None is False
+E        +  where None = <built-in method get of dict object at 0x000002D2B68D1800>('stock_verified')
+E        +    where <built-in method get of dict object at 0x000002D2B68D1800> = {'intent': 'other', 'brand': 'all', 'source': 'local', 'usage': {}, ...}.get
+
+src\demo\tests\test_advisor.py:28: AssertionError
+=========================== short test summary info ===========================
+FAILED src/demo/tests/test_advisor.py::test_owner_best_selling_question_has_useful_answer_in_chat
+FAILED src/demo/tests/test_advisor.py::test_family_followup_uses_capacity_and_explains_tradeoffs
+FAILED src/demo/tests/test_advisor.py::test_comparison_is_answered_without_asking_customer_to_leave
+FAILED src/demo/tests/test_advisor.py::test_unknown_dealer_stock_and_sales_are_never_invented
+4 failed in 0.09s

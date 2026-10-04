@@ -1,0 +1,180 @@
+
+> jack-ingram-vehicle-atlas@0.1.0 test
+> node --test frontend/atlas-core.test.mjs
+
+file:///C:/Users/techai/Documents/Codex/2026-10-04/https-github-com-rblake2320-jack-ingram/work/jack-ingram-chatbot-analytics/frontend/atlas-core.test.mjs:4
+import {projectedExtent,packGroups,validateManifest,validAction,explodeOffset} from './atlas-core.mjs';
+                                                                ^^^^^^^^^^^^^
+SyntaxError: The requested module './atlas-core.mjs' does not provide an export named 'explodeOffset'
+    at #asyncInstantiate (node:internal/modules/esm/module_job:327:21)
+    at async ModuleJob.run (node:internal/modules/esm/module_job:431:5)
+    at async node:internal/modules/esm/loader:633:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.17.0
+✖ frontend\atlas-core.test.mjs (134.3729ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 143.6111
+
+✖ failing tests:
+
+test at frontend\atlas-core.test.mjs:1:1
+✖ frontend\atlas-core.test.mjs (134.3729ms)
+  'test failed'
+...FFFFFF.......                                                         [100%]
+================================== FAILURES ===================================
+______________ test_atlas_exploration_commands[x-ray-expected0] _______________
+
+client = <FlaskClient <Flask 'src.demo.app'>>, message = 'x-ray'
+expected = {'operation': 'render', 'value': 'xray'}
+
+    @pytest.mark.parametrize("message,expected", [
+        ("x-ray", {"operation": "render", "value": "xray"}),
+        ("show systems", {"operation": "render", "value": "systems"}),
+        ("wireframe", {"operation": "render", "value": "wire"}),
+        ("top view", {"operation": "camera", "value": "top"}),
+        ("explode 50%", {"operation": "explode", "value": 0.5}),
+        ("start tour", {"operation": "tour"}),
+    ])
+    def test_atlas_exploration_commands(client, message, expected):
+        reply = client.post("/api/chat", json={"message": message, "vehicle_context": {"vehicle_id": ATLAS["id"]}})
+>       assert reply.status_code == 200 and reply.json.get("explorer_action") == expected
+E       AssertionError: assert (200 == 200 and None == {'operation': 'render', 'value': 'xray'})
+E        +  where 200 = <WrapperTestResponse 443 bytes [200 OK]>.status_code
+E        +  and   None = <built-in method get of dict object at 0x00000199E1D2DD80>('explorer_action')
+E        +    where <built-in method get of dict object at 0x00000199E1D2DD80> = {'brand': 'porsche', 'citations': [], 'conversation_id': 'S3NZZRGFMy-0w2Nd5f_PpAvx-_aK1-nbxaFhP_Nn4Bw', 'data_status': 'visual_reference_not_stock', ...}.get
+E        +      where {'brand': 'porsche', 'citations': [], 'conversation_id': 'S3NZZRGFMy-0w2Nd5f_PpAvx-_aK1-nbxaFhP_Nn4Bw', 'data_status': 'visual_reference_not_stock', ...} = <WrapperTestResponse 443 bytes [200 OK]>.json
+
+src\demo\tests\test_atlas.py:84: AssertionError
+___________ test_atlas_exploration_commands[show systems-expected1] ___________
+
+client = <FlaskClient <Flask 'src.demo.app'>>, message = 'show systems'
+expected = {'operation': 'render', 'value': 'systems'}
+
+    @pytest.mark.parametrize("message,expected", [
+        ("x-ray", {"operation": "render", "value": "xray"}),
+        ("show systems", {"operation": "render", "value": "systems"}),
+        ("wireframe", {"operation": "render", "value": "wire"}),
+        ("top view", {"operation": "camera", "value": "top"}),
+        ("explode 50%", {"operation": "explode", "value": 0.5}),
+        ("start tour", {"operation": "tour"}),
+    ])
+    def test_atlas_exploration_commands(client, message, expected):
+        reply = client.post("/api/chat", json={"message": message, "vehicle_context": {"vehicle_id": ATLAS["id"]}})
+>       assert reply.status_code == 200 and reply.json.get("explorer_action") == expected
+E       AssertionError: assert (200 == 200 and None == {'operation': 'render', 'value': 'systems'})
+E        +  where 200 = <WrapperTestResponse 443 bytes [200 OK]>.status_code
+E        +  and   None = <built-in method get of dict object at 0x00000199E1DB2F40>('explorer_action')
+E        +    where <built-in method get of dict object at 0x00000199E1DB2F40> = {'brand': 'porsche', 'citations': [], 'conversation_id': 'AcQDCHOgSxn0rWvgHCLFYkypymkN55p1dPdLHWo1ZL8', 'data_status': 'visual_reference_not_stock', ...}.get
+E        +      where {'brand': 'porsche', 'citations': [], 'conversation_id': 'AcQDCHOgSxn0rWvgHCLFYkypymkN55p1dPdLHWo1ZL8', 'data_status': 'visual_reference_not_stock', ...} = <WrapperTestResponse 443 bytes [200 OK]>.json
+
+src\demo\tests\test_atlas.py:84: AssertionError
+____________ test_atlas_exploration_commands[wireframe-expected2] _____________
+
+client = <FlaskClient <Flask 'src.demo.app'>>, message = 'wireframe'
+expected = {'operation': 'render', 'value': 'wire'}
+
+    @pytest.mark.parametrize("message,expected", [
+        ("x-ray", {"operation": "render", "value": "xray"}),
+        ("show systems", {"operation": "render", "value": "systems"}),
+        ("wireframe", {"operation": "render", "value": "wire"}),
+        ("top view", {"operation": "camera", "value": "top"}),
+        ("explode 50%", {"operation": "explode", "value": 0.5}),
+        ("start tour", {"operation": "tour"}),
+    ])
+    def test_atlas_exploration_commands(client, message, expected):
+        reply = client.post("/api/chat", json={"message": message, "vehicle_context": {"vehicle_id": ATLAS["id"]}})
+>       assert reply.status_code == 200 and reply.json.get("explorer_action") == expected
+E       AssertionError: assert (200 == 200 and None == {'operation': 'render', 'value': 'wire'})
+E        +  where 200 = <WrapperTestResponse 443 bytes [200 OK]>.status_code
+E        +  and   None = <built-in method get of dict object at 0x00000199E1CF73C0>('explorer_action')
+E        +    where <built-in method get of dict object at 0x00000199E1CF73C0> = {'brand': 'porsche', 'citations': [], 'conversation_id': 'ZTkm2ZfZ4D7we-kxdFCHGzSi4R3kHvqO3ILs4M6cG0c', 'data_status': 'visual_reference_not_stock', ...}.get
+E        +      where {'brand': 'porsche', 'citations': [], 'conversation_id': 'ZTkm2ZfZ4D7we-kxdFCHGzSi4R3kHvqO3ILs4M6cG0c', 'data_status': 'visual_reference_not_stock', ...} = <WrapperTestResponse 443 bytes [200 OK]>.json
+
+src\demo\tests\test_atlas.py:84: AssertionError
+_____________ test_atlas_exploration_commands[top view-expected3] _____________
+
+client = <FlaskClient <Flask 'src.demo.app'>>, message = 'top view'
+expected = {'operation': 'camera', 'value': 'top'}
+
+    @pytest.mark.parametrize("message,expected", [
+        ("x-ray", {"operation": "render", "value": "xray"}),
+        ("show systems", {"operation": "render", "value": "systems"}),
+        ("wireframe", {"operation": "render", "value": "wire"}),
+        ("top view", {"operation": "camera", "value": "top"}),
+        ("explode 50%", {"operation": "explode", "value": 0.5}),
+        ("start tour", {"operation": "tour"}),
+    ])
+    def test_atlas_exploration_commands(client, message, expected):
+        reply = client.post("/api/chat", json={"message": message, "vehicle_context": {"vehicle_id": ATLAS["id"]}})
+>       assert reply.status_code == 200 and reply.json.get("explorer_action") == expected
+E       AssertionError: assert (200 == 200 and None == {'operation': 'camera', 'value': 'top'})
+E        +  where 200 = <WrapperTestResponse 443 bytes [200 OK]>.status_code
+E        +  and   None = <built-in method get of dict object at 0x00000199E1CCAD40>('explorer_action')
+E        +    where <built-in method get of dict object at 0x00000199E1CCAD40> = {'brand': 'porsche', 'citations': [], 'conversation_id': 'sSHVsUK8vFTG4G3ciAGBujLbAwJPxjQHwp20zaGDhuo', 'data_status': 'visual_reference_not_stock', ...}.get
+E        +      where {'brand': 'porsche', 'citations': [], 'conversation_id': 'sSHVsUK8vFTG4G3ciAGBujLbAwJPxjQHwp20zaGDhuo', 'data_status': 'visual_reference_not_stock', ...} = <WrapperTestResponse 443 bytes [200 OK]>.json
+
+src\demo\tests\test_atlas.py:84: AssertionError
+___________ test_atlas_exploration_commands[explode 50%-expected4] ____________
+
+client = <FlaskClient <Flask 'src.demo.app'>>, message = 'explode 50%'
+expected = {'operation': 'explode', 'value': 0.5}
+
+    @pytest.mark.parametrize("message,expected", [
+        ("x-ray", {"operation": "render", "value": "xray"}),
+        ("show systems", {"operation": "render", "value": "systems"}),
+        ("wireframe", {"operation": "render", "value": "wire"}),
+        ("top view", {"operation": "camera", "value": "top"}),
+        ("explode 50%", {"operation": "explode", "value": 0.5}),
+        ("start tour", {"operation": "tour"}),
+    ])
+    def test_atlas_exploration_commands(client, message, expected):
+        reply = client.post("/api/chat", json={"message": message, "vehicle_context": {"vehicle_id": ATLAS["id"]}})
+>       assert reply.status_code == 200 and reply.json.get("explorer_action") == expected
+E       AssertionError: assert (200 == 200 and {'operation': 'separate'} == {'operation':... 'value': 0.5}
+E        +  where 200 = <WrapperTestResponse 449 bytes [200 OK]>.status_code
+E         
+E         Differing items:
+E         {'operation': 'separate'} != {'operation': 'explode'}
+E         Right contains 1 more item:
+E         {'value': 0.5}
+E         Use -v to get more diff)
+
+src\demo\tests\test_atlas.py:84: AssertionError
+____________ test_atlas_exploration_commands[start tour-expected5] ____________
+
+client = <FlaskClient <Flask 'src.demo.app'>>, message = 'start tour'
+expected = {'operation': 'tour'}
+
+    @pytest.mark.parametrize("message,expected", [
+        ("x-ray", {"operation": "render", "value": "xray"}),
+        ("show systems", {"operation": "render", "value": "systems"}),
+        ("wireframe", {"operation": "render", "value": "wire"}),
+        ("top view", {"operation": "camera", "value": "top"}),
+        ("explode 50%", {"operation": "explode", "value": 0.5}),
+        ("start tour", {"operation": "tour"}),
+    ])
+    def test_atlas_exploration_commands(client, message, expected):
+        reply = client.post("/api/chat", json={"message": message, "vehicle_context": {"vehicle_id": ATLAS["id"]}})
+>       assert reply.status_code == 200 and reply.json.get("explorer_action") == expected
+E       AssertionError: assert (200 == 200 and None == {'operation': 'tour'})
+E        +  where 200 = <WrapperTestResponse 443 bytes [200 OK]>.status_code
+E        +  and   None = <built-in method get of dict object at 0x00000199E1DB0F40>('explorer_action')
+E        +    where <built-in method get of dict object at 0x00000199E1DB0F40> = {'brand': 'porsche', 'citations': [], 'conversation_id': '7HuxGa0lBOEDSpFWO8coQUs2XS17P6-Fj-6Qm0ZTh80', 'data_status': 'visual_reference_not_stock', ...}.get
+E        +      where {'brand': 'porsche', 'citations': [], 'conversation_id': '7HuxGa0lBOEDSpFWO8coQUs2XS17P6-Fj-6Qm0ZTh80', 'data_status': 'visual_reference_not_stock', ...} = <WrapperTestResponse 443 bytes [200 OK]>.json
+
+src\demo\tests\test_atlas.py:84: AssertionError
+=========================== short test summary info ===========================
+FAILED src/demo/tests/test_atlas.py::test_atlas_exploration_commands[x-ray-expected0]
+FAILED src/demo/tests/test_atlas.py::test_atlas_exploration_commands[show systems-expected1]
+FAILED src/demo/tests/test_atlas.py::test_atlas_exploration_commands[wireframe-expected2]
+FAILED src/demo/tests/test_atlas.py::test_atlas_exploration_commands[top view-expected3]
+FAILED src/demo/tests/test_atlas.py::test_atlas_exploration_commands[explode 50%-expected4]
+FAILED src/demo/tests/test_atlas.py::test_atlas_exploration_commands[start tour-expected5]
+6 failed, 10 passed in 1.09s

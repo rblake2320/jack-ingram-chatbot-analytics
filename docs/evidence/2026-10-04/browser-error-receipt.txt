@@ -1,0 +1,68 @@
+- banner:
+  - link "JACK INGRAM MOTORS":
+    - /url: /
+    - text: JACK INGRAM
+    - generic: MOTORS
+  - navigation "Main":
+    - link "Assistant":
+      - /url: /
+    - link "Insights":
+      - /url: /analytics
+- main:
+  - paragraph: SIX BRANDS. ONE PLACE TO START.
+  - heading "Your next chapter starts with a conversation." [level=1]:
+    - text: Your next chapter
+    - text: starts with a
+    - text: conversation.
+  - paragraph: Explore a brand, plan your visit, or find the right person to help. Tell us what you're looking for.
+  - paragraph: Explore a brand
+  - generic "Brand inventory":
+    - button "Audi":
+      - text: Audi
+      - generic: ↗
+    - button "Mercedes-Benz":
+      - text: Mercedes-Benz
+      - generic: ↗
+    - button "Nissan":
+      - text: Nissan
+      - generic: ↗
+    - button "Porsche":
+      - text: Porsche
+      - generic: ↗
+    - button "Volkswagen":
+      - text: Volkswagen
+      - generic: ↗
+    - button "Volvo":
+      - text: Volvo
+      - generic: ↗
+  - strong: Jack Ingram Motors
+  - link "(334) 277-5700":
+    - /url: tel:+13342775700
+  - link "Visit the official dealership website ↗":
+    - /url: https://www.jackingram.com/
+  - paragraph:
+    - generic: LOCAL DEMONSTRATION
+    - text: Inventory is sample data. Hours and dealership details are repository references; confirm before visiting.
+  - region "Dealership assistant":
+    - heading "Your dealership assistant" [level=2]
+    - text: Vehicles · service · planning your visit
+    - button "New chat"
+    - log "Conversation":
+      - text: Welcome to Jack Ingram Motors. What brings you in today?
+      - text: Ask about sample vehicles, reference hours, or getting in touch.
+      - generic: Tell me a joke
+      - text: AI service is unavailable. Please try later or call (334) 277-5700.
+      - generic: error
+    - generic "Suggested questions":
+      - button "Plan my visit"
+      - button "Service & care"
+      - button "Arrange a test drive"
+    - generic: How can we help?
+    - textbox "How can we help?" [active]:
+      - /placeholder: Ask about a vehicle or your visit…
+    - button "Send message": Send →
+    - checkbox "Share anonymous usage counts to improve this demo. Message text is excluded from analytics."
+    - generic: Share anonymous usage counts to improve this demo. Message text is excluded from analytics.
+    - status
+    - button "Delete my conversation & session analytics"
+- contentinfo: Reference information only · No appointments or purchases are completed in this demo · Conversations expire after one hour of inactivity and are removed on activity.

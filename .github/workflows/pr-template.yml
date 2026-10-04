@@ -1,17 +1,15 @@
 name: Pull Request Template
-
 on:
   pull_request:
-    types: [opened]
-
+    types: [opened, edited, synchronize, reopened]
+permissions:
+  contents: read
 jobs:
-  pr-template:
+  description:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Check PR Template
-        uses: JJ/github-pr-contains-action@releases/v0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          bodyContains: '## Description'
-          bodyDoesNotContain: 'No description provided'
+      - name: Require a reviewable description
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          python -c "import os; body=os.environ.get('PR_BODY',''); assert '## Description' in body and 'No description provided' not in body, 'Include a concrete Description and validation'"

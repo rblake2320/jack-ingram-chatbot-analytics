@@ -1,0 +1,2 @@
+# Optional CPU routing evaluation; not required to run the chatbot.
+laya==0.3.26

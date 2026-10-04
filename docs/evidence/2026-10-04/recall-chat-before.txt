@@ -1,0 +1,95 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+___________ test_recall_chat_contract_through_actual_flask_handler ____________
+
+tmp_path = WindowsPath('C:/Users/techai/AppData/Local/Temp/pytest-of-techai/pytest-56/test_recall_chat_contract_thro0')
+
+    def test_recall_chat_contract_through_actual_flask_handler(tmp_path):
+        client = create_app({"TESTING": True, "SECRET_KEY": "recall-http-test-secret-32-characters", "DATABASE": str(tmp_path / "test.db"), "RATE_LIMIT": 200}).test_client()
+        for text in ("I got a recall", "2025 Porsche 911 recalls", "2026 Atlas recalls", "2026 Porsche 911 recalls"):
+>           reply = client.post("/api/chat", json={"message": text, "analytics_consent": False})
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+src\demo\tests\test_recalls.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\werkzeug\test.py:1171: in post
+    return self.open(*args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\testing.py:235: in open
+    response = super().open(
+.venv\Lib\site-packages\werkzeug\test.py:1120: in open
+    response_parts = self.run_wsgi_app(request.environ, buffered=buffered)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:992: in run_wsgi_app
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:1268: in run_wsgi_app
+    app_rv = app(environ, start_response)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1536: in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1514: in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1511: in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:919: in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:917: in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:902: in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    @app.route("/api/chat", methods=["POST"])
+    def chat():
+        data = request.get_json()
+        if not isinstance(data, dict):
+            return jsonify(error="json_object_required"), 400
+        message = data.get("message")
+        if not isinstance(message, str) or not message.strip() or len(message) > 2000:
+            return jsonify(error="message_must_be_1_to_2000_characters"), 400
+        if type(data.get("analytics_consent", False)) is not bool:
+            return jsonify(error="analytics_consent_must_be_boolean"), 400
+        selected = data.get("location_id")
+        if selected is not None and (not isinstance(selected, str) or selected not in LOCATIONS):
+            return jsonify(error="invalid_location"), 400
+        vehicle_context = data.get("vehicle_context")
+        if vehicle_context is not None and not valid_context(vehicle_context):
+            return jsonify(error="invalid_vehicle_context"), 400
+        conversation = identity()
+        revision, history = store.history(
+            conversation, require_existing=bool(getattr(g, "widget_identity", None))
+        )
+        started = time.perf_counter()
+        event = {
+            "visitor": digest(visitor()),
+            "intent": "other",
+            "brand": "all",
+            "source": "none",
+            "outcome": "error",
+            "latency_ms": 0,
+            "input_tokens": 0,
+            "output_tokens": 0,
+        }
+        consenting = app.config["ENABLE_ANALYTICS"] and data.get("analytics_consent", False)
+        try:
+            options = {}
+            if selected:
+                options["location_id"] = selected
+            if vehicle_context is not None:
+                options["vehicle_context"] = vehicle_context
+            result = router.process_request(message.strip(), history, **options)
+>           event.update({key: result[key] for key in ("intent", "brand", "source")})
+                               ^^^^^^^^^^^
+E           KeyError: 'brand'
+
+src\demo\app.py:277: KeyError
+=========================== short test summary info ===========================
+FAILED src/demo/tests/test_recalls.py::test_recall_chat_contract_through_actual_flask_handler
+1 failed, 9 deselected in 0.55s

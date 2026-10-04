@@ -1,0 +1,52 @@
+{
+  "server": "Waitress shipped module",
+  "paid_calls": 0,
+  "receipts": [
+    {
+      "scenario": "exact local Laya advisory through shipped HTTP",
+      "outcome": "Worked",
+      "routing": {
+        "calibration": "not_validated_for_dealership",
+        "intent": "inventory",
+        "model": "convaiinnovations/laya",
+        "probabilities": {
+          "appointment": 0.002,
+          "contact": 0.0006,
+          "hours": 0.0007,
+          "inventory": 0.9893,
+          "other": 0.002,
+          "service": 0.0056
+        },
+        "status": "advisory"
+      }
+    },
+    {
+      "scenario": "shipped Waitress boot and two sessions",
+      "outcome": "Worked"
+    },
+    {
+      "scenario": "invalid body and origin controls",
+      "outcome": "Worked"
+    },
+    {
+      "scenario": "consent, admin protection and deletion",
+      "outcome": "Worked"
+    },
+    {
+      "scenario": "reset and honest booking handoff",
+      "outcome": "Worked"
+    },
+    {
+      "scenario": "8 concurrent local inventory requests",
+      "outcome": "Worked",
+      "successful": 8,
+      "maximum_ms": 2683.51,
+      "median_ms": 1601.09
+    },
+    {
+      "scenario": "real HTTP provider success, truncation and failure fixture",
+      "outcome": "Worked",
+      "vendor_inference": false
+    }
+  ]
+}

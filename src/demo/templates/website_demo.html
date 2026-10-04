@@ -1,0 +1,19 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jack Ingram · Website chat demonstration</title>
+<link rel="stylesheet" href="/static/app.css">
+<script src="{{ embed_origin }}/static/embed.js" defer></script>
+</head><body class="website-demo">
+<div class="top-strip">OUR WEBSITE INTEGRATION DEMO <a href="{{ dealership_info.website }}" target="_blank" rel="noopener">Their official website ↗</a></div>
+<header class="masthead"><a class="wordmark" href="/website-demo">Jack Ingram Motors <span>IT'S TIME TO LOVE WHAT YOU DRIVE.</span></a>
+<nav aria-label="Main"><a href="/vehicle-atlas">Interactive 3D</a><a href="/">Vehicle assistant</a></nav></header>
+<main class="host-content">
+<p class="eyebrow">JACK INGRAM MOTORS · MONTGOMERY, AL</p>
+<h1>It's time to love<br>what you drive.</h1>
+<p class="lede">Compare vehicles in the assistant. Explore a Porsche in 3D.<br>Find the right Jack Ingram location for your next step.</p>
+<div class="demo-actions"><a class="primary-link" href="/vehicle-atlas">Explore imported Porsche surfaces in 3D →</a><a class="secondary-link" href="/">Help me choose a vehicle →</a></div>
+<p class="demo-note">We built this demo, the systems reconstruction, interactive explorer and assistant.<br>The separate exterior reference is a credited licensed asset. Commercials and inventory on the official sites belong to the dealership.</p>
+<h2 class="external-heading">Official dealership websites <small>These open their existing sites ↗</small></h2>
+<div class="host-locations">{% for location in dealership_info.locations %}<a href="{{ location.website }}" target="_blank" rel="noopener">{{ location.name|replace('Jack Ingram ', '') }} <span>↗</span><small>{{ location.address }}</small></a>{% endfor %}</div>
+</main>
+</body></html>

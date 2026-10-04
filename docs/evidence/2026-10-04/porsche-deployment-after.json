@@ -1,0 +1,40 @@
+{
+  "base_url": "http://127.0.0.1:8092",
+  "paid_calls": 0,
+  "receipts": [
+    {
+      "scenario": "shipped viewer, decoder and licensed model",
+      "outcome": "Worked",
+      "asset_sha256": "421fdabf0da312edb3c22dc0fc915bcc75551ff0db7374a7ebac8af80efc5ea2",
+      "bytes": 4055076
+    },
+    {
+      "scenario": "website and chat guide open source geometry; systems are labeled schematic",
+      "outcome": "Worked"
+    },
+    {
+      "scenario": "component actions, unsupported internals and malformed context",
+      "outcome": "Worked"
+    },
+    {
+      "scenario": "owner question, seven-seat follow-up and chosen model showroom",
+      "outcome": "Worked",
+      "shortlist": [
+        "atlas",
+        "xc90",
+        "pathfinder"
+      ]
+    },
+    {
+      "scenario": "MY2026 systems asset and engine action; official MY2025 recall-to-camera handoff",
+      "outcome": "Worked",
+      "components": 77,
+      "mesh_count": 165,
+      "sha256": "5cabbc7f6d75563d14f16ae4ea43c9199f73019c805e2a9d9fa39af46031153a",
+      "licensed_exterior_sha256": "421fdabf0da312edb3c22dc0fc915bcc75551ff0db7374a7ebac8af80efc5ea2",
+      "licensed_exterior_model_year": null,
+      "recall_status": "live",
+      "campaign": "25V896000"
+    }
+  ]
+}

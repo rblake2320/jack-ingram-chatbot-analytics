@@ -1,0 +1,43 @@
+
+> jack-ingram-vehicle-atlas@0.1.0 test
+> node --test frontend/*.test.mjs
+
+✔ licensed model manifest accounts for every mesh including repeated source names (3.913ms)
+✔ rotated world bounds pack without overlapping at aspect 0.46 (0.8385ms)
+✔ rotated world bounds pack without overlapping at aspect 1.8 (0.2695ms)
+✔ viewer executes only bounded component actions (0.1824ms)
+✔ continuous exploded poses restore rest, reach endpoints and never accumulate (0.8544ms)
+✔ F15-style render, camera and animation actions are bounded (0.6007ms)
+✔ exported systems geometry has owned meshes, checked sources and distinct MY2026 identity (2.5933ms)
+✖ actual GLB vertices preserve vehicle dimensions, axle spacing, tires and rotors in meters (0.9449ms)
+✔ all exported systems parts pack without overlap at aspect 0.46 (2.3665ms)
+✔ all exported systems parts pack without overlap at aspect 1.8 (1.4405ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 292.5285
+
+✖ failing tests:
+
+test at frontend\systems-geometry.test.mjs:26:1
+✖ actual GLB vertices preserve vehicle dimensions, axle spacing, tires and rotors in meters (0.9449ms)
+  AssertionError [ERR_ASSERTION]: 4.571000000149012 differs from 4.542
+      at close (file:///C:/Users/techai/Documents/Codex/2026-10-04/https-github-com-rblake2320-jack-ingram/work/jack-ingram-chatbot-analytics/frontend/systems-geometry.test.mjs:20:54)
+      at TestContext.<anonymous> (file:///C:/Users/techai/Documents/Codex/2026-10-04/https-github-com-rblake2320-jack-ingram/work/jack-ingram-chatbot-analytics/frontend/systems-geometry.test.mjs:27:109)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

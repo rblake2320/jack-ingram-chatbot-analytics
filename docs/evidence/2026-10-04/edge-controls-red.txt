@@ -1,0 +1,159 @@
+FF.                                                                      [100%]
+================================== FAILURES ===================================
+________________________ test_malformed_origin_denied _________________________
+
+app = <Flask 'src.demo.app'>
+
+    def test_malformed_origin_denied(app):
+>       assert app.test_client().post("/api/chat", json={"message": "hi"},
+                                      headers={"Origin": "http://["}).status_code == 403
+
+src\demo\tests\test_chatbot.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\venv\Lib\site-packages\werkzeug\test.py:1171: in post
+    return self.open(*args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^
+..\..\venv\Lib\site-packages\flask\testing.py:235: in open
+    response = super().open(
+..\..\venv\Lib\site-packages\werkzeug\test.py:1120: in open
+    response_parts = self.run_wsgi_app(request.environ, buffered=buffered)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\venv\Lib\site-packages\werkzeug\test.py:992: in run_wsgi_app
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\venv\Lib\site-packages\werkzeug\test.py:1268: in run_wsgi_app
+    app_rv = app(environ, start_response)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\venv\Lib\site-packages\flask\app.py:1536: in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\venv\Lib\site-packages\flask\app.py:1514: in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\venv\Lib\site-packages\flask\app.py:1511: in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\venv\Lib\site-packages\flask\app.py:919: in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\venv\Lib\site-packages\flask\app.py:915: in full_dispatch_request
+    rv = self.preprocess_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\venv\Lib\site-packages\flask\app.py:1291: in preprocess_request
+    rv = self.ensure_sync(before_func)()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\demo\app.py:62: in guard
+    if origin and (urlsplit(origin).scheme not in ("http", "https")
+                   ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+url = '', scheme = 'http', allow_fragments = True
+
+    @functools.lru_cache(typed=True)
+    def urlsplit(url, scheme='', allow_fragments=True):
+        """Parse a URL into 5 components:
+        <scheme>://<netloc>/<path>?<query>#<fragment>
+    
+        The result is a named 5-tuple with fields corresponding to the
+        above. It is either a SplitResult or SplitResultBytes object,
+        depending on the type of the url parameter.
+    
+        The username, password, hostname, and port sub-components of netloc
+        can also be accessed as attributes of the returned object.
+    
+        The scheme argument provides the default value of the scheme
+        component when no scheme is found in url.
+    
+        If allow_fragments is False, no attempt is made to separate the
+        fragment component from the previous component, which can be either
+        path or query.
+    
+        Note that % escapes are not expanded.
+        """
+    
+        url, scheme, _coerce_result = _coerce_args(url, scheme)
+        # Only lstrip url as some applications rely on preserving trailing space.
+        # (https://url.spec.whatwg.org/#concept-basic-url-parser would strip both)
+        url = url.lstrip(_WHATWG_C0_CONTROL_OR_SPACE)
+        scheme = scheme.strip(_WHATWG_C0_CONTROL_OR_SPACE)
+    
+        for b in _UNSAFE_URL_BYTES_TO_REMOVE:
+            url = url.replace(b, "")
+            scheme = scheme.replace(b, "")
+    
+        allow_fragments = bool(allow_fragments)
+        netloc = query = fragment = ''
+        i = url.find(':')
+        if i > 0 and url[0].isascii() and url[0].isalpha():
+            for c in url[:i]:
+                if c not in scheme_chars:
+                    break
+            else:
+                scheme, url = url[:i].lower(), url[i+1:]
+        if url[:2] == '//':
+            netloc, url = _splitnetloc(url, 2)
+            if (('[' in netloc and ']' not in netloc) or
+                    (']' in netloc and '[' not in netloc)):
+>               raise ValueError("Invalid IPv6 URL")
+E               ValueError: Invalid IPv6 URL
+
+C:\Python312\Lib\urllib\parse.py:514: ValueError
+_____________________ test_non_ascii_admin_header_denied ______________________
+
+app = <Flask 'src.demo.app'>
+
+    def test_non_ascii_admin_header_denied(app):
+>       assert app.test_client().get("/api/analytics", headers={"Authorization": "Bearer snowman-\u2603"}).status_code == 401
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+src\demo\tests\test_chatbot.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\venv\Lib\site-packages\werkzeug\test.py:1166: in get
+    return self.open(*args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^
+..\..\venv\Lib\site-packages\flask\testing.py:235: in open
+    response = super().open(
+..\..\venv\Lib\site-packages\werkzeug\test.py:1120: in open
+    response_parts = self.run_wsgi_app(request.environ, buffered=buffered)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\venv\Lib\site-packages\werkzeug\test.py:992: in run_wsgi_app
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\venv\Lib\site-packages\werkzeug\test.py:1268: in run_wsgi_app
+    app_rv = app(environ, start_response)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\venv\Lib\site-packages\flask\app.py:1536: in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\venv\Lib\site-packages\flask\app.py:1514: in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\venv\Lib\site-packages\flask\app.py:1511: in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\venv\Lib\site-packages\flask\app.py:919: in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\venv\Lib\site-packages\flask\app.py:917: in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+..\..\venv\Lib\site-packages\flask\app.py:902: in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    @app.route("/api/analytics")
+    def analytics():
+        token = app.config["ADMIN_TOKEN"]
+        supplied = request.headers.get("Authorization", "")
+        if not token:
+            return jsonify(error="analytics_admin_not_configured"), 503
+>       if not hmac.compare_digest(supplied, "Bearer " + token):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: comparing strings with non-ASCII characters is not supported
+
+src\demo\app.py:173: TypeError
+=========================== short test summary info ===========================
+FAILED src/demo/tests/test_chatbot.py::test_malformed_origin_denied - ValueEr...
+FAILED src/demo/tests/test_chatbot.py::test_non_ascii_admin_header_denied - T...
+2 failed, 1 passed, 42 deselected in 0.90s

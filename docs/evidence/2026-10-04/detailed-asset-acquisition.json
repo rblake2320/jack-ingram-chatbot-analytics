@@ -1,0 +1,31 @@
+{
+  "checked_at": "2026-10-04T14:43:41.683107+00:00",
+  "receipts": [
+    {
+      "candidate": "Porsche 911 GT3 interior candidate",
+      "attempted_download_api": "https://api.sketchfab.com/v3/models/78d5c47ab2554c2592b7e499179a0792/download",
+      "status": 202,
+      "content_type": "text/html; charset=UTF-8",
+      "outcome": "Blocked",
+      "response_excerpt": ""
+    },
+    {
+      "candidate": "Carrier Library Porsche engine scan candidate",
+      "attempted_download_api": "https://api.sketchfab.com/v3/models/df1e71d1c02941c2ae0643f63bb9d533/download",
+      "status": 202,
+      "content_type": "text/html; charset=UTF-8",
+      "outcome": "Blocked",
+      "response_excerpt": ""
+    },
+    {
+      "candidate": "PROKOP 1983 911 SC engine and 915 gearbox candidate",
+      "attempted_download_api": "https://api.sketchfab.com/v3/models/5454444654c84c87bf84d1d9b1fc24eb/download",
+      "status": 202,
+      "content_type": "text/html; charset=UTF-8",
+      "outcome": "Blocked",
+      "response_excerpt": ""
+    }
+  ],
+  "imported": false,
+  "money_spent": 0
+}

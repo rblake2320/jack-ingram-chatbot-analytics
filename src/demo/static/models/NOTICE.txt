@@ -1,0 +1,39 @@
+Porsche 911 Carrera 4S visual reference
+
+Author: Karol Miklas (https://sketchfab.com/karolmiklas)
+Original: https://sketchfab.com/3d-models/free-porsche-911-carrera-4s-d01b254483794de3819786d93e0e1ebf
+License: Creative Commons Attribution-ShareAlike 4.0 International
+https://creativecommons.org/licenses/by-sa/4.0/
+https://creativecommons.org/licenses/by-sa/4.0/legalcode.en
+Retrieved 2026-10-04, unchanged GLB from:
+https://developer.playcanvas.com/assets/porsche-911-carrera-4s.glb
+SHA256: 421fdabf0da312edb3c22dc0fc915bcc75551ff0db7374a7ebac8af80efc5ea2
+
+The author/license/source above are embedded in this exact GLB's asset.extras.
+The publisher documentation lists a different author; this distribution credits
+the author embedded in the file. No model year is supplied.
+The GLB is redistributed unchanged. Runtime hiding, component grouping and
+separation are identified here as our presentation adaptations, offered under
+CC BY-SA 4.0 to the extent they create an adaptation of the licensed model.
+No CAD, engineering accuracy, exact dealer VIN or current stock is asserted.
+Porsche trademarks remain their owner's property; no endorsement is implied.
+
+Renderer software (separate from vehicle asset license):
+Three.js 0.186.1, MIT: /static/atlas/THREE-LICENSE.txt
+Draco decoder, Apache License 2.0: /static/atlas/draco/LICENSE.txt
+https://github.com/google/draco
+
+Viewer and assistant application source are in the project repository.
+The exterior reference is not original artwork created by this project.
+
+2026 Porsche 911 Carrera 4S (992.2) systems reconstruction
+File: porsche-9922-systems.glb
+Creator: Jack Ingram demo contributors
+License: MIT, original explanatory geometry (see project LICENSE).
+Rebuild: node scripts/build-porsche-systems.mjs
+Public Porsche specification facts constrain meters, envelope and selected systems.
+Body contours, component shapes, placements and trace paths are representative,
+not OEM CAD, a VIN-specific parts catalogue or a mechanical repair procedure.
+No Porsche CAD or media have been copied into this original model. Its separate
+manifest records each component's source and evidence grade. Recall examples
+retain their own model-year scope and never establish the illustrated VIN's status.

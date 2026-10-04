@@ -1,3 +1,5 @@
+# Template only. Configure SESSION_SECRET and ADMIN_TOKEN as provider-managed secrets.
+# SQLite needs a durable volume for retained state; do not autoscale this local demo.
 name: jack-ingram-chatbot
 region: nyc
 services:
@@ -5,15 +7,25 @@ services:
     github:
       repo: rblake2320/jack-ingram-chatbot-analytics
       branch: main
-      deploy_on_push: true
-    source_dir: src/demo
+      deploy_on_push: false
+    source_dir: /
     envs:
-      - key: ANTHROPIC_API_KEY
-        value: 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
+      - key: HOST
+        value: 0.0.0.0
+      - key: COOKIE_SECURE
+        value: "true"
+      - key: CHAT_PROVIDER
+        value: local
+      - key: TRUSTED_HOSTS
+        value: localhost,127.0.0.1
+      - key: SESSION_SECRET
         type: SECRET
-    build_command: pip install -r requirements.txt
-    run_command: gunicorn app:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8080 --timeout 120
+    build_command: pip install --require-hashes -r requirements.lock
+    run_command: python -m src.demo.app
+    http_port: 8080
     instance_size_slug: basic-xxs
     instance_count: 1
+    health_check:
+      http_path: /health
     routes:
       - path: /

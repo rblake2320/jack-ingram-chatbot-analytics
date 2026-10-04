@@ -1,0 +1,22 @@
+{
+  "outcome": "Worked",
+  "image": "jack-ingram-website:20261004",
+  "uid": 1000,
+  "health": {
+    "booking": "unconfigured",
+    "crm": "unconfigured",
+    "inventory": "official_website_links",
+    "laya": "disabled",
+    "provider": "local",
+    "provider_configured": true,
+    "status": "healthy"
+  },
+  "checks": [
+    "8 official locations",
+    "iframe page",
+    "no-cookie signed session",
+    "Porsche service schedule",
+    "unauthorized ancestor denied",
+    "admin endpoint guarded"
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-04",
+  "failure": {
+    "outcome": "Failed",
+    "scenario": "The previous systems page opened on a box-shaped representative body rather than a recognizable Porsche exterior.",
+    "evidence": "porsche-boxy-before-owner.png"
+  },
+  "browser_retest": {
+    "outcome": "Worked",
+    "url": "http://127.0.0.1:8090/vehicle-atlas?subject=systems",
+    "initial_presentation": "exterior",
+    "licensed_exterior_meshes": 44,
+    "visual_registration_error_m": 0,
+    "clicking_exterior": "Opened X-ray cutaway",
+    "xray_system_meshes": 165,
+    "explosion_target": 0.5,
+    "explosion_observed": 0.5,
+    "slider_return_to_zero": "Worked: exterior restored with 44 displayed surfaces",
+    "internal_parts_at_exterior_state": "Inside",
+    "reset_presentation": "exterior",
+    "reset_visible_meshes": 44,
+    "screenshots": [
+      "porsche-corrected-exterior.png",
+      "porsche-corrected-cutaway.png"
+    ]
+  },
+  "recall_retest": {
+    "outcome": "Worked",
+    "url": "http://127.0.0.1:8090/vehicle-atlas?subject=systems&recall=25V896000&year=2025",
+    "campaign": "25V896000",
+    "selected_component": "rear-camera",
+    "presentation": "cutaway",
+    "official_issue_consequence_remedy_visible": true,
+    "year_scope_note_visible": true
+  },
+  "linux_container": {
+    "outcome": "Worked",
+    "image_id": "sha256:21d33f61346b8055ced91a7bb491b30801837da432bf51f26e7fe94a233e78a4",
+    "container_id": "62e519f2c776345c3dbac4144c982b1ca6e786d5599561910e9ffeb42ee2ddda",
+    "runtime_uid": 1000,
+    "observed_port": 59667,
+    "exterior_meshes": 44,
+    "xray_system_meshes": 165,
+    "xray_draw_calls": 388,
+    "explosion_observed": "50% then 0% on the final image",
+    "exterior_restored_after_mode_change": true,
+    "visual_registration_error_m": 0,
+    "http_evidence": "vehicle-visual-container-http.json",
+    "browser_screenshot": "porsche-visual-linux.png"
+  }
+}

@@ -1,0 +1,19 @@
+C:\Users\techai\Documents\Codex\2026-10-04\https-github-com-rblake2320-jack-ingram\work\laya-runtime\laya\agent.py:2110: RuntimeWarning: laya: this checkpoint ships invalid temperatures or values outside [0.5, 5]; using choice:11+=0.10058280825614929 -> 0.5. Treat confidence from the affected entries as uncalibrated.
+  return Agent(model_id_or_path, device=device, token=token, subfolder=subfolder, fast=fast,
+{
+  "model": "convaiinnovations/laya",
+  "sdk": "0.3.26",
+  "revision": "7b928d828b7b0e022f929d9bd2e44165aa270148",
+  "device": "cpu",
+  "threads": 2,
+  "input_type": "synthetic short English text, not screenshots or customer transcripts",
+  "corpus_sha256": "f7fc617c90462252a5e5976d2f39e4072de91a33787ae3cbfba6aa8bb31b1485",
+  "cases": 24,
+  "baseline_correct": 24,
+  "laya_correct": 22,
+  "valid_results": 24,
+  "load_seconds": 20.19,
+  "median_milliseconds": 432.275,
+  "release_policy": "Advisory only; no probability threshold grants action or overrides baseline.",
+  "acceptance_target": "At least 22/24 labels, all typed outputs valid; domain calibration still required."
+}

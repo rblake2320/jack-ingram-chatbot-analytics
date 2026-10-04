@@ -1,0 +1,24 @@
+{
+  "outcome": "Worked",
+  "components": 77,
+  "mesh_count": 165,
+  "triangles": 45644,
+  "bytes": 1525460,
+  "sha256": "5cabbc7f6d75563d14f16ae4ea43c9199f73019c805e2a9d9fa39af46031153a",
+  "units": "meters",
+  "axle_distance": 2.45,
+  "body_envelope": {
+    "length": 4.542,
+    "width": 1.852,
+    "height": 1.303,
+    "wheelbase": 2.45,
+    "front_axle_z": 1.245,
+    "rear_axle_z": -1.205,
+    "front_tire": "245/35 ZR20",
+    "rear_tire": "305/30 ZR21",
+    "front_disc": 0.408,
+    "rear_disc": 0.38
+  },
+  "hybrid": false,
+  "omitted": "Security systems, exact harness routing, VIN parts and OEM manufacturing geometry"
+}

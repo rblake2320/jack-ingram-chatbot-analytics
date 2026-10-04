@@ -1,204 +1,208 @@
-# Jack Ingram Motors Chatbot Analytics Solution
+# Jack Ingram Motors chatbot and analytics demo
 
-![GitHub last commit](https://img.shields.io/github/last-commit/rblake2320/jack-ingram-chatbot-analytics)
-![GitHub repo size](https://img.shields.io/github/repo-size/rblake2320/jack-ingram-chatbot-analytics)
-![GitHub issues](https://img.shields.io/github/issues/rblake2320/jack-ingram-chatbot-analytics)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/rblake2320/jack-ingram-chatbot-analytics)
-![License](https://img.shields.io/badge/license-MIT-blue)
+A website-embeddable dealership assistant covering six brands, Signature Used Cars
+and the Body Shop. It compares reviewed vehicle model guides inside chat, includes
+an interactive Porsche 911 component explorer, links to the stores' current inventory
+and scheduling tools, and produces consent-based usage analytics.
+The repository also contains historical proposals; their revenue and conversion
+numbers are estimates, not measured results.
 
-## Overview
+## Run on Windows
 
-This repository contains a comprehensive analytics-enabled chatbot solution designed specifically for Jack Ingram Motors and its six brand-specific dealership sites (Audi, Mercedes-Benz, Nissan, Porsche, Volkswagen, and Volvo). The solution provides powerful customer engagement capabilities while capturing detailed analytics to drive marketing campaigns and business growth.
+Python 3.12+:
 
-### Key Features
-
-- **Brand-Specific Intelligence**: Unique voice and tone for each dealership brand
-- **Comprehensive Analytics**: Visitor behavior tracking across all metrics
-- **Enhanced Customer Experience**: 24/7 instant assistance across all brands
-- **Business Process Optimization**: Intelligent lead qualification and routing
-- **Multi-Tenant Architecture**: Scalable to additional dealerships
-
-## Business Impact
-
-Implementation of this solution delivers:
-
-- **37% increase** in web-to-lead conversions
-- **25-40% more** appointments scheduled
-- **75% overall ROI** improvement
-- **24/7 customer engagement** capturing after-hours traffic (30-40% of visitors)
-- **Unprecedented insights** into customer behavior and preferences
-
-## Repository Structure
-
-```
-/
-├── docs/                          # Documentation directory
-│   ├── proposal/                  # Proposal documents
-│   ├── analysis/                  # Analysis documents
-│   │   ├── website_analysis/      # Website analysis documents
-│   │   ├── brand_analysis/        # Brand-specific analysis
-│   │   └── requirements/          # Requirements documents
-│   ├── implementation/            # Implementation documents
-│   └── business/                  # Business documents
-├── src/                           # Source code directory (for future development)
-│   ├── config/                    # Configuration files
-│   ├── api/                       # API integration code
-│   ├── analytics/                 # Analytics implementation
-│   └── ui/                        # UI components
-├── examples/                      # Example code and usage
-├── tests/                         # Test files
-└── .github/                       # GitHub specific files
-    ├── ISSUE_TEMPLATE/            # Issue templates
-    └── workflows/                 # GitHub Actions workflows
+```powershell
+python -m venv .venv
+.venv/Scripts/python.exe -m pip install --require-hashes -r requirements.lock
+Copy-Item .env.example .env
+.venv/Scripts/python.exe -m src.demo.app
 ```
 
-## Documentation
+Open <http://127.0.0.1:8080>. Local mode needs no model or API credentials.
+Use brand buttons, the message field, and suggested questions. “New chat” resets
+this visitor's history. Requests are limited to 2,000 characters and 16 KiB JSON.
+Waitress's transport buffer is bounded to 64 KiB.
 
-### Proposal Documents
+## Capabilities and evidence
 
-- [Final Proposal](docs/proposal/final_proposal.md): Complete solution proposal
-- [Analytics Proposal](docs/proposal/analytics_proposal.md): Analytics-specific proposal
+| Capability | Implementation | Acceptance |
+| --- | --- | --- |
+| Eight official locations, department hours, contact and action links | src/demo/data/dealerships.json; src/demo/api_router.py | test_website.py |
+| Website widget with isolated styles and cookie-independent sessions | /static/embed.js; /widget | browser acceptance; no-cookie HTTP test |
+| In-chat model comparisons and passenger-capacity follow-ups | src/demo/advisor.py; vehicle_guides.json | test_advisor.py; owner question in actual widget |
+| Licensed Porsche 911 visual explorer, picking, separation, peel, focus and chat controls | /vehicle-atlas; frontend/atlas.js | test_atlas.py; Node geometry controls; desktop/mobile/container browser receipts |
+| Labeled 2024 sample vehicles; expired offers excluded | src/demo/inventory_db.py | test_expired_offers_and_model_filter |
+| Isolated history and reset; stale replies rejected | src/demo/store.py | test_receiving_session_isolation_and_reset; test_reset_wins_inflight |
+| Consented metadata, deletion, protected dashboard | src/demo/app.py; /analytics | test_consent_summary_and_forget; browser receipt |
+| Current configurable Messages API | src/demo/claude_client.py | synthetic HTTP contract and fault tests |
+| Optional local Laya intent suggestions | src/demo/routing.py | scripts/evaluate_laya.py |
+| Windows/Linux server and container | python -m src.demo.app | scripts/verify_http.py; CI |
 
-### Analysis Documents
+Local responses are deterministic. To enable paid generation, explicitly set
+CHAT_PROVIDER=anthropic and supply a **new** ANTHROPIC_API_KEY in .env or a secret store.
+ANTHROPIC_MODEL is configurable (default claude-sonnet-5-5, checked against the
+[current provider catalog](https://platform.claude.com/docs/en/models/overview)).
+Official facts and handoff routes remain local. Sample inventory is available only
+when explicitly requested with “sample”. The provider adapter
+has bounded timeouts, no retries, and rejects empty, malformed or unfinished replies.
+Provider contract tests use synthetic local responses; vendor inference requires
+the operator's configured account and spending authorization.
 
-#### Website Analysis
-- [Main Site Analysis](docs/analysis/website_analysis/main_site.md): Jack Ingram Motors main site analysis
-- [User Journeys](docs/analysis/website_analysis/user_journeys.md): User journey mapping
-- [Technology Stack](docs/analysis/website_analysis/tech_stack.md): Technical stack assessment
+## Privacy and analytics
 
-#### Brand-Specific Analysis
-- [Audi Analysis](docs/analysis/brand_analysis/audi.md): Audi Montgomery site analysis
-- [Mercedes-Benz Analysis](docs/analysis/brand_analysis/mercedes_benz.md): Mercedes-Benz site analysis
-- [Nissan Analysis](docs/analysis/brand_analysis/nissan.md): Nissan site analysis
-- [Porsche Analysis](docs/analysis/brand_analysis/porsche.md): Porsche site analysis
-- [Volkswagen Analysis](docs/analysis/brand_analysis/volkswagen.md): Volkswagen site analysis
+Analytics is opt-in per message; the checkbox starts unchecked. Events contain
+intent, brand, source, latency, token counts and a keyed anonymous browser identifier.
+Events exclude messages, contact details, raw IP and user-agent strings.
+“Delete my conversation & session analytics” removes this browser session's records.
 
-#### Requirements Documents
-- [Analytics Requirements](docs/analysis/requirements/analytics_requirements.md): Detailed analytics requirements
-- [Metrics Definition](docs/analysis/requirements/metrics.md): Key customer behavior metrics
-- [Pain Points Analysis](docs/analysis/requirements/pain_points.md): Dealership customer experience pain points
+Conversation text is stored separately in local SQLite to support follow-up questions,
+limited to 20 messages and one hour of inactivity. Analytics retention is 90 days.
+Expired records are deleted on server activity; the database is not encrypted by this app.
+Protect its directory and volume, and configure an appropriate data policy before deployment.
+No third-party analytics scripts or external frontend CDNs are loaded.
 
-### Implementation Documents
-- [Compatibility Assessment](docs/implementation/compatibility.md): Chatbot compatibility assessment
-- [Optimization Recommendations](docs/implementation/optimization.md): Optimization guidance
-- [Implementation Plan](docs/implementation/implementation_plan.md): Detailed implementation roadmap
-- [Validation Report](docs/implementation/validation.md): Solution validation
+/analytics requires ADMIN_TOKEN (32+ characters) to retrieve aggregates. Set
+SESSION_SECRET (32+ characters) for durable signed cookies. Generate these locally:
 
-### Business Documents
-- [Business Enhancements](docs/business/enhancements.md): Business enhancement documentation
-- [Feature Mapping](docs/business/feature_mapping.md): Feature-pain point mapping
-- [Dashboard Design](docs/business/dashboard_design.md): Analytics dashboard specifications
-
-## Implementation Plan
-
-The solution will be implemented through a phased approach:
-
-### Phase 1: Core Integration (Weeks 1-2)
-- Base chatbot deployment across all sites
-- Core knowledge base implementation
-- Basic analytics tracking
-- Essential brand customizations
-
-### Phase 2: Enhanced Functionality (Weeks 3-4)
-- Inventory integration
-- Appointment scheduling
-- Lead capture optimization
-- Advanced brand customizations
-
-### Phase 3: Analytics Expansion (Weeks 5-6)
-- Comprehensive analytics implementation
-- Custom dashboard development
-- Marketing campaign integration
-- Performance optimization
-
-### Phase 4: Advanced Features (Weeks 7-8)
-- Multi-language support
-- Personalization framework
-- Advanced accessibility
-- Cross-brand capabilities
-
-## Technical Implementation
-
-The solution utilizes a modern, lightweight architecture:
-
-```javascript
-// Embed code example
-(function(w, d, s, o, f, js, fjs) {
-  w['JackIngramChatWidget'] = o;
-  w[o] = w[o] || function() {
-    (w[o].q = w[o].q || []).push(arguments)
-  };
-  js = d.createElement(s), fjs = d.getElementsByTagName(s)[0];
-  js.id = o;
-  js.src = f;
-  js.async = 1;
-  fjs.parentNode.insertBefore(js, fjs);
-}(window, document, 'script', 'jiChat', 'https://chat-cdn.jackingram.com/loader.js'));
-
-jiChat('init', {
-  dealershipId: 'jackingram',
-  brand: 'auto-detect', // Will detect brand based on URL
-  language: 'auto-detect', // Will detect language based on site setting
-  theme: 'auto-brand', // Will apply brand-specific styling
-  analyticsEnabled: true
-});
+```powershell
+python -c "import secrets; print(secrets.token_urlsafe(48))"
 ```
 
-Key technical features include:
-- Asynchronous loading for minimal performance impact
-- Responsive design for all device types
-- Secure API integrations with inventory and scheduling systems
-- Real-time data synchronization
-- WCAG 2.1 AA accessibility compliance
+Copy separate generated values into .env without committing it. With no secret,
+loopback development uses an ephemeral key and warns that sessions reset on restart.
+Public binding requires SESSION_SECRET; use HTTPS and COOKIE_SECURE=true.
+Set TRUSTED_HOSTS to the explicit deployment hostname (plus localhost for health probes).
+Rate limits are enforced in SQLite against a keyed IP digest, so clearing cookies
+does not bypass them. Do not trust forwarded headers without a configured proxy.
 
-## Getting Started
+## Laya
 
-### Prerequisites
+The supplied [convaiinnovations/laya](https://huggingface.co/convaiinnovations/laya)
+checkpoint classifies typed intents; it does not generate chat answers. Optional:
 
-- Node.js 16+
-- OpenAI API access
-- Web server with HTTPS support
-
-### Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/rblake2320/jack-ingram-chatbot-analytics.git
-cd jack-ingram-chatbot-analytics
+```powershell
+.venv/Scripts/python.exe -m pip install -r requirements-laya.txt
+.venv/Scripts/python.exe scripts/evaluate_laya.py --output laya-evaluation.json
 ```
 
-2. Install dependencies (for future development):
-```bash
-npm install
+The evaluation requires already cached checkpoint files; it does not download them.
+To display advisory routing alongside deterministic replies, configure ENABLE_LAYA=true
+and LAYA_MODEL_PATH to that local checkpoint. CPU inference uses two threads.
+Unavailable, busy, oversized and malformed results fall back safely.
+On 24 synthetic English dealership requests, SDK 0.3.26 returned 24 valid outputs and
+22 correct labels, versus 24 correct baseline labels after repairing plural SUV recognition. The checkpoint warned that its
+probabilities were uncalibrated. Keep routing advisory; no authorization or booking
+decision uses its probabilities. See [review and receipts](docs/review-2026-10-04.md).
+
+## Verify
+
+```powershell
+./scripts/verify.ps1 -Install
 ```
 
-3. Configure environment variables:
-```bash
-cp .env.example .env
-# Edit .env with your API keys and configuration
+The verification installs development dependencies, scans source and local Markdown
+links, runs regression/fault tests, exercises the actual Waitress server over HTTP,
+and audits runtime dependencies. It makes zero paid API calls.
+CI runs Windows and Ubuntu acceptance checks and retains HTTP/test/SBOM receipts.
+Dependabot proposes dependency updates; it never merges them automatically.
+
+## Container
+
+```powershell
+docker build -f src/demo/Dockerfile -t jack-ingram-chatbot .
+docker run --rm -p 127.0.0.1:8080:8080 --env-file .env -e HOST=0.0.0.0 -e COOKIE_SECURE=false jack-ingram-chatbot
 ```
 
-4. Deploy to your web server following the [Implementation Plan](docs/implementation/implementation_plan.md).
+The image runs as an unprivileged user. Supply SESSION_SECRET and a durable,
+protected /app/instance volume if retaining data. The deployment template is
+src/demo/app.yaml; automatic deployment is disabled. This review did not deploy
+the app publicly.
 
-## Contributing
+## Receiving integrations
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+/health reports inventory=official_website_links, booking=unconfigured and crm=unconfigured.
+The assistant links to current inventory on the official websites. Returning live
+stock or prices inside chat requires an authorized current feed. Actual appointment scheduling
+requires a booking API and confirmation receipt; CRM requires an approved destination
+and delivery receipt. The demo provides a phone/website handoff and never reports a
+reservation, lead delivery, financing approval or current offer.
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+Credentials previously appeared in public source, docs and deployment manifests.
+Current files remove them. **Revoke and rotate the old Anthropic, Perplexity and
+Firecrawl keys**; deletion from the current tree does not remove public Git history.
 
-## License
+## Project map
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+- src/demo: Flask application, sourced dealership catalog, installable widget and demonstration page.
+- scripts: source gates, Waitress acceptance, optional Laya evaluation.
+- docs/review-2026-10-04.md: findings, registered checks and retained results.
+- Other documentation: historical plans, not deployment evidence.
+- Existing PRs #2/#3: separate repository hygiene/fleet proposals.
 
-## Contact
+Application code uses the MIT license. The unchanged Carrera 4S model and its
+presentation adaptations use CC BY-SA 4.0, credited to Karol Miklas; Three.js uses
+MIT and Draco uses Apache 2.0. See [asset notices](src/demo/static/models/NOTICE.txt).
+Business facts are a dated snapshot; confirm holiday changes with the dealership.
 
-Project Owner: [rblake2320](https://github.com/rblake2320)
+## Website integration and recent technology
 
-## Acknowledgments
+Open /website-demo for a dealership presentation, or / for the larger assistant preview.
+Install the widget through the dealership's CMS using an external script from your
+deployed HTTPS chat service. See [installation and source review](docs/website-integration-2026-10-04.md)
+for the concrete snippet, CSP, store selection, data refresh and acceptance results.
+See [July–October technology review](docs/recent-technology-2026-10-04.md) for dated
+primary sources and adoption decisions.
 
-- Jack Ingram Motors for providing access to their website ecosystem
-- OpenAI for the Assistants API technology
+## Interactive showroom and buying assistant
+
+Open `/vehicle-atlas` for the credited Carrera 4S exterior (44 imported vehicle
+surfaces; model year unverified). The prominent **Take apart 44 surfaces** control
+separates every imported mesh at its original scale. Click a separated surface to
+inspect it alone, or reassemble the model. The guided tour also visits this view.
+These surfaces are artist-authored geometry, not Porsche service parts. The asset
+does not contain engine or transmission internals.
+
+Open `/vehicle-atlas?subject=systems` for a separate **illustrative system map**.
+It starts on the licensed exterior, then X-ray or Concept map displays an original
+procedural reconstruction: 77 named schematic regions, 165 meshes and 45,644
+triangles in a 1.53 MB GLB. A transparent licensed silhouette supplies visual
+context. Component dimensions are constrained by public specifications, but the
+shapes and positions are illustrative. Its larger mesh and region counts do not
+mean it has the source detail of the exterior or the F-15 Eagle Atlas. The two
+assets are hash verified and aligned by their bounding envelopes; neither is
+OEM manufacturing CAD, a service disassembly or an exact VIN.
+
+Ask `2025 Porsche 911 recalls` or `2026 Atlas recalls` in the website chat.
+Official NHTSA issue, consequence and remedy appear inside the product. Reviewed
+Porsche camera and lighting notices open the systems viewer with the notice and
+component selected. A MY2025 notice retains MY2025 coverage even when the
+illustration is the MY2026 reconstruction. Results require a manufacturer/VIN
+check; they do not establish an individual car's recall or repair status. The
+live lookup has a bounded cache and dated official-response fallback. A failed
+lookup is shown as unavailable, never as zero recalls. Manufacturer do-not-drive
+and park-outside flags are preserved. Service links are requests, not reservations.
+
+The exterior asset contains 45 meshes: 44 vehicle surfaces in seven reviewed
+groups plus one hidden source ground plane. The connected assistant applies
+bounded viewer actions such as “show me the rear wheels” and “isolate the glass”.
+
+Try “what is the best selling cars you have”, “compare Rogue and Atlas”, then
+“I need 7 seats”. The assistant answers inside chat, distinguishes five-seat models
+from three-row alternatives, and asks about budget. Manufacturer guides are marked
+separately from dealer stock; unpublished sales rankings and counts are never invented.
+
+The commercial and inventory browser on jackingram.com belong to the dealership.
+This repository supplies the demo host page, installable chat widget, buying guides,
+original schematic systems map, interactive explorer, recall connections, backend
+and private analytics. External website handoffs are labeled; the demo's primary
+action opens the imported exterior geometry.
+
+The compiled viewer is committed for Python-only startup and container use. To
+rebuild it, install Node.js 24, then run `npm ci --ignore-scripts` and `npm run build`.
+`npm test` checks component identity and projected part packing. CI rebuilds and
+rejects generated-file drift on Windows and Ubuntu. The viewer loads all runtime
+assets from its own server, with no frontend CDN. /vehicle-atlas has scoped blob
+permissions for embedded texture decoding and Draco workers; other routes retain
+their existing policy.
+
+See [showroom acceptance and provenance](docs/vehicle-explorer-2026-10-04.md).

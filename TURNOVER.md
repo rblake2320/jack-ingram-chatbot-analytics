@@ -59,12 +59,12 @@
 ## API Keys and Credentials
 NOTE: The following are TEST/DEMO API keys with limited usage and timeouts. They are intentionally included for demonstration purposes:
 
-- Perplexity API Key (TEST): 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
+- Perplexity API Key (TEST): REMOVED_USE_ENVIRONMENT
   - 24-hour test key for demo functionality
   - Limited to basic query operations
   - Automatically expires
 
-- FireCrawl API Key (TEST): fc-be236bbbb1ae48a7b516efb3a2d932e2
+- FireCrawl API Key (TEST): REMOVED_USE_ENVIRONMENT
   - Demo key for web scraping features
   - Rate-limited for testing
   - No sensitive access permissions

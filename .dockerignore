@@ -1,0 +1,11 @@
+.git
+.venv
+instance
+*.sqlite3*
+.env
+screenshots
+docs
+work
+outputs
+__pycache__
+*.pyc

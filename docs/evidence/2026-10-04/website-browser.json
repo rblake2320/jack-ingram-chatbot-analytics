@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-04",
+  "host": "http://127.0.0.1:8089/website-demo",
+  "iframe": "http://localhost:8089/widget?parent=http%3A%2F%2F127.0.0.1%3A8089",
+  "browsers": ["Codex in-app browser", "Chrome"],
+  "receipts": [
+    {"scenario": "lazy cross-origin widget and all eight location options", "outcome": "Worked"},
+    {"scenario": "typed form submit without allow-forms sandbox capability", "outcome": "Failed", "observed": "Input remained unchanged and form event did not submit; quick buttons worked"},
+    {"scenario": "typed submit after adding allow-forms, with form-action self CSP", "outcome": "Worked", "observed": "Nissan service hours and official source link visible"},
+    {"scenario": "Chrome Return key in focused iframe input", "outcome": "Worked", "observed": "Nissan service answer received"},
+    {"scenario": "Escape in iframe input; reopen", "outcome": "Worked", "observed": "Launcher collapsed and received focus; reopening preserved conversation"},
+    {"scenario": "mobile Body Shop address and scheduling handoff", "outcome": "Worked", "css_width": 390, "css_height": 844, "page_scroll_width": 382, "observed": "5648 Eddins Road and official bodyshop scheduling/contact links visible"},
+    {"scenario": "Nissan inventory handoff", "outcome": "Worked", "observed": "Official Nissan new-inventory URL visible; no sample price presented"}
+  ],
+  "screenshots": ["website-widget-desktop.png", "website-widget-mobile.png"],
+  "notes": "Screenshots retained in the task outputs directory. IAB viewport override was ineffective; responsive acceptance used Chrome and measured actual DOM viewport size."
+}
