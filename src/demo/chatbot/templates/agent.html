@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent Console</title>
+  <link rel="stylesheet" href="/static/app.css">
+  <script src="/static/agent.js" defer></script>
+</head>
+<body>
+  <main class="admin-shell">
+    <header class="toolbar">
+      <h1 class="brand">Live chat console</h1>
+      <a class="btn" href="/admin">Analytics</a>
+    </header>
+    <form class="toolbar card panel" id="auth-form">
+      <label for="token">Admin token</label>
+      <input id="token" type="password" autocomplete="off" size="30" required>
+      <label for="agent-name">Your name</label>
+      <input id="agent-name" maxlength="60" required>
+      <button class="btn primary" type="submit">Connect</button>
+      <span class="error-text" id="auth-error" role="alert"></span>
+    </form>
+    <section class="agent-layout hidden" id="console">
+      <div class="card">
+        <div class="panel"><h2>Queue</h2><p class="subtitle" id="queue-count"></p></div>
+        <div id="queue" role="list"></div>
+      </div>
+      <div class="card">
+        <div class="panel toolbar">
+          <h2 id="conv-title">Select a conversation</h2>
+          <button class="btn" id="claim" type="button" disabled>Claim</button>
+          <button class="btn" id="close" type="button" disabled>Close &amp; return to bot</button>
+        </div>
+        <div class="transcript" id="transcript" role="log" aria-live="polite"></div>
+        <form class="composer" id="reply-form">
+          <label for="reply" class="hidden">Reply</label>
+          <textarea id="reply" rows="2" maxlength="2000" placeholder="Reply to the customer…" disabled></textarea>
+          <button class="btn primary" type="submit" id="send" disabled>Send</button>
+        </form>
+        <p class="error-text" id="console-error" role="alert"></p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

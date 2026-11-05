@@ -1,0 +1,9 @@
+# Normalise line endings: LF in the repo, native on checkout for scripts that need it.
+* text=auto eol=lf
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.webp binary
+*.png binary
+*.jpg binary
+*.sqlite3 binary

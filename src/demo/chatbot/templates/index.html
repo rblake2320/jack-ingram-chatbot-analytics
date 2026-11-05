@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ dealer.name }} Assistant</title>
+  <link rel="stylesheet" href="/static/app.css">
+  <script src="/static/chat.js" defer></script>
+</head>
+<body>
+  <main class="chat-shell" data-sample="{{ 'true' if is_sample else 'false' }}">
+    <header class="chat-header">
+      <div class="brand">
+        <h1>{{ dealer.name }}{% if is_sample %}<span class="badge" title="Inventory shown is sample data">Demo data</span>{% endif %}</h1>
+        <p>Virtual assistant · {{ dealer.brands | join(" · ") }}</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn" id="open-booking" type="button">Book appointment</button>
+        <button class="btn" id="open-lead" type="button">Contact me</button>
+        <button class="btn" id="new-chat" type="button" title="Start a new conversation">New chat</button>
+      </div>
+    </header>
+
+    <div class="banner hidden" id="handoff-banner" role="status" aria-live="polite"></div>
+
+    <section class="card">
+      <div class="messages" id="messages" role="log" aria-live="polite" aria-label="Conversation"></div>
+      <div class="typing" id="typing" aria-live="polite"></div>
+      <div class="chips" id="chips" aria-label="Suggestions">
+        <button class="chip" type="button" data-prompt="Show me SUVs under $50,000">SUVs under $50k</button>
+        <button class="chip" type="button" data-prompt="I'd like to book a service appointment">Book service</button>
+        <button class="chip" type="button" data-prompt="What is my 2019 Honda Accord with 60,000 miles worth as a trade-in?">Value my trade</button>
+        <button class="chip" type="button" data-prompt="What would my payment be on $35,000 at 6.9% for 60 months?">Estimate a payment</button>
+        <button class="chip" type="button" data-prompt="Can I talk to a real person?">Talk to a person</button>
+      </div>
+      <form class="composer" id="composer" autocomplete="off">
+        <label for="input" class="hidden">Message</label>
+        <textarea id="input" rows="1" maxlength="2000" placeholder="Ask about vehicles, service, financing…" required></textarea>
+        <button class="btn primary" id="send" type="submit">Send</button>
+      </form>
+      <div class="counter" id="counter">0 / 2000</div>
+    </section>
+    <p class="muted small">Estimates are for planning only. Please don't share sensitive information such as Social Security or card numbers in chat.</p>
+  </main>
+
+  <dialog id="booking-dialog" aria-labelledby="booking-title">
+    <form class="dialog-body" id="booking-form" novalidate>
+      <h2 id="booking-title">Book an appointment</h2>
+      <div class="row">
+        <div class="field">
+          <label for="b-dept">Type</label>
+          <select id="b-dept" name="department">
+            <option value="service">Service visit</option>
+            <option value="test_drive">Test drive</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="b-date">From date</label>
+          <input id="b-date" name="date" type="date">
+        </div>
+      </div>
+      <div class="field">
+        <label>Available times</label>
+        <div class="slots" id="b-slots"><span class="muted small">Loading…</span></div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="b-first">First name</label><input id="b-first" name="first_name" maxlength="50" required></div>
+        <div class="field"><label for="b-last">Last name</label><input id="b-last" name="last_name" maxlength="50" required></div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="b-phone">Mobile phone</label><input id="b-phone" name="phone" type="tel" maxlength="20" required></div>
+        <div class="field"><label for="b-email">Email (optional)</label><input id="b-email" name="email" type="email" maxlength="254"></div>
+      </div>
+      <div class="field"><label for="b-notes">Vehicle / notes (optional)</label><input id="b-notes" name="notes" maxlength="500"></div>
+      <label class="consent"><input type="checkbox" id="b-consent" required> I agree to be contacted by phone, text or email about this appointment.</label>
+      <div class="error-text" id="b-error" role="alert"></div>
+      <div class="success hidden" id="b-success" role="status"></div>
+      <div class="dialog-actions">
+        <button class="btn hidden" type="button" id="b-ics">Add to calendar</button>
+        <button class="btn" type="button" data-close>Close</button>
+        <button class="btn primary" type="submit" id="b-submit">Book</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="lead-dialog" aria-labelledby="lead-title">
+    <form class="dialog-body" id="lead-form" novalidate>
+      <h2 id="lead-title">Have our team contact you</h2>
+      <div class="row">
+        <div class="field"><label for="l-first">First name</label><input id="l-first" maxlength="50" required></div>
+        <div class="field"><label for="l-last">Last name</label><input id="l-last" maxlength="50"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="l-phone">Phone</label><input id="l-phone" type="tel" maxlength="20"></div>
+        <div class="field"><label for="l-email">Email</label><input id="l-email" type="email" maxlength="254"></div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="l-interest">Interested in</label>
+          <select id="l-interest">
+            <option value="buy">Buying</option>
+            <option value="lease">Leasing</option>
+            <option value="trade-in">Trading in</option>
+            <option value="service">Service</option>
+            <option value="general" selected>Something else</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="l-pref">Preferred contact</label>
+          <select id="l-pref">
+            <option value="phone">Phone call</option>
+            <option value="text">Text</option>
+            <option value="email">Email</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><label for="l-comments">Comments</label><textarea id="l-comments" rows="3" maxlength="1000"></textarea></div>
+      <label class="consent"><input type="checkbox" id="l-consent" required> I agree to be contacted about my request.</label>
+      <div class="error-text" id="l-error" role="alert"></div>
+      <div class="success hidden" id="l-success" role="status"></div>
+      <div class="dialog-actions">
+        <button class="btn" type="button" data-close>Close</button>
+        <button class="btn primary" type="submit" id="l-submit">Send</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>

@@ -1,19 +1,22 @@
 # Jack Ingram Motors Website Analysis
 
 ## Overview
+
 Jack Ingram Motors operates a multi-brand dealership website that serves as a hub for six premium automotive brands: Audi, Mercedes-Benz, Nissan, Porsche, Volkswagen, and Volvo. The website is designed to provide a unified experience while allowing customers to navigate to brand-specific inventory and services.
 
 ## Main Website Structure
 
 ### Navigation and Core Elements
+
 - **Primary Navigation**: Shop New, Shop Pre-Owned, Sell or Trade, Finance, Service, Body Shop, About Us, Español
 - **Logo**: Jack Ingram Motors logo links to homepage
 - **Search Functionality**: Global search feature for inventory
 - **Language Toggle**: English/Spanish option available
 
 ### Homepage Sections
+
 1. **Hero Banner**: Rotating promotional content with call-to-action buttons
-2. **Inventory Quick Access**: 
+2. **Inventory Quick Access**:
    - Browse New Inventory
    - Browse Pre-Owned Inventory
    - Browse Certified Pre-Owned Inventory
@@ -29,6 +32,7 @@ Jack Ingram Motors operates a multi-brand dealership website that serves as a hu
    - Get Pre-Approved
 
 ### Footer Elements
+
 - Dealership address: 227 Eastern Blvd Montgomery, AL 36117
 - Dealership selector dropdown
 - Contact information
@@ -38,20 +42,25 @@ Jack Ingram Motors operates a multi-brand dealership website that serves as a hu
 ## Key User Journeys
 
 ### 1. Vehicle Shopping Journey
+
 - Homepage → Shop New/Pre-Owned → Brand Selection → Inventory Filtering → Vehicle Detail Page → Financing Options → Contact/Lead Form
 
 ### 2. Service Journey
+
 - Homepage → Service → Service Type Selection → Scheduling Interface → Appointment Confirmation
 
 ### 3. Financing Journey
+
 - Homepage → Finance → Credit Application → Pre-Approval → Vehicle Selection
 
 ### 4. Trade-In Journey
+
 - Homepage → Sell or Trade → Valuation Tool → Trade Offer → Upgrade Options
 
 ## Brand-Specific Experiences
 
 Each of the six brands appears to have dedicated sections with:
+
 - Brand-specific inventory
 - Special offers and promotions
 - Model information
@@ -61,12 +70,14 @@ Each of the six brands appears to have dedicated sections with:
 ## Technical Observations
 
 ### Website Architecture
+
 - Responsive design that adapts to different screen sizes
 - Modern web technologies with dynamic content loading
 - Consistent header/footer across all pages
 - Appears to use a content management system for dealership inventory
 
 ### Integration Points
+
 - Inventory management system
 - Customer relationship management (CRM) system
 - Financing application processing
@@ -74,6 +85,7 @@ Each of the six brands appears to have dedicated sections with:
 - Vehicle valuation tools
 
 ### User Interface Elements
+
 - Clean, modern design with brand-appropriate styling
 - Clear call-to-action buttons
 - Prominent search functionality
@@ -83,6 +95,7 @@ Each of the six brands appears to have dedicated sections with:
 ## Chatbot Integration Opportunities
 
 ### High-Value Integration Points
+
 1. **Inventory Search Assistance**: Help users find vehicles matching specific criteria
 2. **Financing Pre-Qualification**: Guide users through financing options and pre-approval
 3. **Service Scheduling**: Assist with appointment booking and service information
@@ -91,6 +104,7 @@ Each of the six brands appears to have dedicated sections with:
 6. **Multilingual Support**: Leverage the existing Spanish language option
 
 ### Page-Specific Chatbot Functions
+
 - **Homepage**: General assistance, direction to appropriate sections
 - **Inventory Pages**: Vehicle specification explanations, comparison assistance
 - **Finance Pages**: Payment calculations, credit application guidance
@@ -98,6 +112,7 @@ Each of the six brands appears to have dedicated sections with:
 - **Brand Pages**: Brand-specific knowledge and model information
 
 ## Next Steps
+
 - Analyze each brand-specific section in detail
 - Examine the technical implementation of key user journeys
 - Identify the technology stack and integration points

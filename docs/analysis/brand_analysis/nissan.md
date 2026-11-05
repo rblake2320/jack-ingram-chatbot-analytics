@@ -1,11 +1,13 @@
 # Brand-Specific Website Analysis: Nissan
 
 ## Overview
+
 The Jack Ingram Nissan website is one of the six brand-specific dealership sites under the Jack Ingram Motors umbrella. This analysis documents the structure, functionality, and unique elements of the Nissan site to ensure optimal chatbot integration.
 
 ## Site Structure
 
 ### Navigation and Core Elements
+
 - **Primary Navigation**: New, Nissan Models, Pre-Owned, Sell or Trade, Finance & Specials, Service & Parts, Research, Español
 - **Logo**: Jack Ingram Nissan logo links to brand homepage
 - **Contact Information**: Sales: 334-597-5472, Service: 334-602-4175
@@ -15,6 +17,7 @@ The Jack Ingram Nissan website is one of the six brand-specific dealership sites
 - **Sign In/Account**: User account functionality
 
 ### Homepage Sections
+
 1. **Hero Banner**: Rotating promotional content featuring current Nissan models and offers
    - Current promotion: "Summer Trade-Up Sales Event"
    - Featured lease offer: "2025 Nissan Sentra SV" at $300/month
@@ -32,6 +35,7 @@ The Jack Ingram Nissan website is one of the six brand-specific dealership sites
    - Schedule Service
 
 ### Unique Brand Elements
+
 - **Nissan-Specific Design**: Follows Nissan brand guidelines with appropriate styling
 - **Nissan Models Section**: Dedicated area for Nissan model lineup
 - **Certified Pre-Owned**: Nissan-specific CPO program
@@ -40,23 +44,28 @@ The Jack Ingram Nissan website is one of the six brand-specific dealership sites
 ## Key User Journeys
 
 ### 1. Nissan-Specific Vehicle Shopping Journey
+
 - Homepage → New → Model Selection → Vehicle Detail Page → Financing Options → Contact/Lead Form
 
 ### 2. Nissan Service Journey
+
 - Homepage → Service & Parts → Service Scheduling → Appointment Confirmation
 
 ### 3. Nissan Research Journey
+
 - Homepage → Research → Model Details → Inventory Availability → Test Drive Request
 
 ## Technical Observations
 
 ### Website Architecture
+
 - Brand-consistent design following Nissan corporate guidelines
 - Responsive layout that adapts to different screen sizes
 - Consistent header/footer across all pages
 - Integration with Nissan-specific inventory and pricing systems
 
 ### Integration Points
+
 - Nissan inventory management system
 - Nissan financial services
 - Service scheduling system specific to Nissan maintenance requirements
@@ -64,6 +73,7 @@ The Jack Ingram Nissan website is one of the six brand-specific dealership sites
 - Customer account management system
 
 ### User Interface Elements
+
 - Modern, accessible design elements
 - High-quality vehicle imagery
 - Detailed specification displays
@@ -74,6 +84,7 @@ The Jack Ingram Nissan website is one of the six brand-specific dealership sites
 ## Chatbot Integration Opportunities
 
 ### High-Value Integration Points
+
 1. **Nissan Model Expertise**: Provide detailed information about Nissan-specific features, technology, and performance
 2. **Nissan Financial Services Guidance**: Help users understand Nissan-specific financing, leasing, and special offers
 3. **Nissan Service Scheduling**: Assist with maintenance scheduling and service information
@@ -81,6 +92,7 @@ The Jack Ingram Nissan website is one of the six brand-specific dealership sites
 5. **Nissan Technology Explanations**: Educate users about Nissan-specific technology like ProPILOT Assist, Safety Shield 360, etc.
 
 ### Page-Specific Chatbot Functions
+
 - **Homepage**: Nissan brand introduction, current promotions, model lineup overview
 - **Inventory Pages**: Model comparisons, feature explanations, availability updates
 - **Service Pages**: Maintenance schedules, service package information
@@ -103,6 +115,7 @@ The Jack Ingram Nissan website is one of the six brand-specific dealership sites
 5. **Service Information**: Nissan-specific maintenance vs. multi-brand service options
 
 ## Next Steps for Analysis
+
 - Examine vehicle detail pages for Nissan-specific content and functionality
 - Analyze Nissan service scheduling process
 - Review Nissan financial services integration

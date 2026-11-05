@@ -1,0 +1,72 @@
+{
+ "_meta": {
+  "sample": true,
+  "notice": "SAMPLE service records for demo VINs only."
+ },
+ "records": [
+  {
+   "vin": "1N4TUXT21MC419931",
+   "customer_last_name": "Sample",
+   "service_date": "2026-03-10",
+   "mileage": 62202,
+   "description": "Synthetic oil change, tire rotation, multi-point inspection",
+   "ro_number": "SAMPLE-RO-1000"
+  },
+  {
+   "vin": "1N4TUXT21MC419931",
+   "customer_last_name": "Sample",
+   "service_date": "2026-06-10",
+   "mileage": 68202,
+   "description": "Brake pads (front), cabin air filter",
+   "ro_number": "SAMPLE-RO-1001"
+  },
+  {
+   "vin": "5N1WWJCU1PD935930",
+   "customer_last_name": "Demo",
+   "service_date": "2026-03-11",
+   "mileage": 26864,
+   "description": "Synthetic oil change, tire rotation, multi-point inspection",
+   "ro_number": "SAMPLE-RO-1010"
+  },
+  {
+   "vin": "5N1WWJCU1PD935930",
+   "customer_last_name": "Demo",
+   "service_date": "2026-06-11",
+   "mileage": 32864,
+   "description": "Brake pads (front), cabin air filter",
+   "ro_number": "SAMPLE-RO-1011"
+  },
+  {
+   "vin": "5N1HPXK61NB518022",
+   "customer_last_name": "Example",
+   "service_date": "2026-03-12",
+   "mileage": 49784,
+   "description": "Synthetic oil change, tire rotation, multi-point inspection",
+   "ro_number": "SAMPLE-RO-1020"
+  },
+  {
+   "vin": "5N1HPXK61NB518022",
+   "customer_last_name": "Example",
+   "service_date": "2026-06-12",
+   "mileage": 55784,
+   "description": "Brake pads (front), cabin air filter",
+   "ro_number": "SAMPLE-RO-1021"
+  },
+  {
+   "vin": "W1K6JFP74RB839833",
+   "customer_last_name": "Testcase",
+   "service_date": "2026-03-13",
+   "mileage": 10893,
+   "description": "Synthetic oil change, tire rotation, multi-point inspection",
+   "ro_number": "SAMPLE-RO-1030"
+  },
+  {
+   "vin": "W1K6JFP74RB839833",
+   "customer_last_name": "Testcase",
+   "service_date": "2026-06-13",
+   "mileage": 16893,
+   "description": "Brake pads (front), cabin air filter",
+   "ro_number": "SAMPLE-RO-1031"
+  }
+ ]
+}

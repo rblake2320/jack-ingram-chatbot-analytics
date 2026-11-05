@@ -1,0 +1,82 @@
+{
+  "_meta": {
+    "verified": false,
+    "source": "Site-capture notes in this repository dated 2025-06-09 (docs/analysis/website_analysis/main_site.md and docs/analysis/brand_analysis/*.md). Hours are carried over from the previous app config and are NOT confirmed. Confirm every value with the dealership before production; set DEALERSHIP_FILE to an edited copy.",
+    "conflicts_resolved": "Previous code used '1000 Eastern Blvd' and '(334) 277-5700' with no source; the site captures list the addresses below. A Mercedes-Benz service number captured as 764-206-4747 has no valid Alabama area code and was omitted."
+  },
+  "group_name": "Jack Ingram Motors",
+  "city": "Montgomery, Alabama",
+  "website": "https://www.jackingram.com/",
+  "main_address": "227 Eastern Blvd, Montgomery, AL 36117",
+  "brands": ["Audi", "Mercedes-Benz", "Nissan", "Porsche", "Volkswagen", "Volvo"],
+  "stores": [
+    {
+      "brand": "Nissan",
+      "name": "Jack Ingram Nissan",
+      "address": "227 Eastern Blvd, Montgomery, AL 36117",
+      "sales_phone": "(334) 597-5472",
+      "service_phone": "(334) 602-4175",
+      "tone": "practical, reliable, value-focused",
+      "popular_models": ["Altima", "Rogue", "Pathfinder", "Frontier"]
+    },
+    {
+      "brand": "Mercedes-Benz",
+      "name": "Jack Ingram Mercedes-Benz",
+      "address": "217 Eastern Blvd, Montgomery, AL 36117",
+      "sales_phone": "(334) 356-7750",
+      "service_phone": null,
+      "tone": "refined, heritage and craftsmanship",
+      "popular_models": ["C-Class", "E-Class", "GLC", "GLE"]
+    },
+    {
+      "brand": "Porsche",
+      "name": "Jack Ingram Porsche",
+      "address": "245 Eastern Blvd, Montgomery, AL 36117",
+      "sales_phone": "(866) 266-0830",
+      "service_phone": "(877) 625-1372",
+      "tone": "performance-oriented, exclusive, passionate",
+      "popular_models": ["911", "Cayenne", "Macan", "Taycan"]
+    },
+    {
+      "brand": "Audi",
+      "name": "Audi Montgomery",
+      "address": null,
+      "sales_phone": "(888) 471-6429",
+      "service_phone": "(888) 766-0108",
+      "parts_phone": "(334) 652-0329",
+      "tone": "sophisticated, tech-forward, progressive luxury",
+      "popular_models": ["A4", "Q5", "Q7", "Q8 e-tron"]
+    },
+    {
+      "brand": "Volkswagen",
+      "name": "Jack Ingram Volkswagen",
+      "address": null,
+      "sales_phone": null,
+      "service_phone": null,
+      "tone": "German engineering, value and versatility",
+      "popular_models": ["Jetta", "Tiguan", "Atlas", "ID.4"]
+    },
+    {
+      "brand": "Volvo",
+      "name": "Jack Ingram Volvo",
+      "address": null,
+      "sales_phone": null,
+      "service_phone": null,
+      "tone": "safety, Scandinavian design, sustainability",
+      "popular_models": ["XC40", "XC60", "XC90", "EX30"]
+    }
+  ],
+  "hours": {
+    "sales": {"mon": "09:00-19:00", "tue": "09:00-19:00", "wed": "09:00-19:00", "thu": "09:00-19:00", "fri": "09:00-19:00", "sat": "09:00-18:00", "sun": null},
+    "service": {"mon": "07:30-18:00", "tue": "07:30-18:00", "wed": "07:30-18:00", "thu": "07:30-18:00", "fri": "07:30-18:00", "sat": "08:00-17:00", "sun": null}
+  },
+  "hours_note": "Site captures showed store-specific hours (for example Nissan sales 8:30 AM-7:00 PM and Mercedes-Benz 8:30 AM-6:00 PM on the capture day); hours can vary by store.",
+  "services": {
+    "sales": ["New vehicles", "Pre-owned vehicles", "Certified pre-owned", "Trade-in appraisals", "Financing and leasing"],
+    "service": ["Factory-authorized service", "Express maintenance", "Body shop / collision", "Parts", "Tires"]
+  },
+  "departments": {
+    "service": {"hours": "service", "slot_minutes": 30, "capacity": 3, "label": "Service appointment"},
+    "test_drive": {"hours": "sales", "slot_minutes": 30, "capacity": 2, "label": "Test drive"}
+  }
+}

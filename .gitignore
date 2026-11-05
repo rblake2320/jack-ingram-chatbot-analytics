@@ -150,3 +150,13 @@ Thumbs.db
 *.tar.gz
 doctl*
 chatbot_analytics.log
+# --- application runtime data (SQLite, dev secrets, exports) ---
+var/
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+.dev-secrets.json
+.env
+.env.*
+!.env.example
+.ruff_cache/

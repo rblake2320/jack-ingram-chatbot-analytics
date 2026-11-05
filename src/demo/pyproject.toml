@@ -1,0 +1,38 @@
+[project]
+name = "jack-ingram-chatbot"
+version = "2.0.0"
+description = "Jack Ingram Motors AI assistant: FastAPI service with Claude tool use, scheduling, lead capture and analytics."
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra --strict-markers"
+markers = [
+    "slow: multi-process race tests (still run by default)",
+]
+filterwarnings = [
+    "error::pytest.PytestUnraisableExceptionWarning",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+extend-exclude = ["chatbot/static", "chatbot/templates"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "SIM", "RUF"]
+ignore = [
+    "S101",   # assert is fine in tests
+    "S311",   # random is used only for jitter, never for secrets
+    "RUF001", # allow unicode in user-facing strings
+    "RUF012",
+    "B008",   # FastAPI Depends() in defaults is idiomatic
+    "UP047",  # keep TypeVar generics readable for 3.12 tooling
+]
+
+[tool.ruff.lint.pycodestyle]
+max-line-length = 135  # long SQL string literals; the formatter still targets 120
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S", "B", "SIM"]

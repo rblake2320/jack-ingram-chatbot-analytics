@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Assistant Analytics</title>
+  <link rel="stylesheet" href="/static/app.css">
+  <script src="/static/admin.js" defer></script>
+</head>
+<body>
+  <main class="admin-shell">
+    <header class="toolbar">
+      <h1 class="brand">Assistant analytics</h1>
+      <span class="muted small">v{{ version }}</span>
+    </header>
+
+    <form class="toolbar card panel" id="auth-form">
+      <label for="token">Admin token</label>
+      <input id="token" type="password" autocomplete="off" size="36" required>
+      <button class="btn primary" type="submit">Load</button>
+      <span class="error-text" id="auth-error" role="alert"></span>
+    </form>
+
+    <section id="dashboard" class="hidden">
+      <div class="toolbar" role="group" aria-label="Filters">
+        <label for="range" class="small muted">Date range</label>
+        <select id="range">
+          <option value="7">Last 7 days</option>
+          <option value="30" selected>Last 30 days</option>
+          <option value="90">Last 90 days</option>
+        </select>
+        <button class="btn" id="refresh" type="button">Refresh</button>
+        <a class="btn" href="/agent">Agent console</a>
+        <span class="muted small" id="generated"></span>
+      </div>
+
+      <div class="card hero" id="hero">
+        <span class="value" id="hero-value">–</span>
+        <span class="label">conversations in the selected range</span>
+      </div>
+
+      <div class="grid-tiles" id="tiles"></div>
+
+      <div class="card panel">
+        <h2>Daily activity</h2>
+        <p class="subtitle">Conversations, leads and appointments per day (dealership local time)</p>
+        <div class="legend" id="daily-legend"></div>
+        <div class="chart" id="daily-chart"></div>
+        <details>
+          <summary>Show as table</summary>
+          <table class="data" id="daily-table"></table>
+        </details>
+      </div>
+
+      <div class="two-col">
+        <div class="card panel">
+          <h2>What customers ask about</h2>
+          <p class="subtitle">Messages by detected topic</p>
+          <div class="chart" id="topics-chart"></div>
+        </div>
+        <div class="card panel">
+          <h2>When customers chat</h2>
+          <p class="subtitle">Messages by weekday and hour (local time)</p>
+          <div class="chart" id="heatmap"></div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card panel">
+          <h2>Tool usage</h2>
+          <table class="data" id="tools-table"></table>
+        </div>
+        <div class="card panel">
+          <h2>System health</h2>
+          <table class="data" id="health-table"></table>
+          <div class="toolbar">
+            <button class="btn" id="verify-ledger" type="button">Verify ledger</button>
+            <button class="btn" id="verify-records" type="button">Verify records</button>
+            <a class="btn" id="leads-csv" href="#" role="button">Export leads CSV</a>
+          </div>
+          <p class="small" id="verify-result" role="status"></p>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <h2>Recent leads</h2>
+        <table class="data" id="leads-table"></table>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
