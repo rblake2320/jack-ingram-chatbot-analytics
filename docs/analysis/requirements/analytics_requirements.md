@@ -3,6 +3,7 @@
 ## Core Analytics Requirements
 
 ### Customer Behavior Metrics
+
 1. **Site Visitor Analytics**
    - Number of visitors accessing the chatbot
    - Time of day distribution for chatbot interactions

@@ -6,7 +6,8 @@ Based on industry research and the extracted requirements from the provided docu
 
 **Pain Point**: 30-40% of website visitors browse after dealership business hours (typically after 6 PM), leaving their questions unanswered and potentially losing these customers to competitors.
 
-**Impact**: 
+**Impact**:
+
 - Lost sales opportunities
 - Reduced lead capture
 - Customer frustration leading to abandonment
@@ -19,6 +20,7 @@ Based on industry research and the extracted requirements from the provided docu
 **Pain Point**: Customers must navigate multiple communication channels (phone, email, website forms, social media) to get information, leading to inconsistent experiences and lost information.
 
 **Impact**:
+
 - Customer frustration from repeating information
 - Inconsistent messaging across channels
 - Missed follow-up opportunities
@@ -31,6 +33,7 @@ Based on industry research and the extracted requirements from the provided docu
 **Pain Point**: Traditional lead follow-up processes can take hours or even days, while 90% of customers expect responses within 10 minutes.
 
 **Impact**:
+
 - Customer impatience leading to competitor engagement
 - Perception of poor service quality
 - Reduced conversion rates
@@ -43,6 +46,7 @@ Based on industry research and the extracted requirements from the provided docu
 **Pain Point**: Static inventory pages require manual filtering, making it difficult for customers to quickly find vehicles matching their specific criteria.
 
 **Impact**:
+
 - High bounce rates from frustrated searchers
 - Increased time-to-purchase
 - Missed opportunities when customers can't find what they want
@@ -55,6 +59,7 @@ Based on industry research and the extracted requirements from the provided docu
 **Pain Point**: Generic website experiences fail to address individual customer needs, preferences, and shopping history.
 
 **Impact**:
+
 - Lower engagement rates
 - Missed upsell/cross-sell opportunities
 - Reduced customer loyalty
@@ -67,6 +72,7 @@ Based on industry research and the extracted requirements from the provided docu
 **Pain Point**: Customers struggle to understand financing options, payment calculations, and trade-in values without speaking to a finance manager.
 
 **Impact**:
+
 - Financing anxiety delaying purchase decisions
 - Sticker shock during in-person negotiations
 - Reduced finance product attachment rates
@@ -79,6 +85,7 @@ Based on industry research and the extracted requirements from the provided docu
 **Pain Point**: Booking service appointments often requires phone calls during business hours or navigating complex online scheduling systems.
 
 **Impact**:
+
 - Missed service revenue
 - Customer defection to independent shops
 - Reduced fixed operations efficiency
@@ -91,6 +98,7 @@ Based on industry research and the extracted requirements from the provided docu
 **Pain Point**: Dealerships have limited visibility into customer website behavior, search patterns, and content preferences.
 
 **Impact**:
+
 - Missed insights on customer interests
 - Inefficient marketing spend
 - Inability to optimize inventory based on demand signals
@@ -103,6 +111,7 @@ Based on industry research and the extracted requirements from the provided docu
 **Pain Point**: English-only websites exclude potential customers who prefer other languages, particularly Spanish in many markets.
 
 **Impact**:
+
 - Excluded customer segments
 - Reduced market reach
 - Poor experience for non-English speakers
@@ -115,6 +124,7 @@ Based on industry research and the extracted requirements from the provided docu
 **Pain Point**: Many consumers have inherent distrust of dealerships, expecting high-pressure sales tactics and non-transparent pricing.
 
 **Impact**:
+
 - Hesitation to provide contact information
 - Reluctance to visit the dealership
 - Skepticism about pricing and offers
@@ -127,6 +137,7 @@ Based on industry research and the extracted requirements from the provided docu
 **Pain Point**: Many dealership websites are not fully optimized for mobile users, despite most car shopping now occurring on smartphones.
 
 **Impact**:
+
 - Poor user experience on small screens
 - Difficult form completion on mobile devices
 - Slow page loading on cellular connections
@@ -139,6 +150,7 @@ Based on industry research and the extracted requirements from the provided docu
 **Pain Point**: Customers want instant trade-in estimates but often must submit forms and wait for dealer responses.
 
 **Impact**:
+
 - Reduced trade-in capture
 - Customer uncertainty about affordability
 - Competitive disadvantage to instant-valuation sites
@@ -151,6 +163,7 @@ Based on industry research and the extracted requirements from the provided docu
 **Pain Point**: After submitting inquiries, customers often receive disjointed follow-up from multiple dealership staff without context of their original questions.
 
 **Impact**:
+
 - Customer frustration from repeating information
 - Inconsistent messaging from different staff
 - Perception of disorganization
@@ -163,6 +176,7 @@ Based on industry research and the extracted requirements from the provided docu
 **Pain Point**: Many dealerships focus on the sale but have minimal systematic follow-up for service, accessories, and future purchases.
 
 **Impact**:
+
 - Reduced service retention
 - Missed accessory sales
 - Lower customer lifetime value
@@ -175,6 +189,7 @@ Based on industry research and the extracted requirements from the provided docu
 **Pain Point**: Customers often cannot get clear pricing information without directly contacting the dealership, creating anxiety about negotiation.
 
 **Impact**:
+
 - Price shopping across multiple dealerships
 - Delayed purchase decisions
 - Customer frustration with the sales process

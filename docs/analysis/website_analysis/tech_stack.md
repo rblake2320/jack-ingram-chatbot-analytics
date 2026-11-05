@@ -1,11 +1,13 @@
 # Technology Stack Analysis for Jack Ingram Motors
 
 ## Overview
+
 This document provides an analysis of the technology stack and integrations used across the Jack Ingram Motors website and its six brand-specific dealership sites. Due to script obfuscation and limited console access, this analysis is based on visible elements, page structure, and common automotive dealership platform patterns.
 
 ## Identified Technology Components
 
 ### Website Platform
+
 Based on the site structure, navigation patterns, and URL structure, Jack Ingram Motors appears to be using a specialized automotive dealership website platform. The most likely candidates include:
 
 1. **Dealer.com** - A common platform for multi-brand dealership groups

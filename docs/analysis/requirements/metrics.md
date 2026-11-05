@@ -5,6 +5,7 @@ Based on industry best practices and the extracted requirements, the following k
 ## 1. Engagement Metrics
 
 ### Interaction Volume
+
 - **Total Conversations**: Number of chat sessions initiated per day/week/month
 - **Peak Usage Times**: Distribution of conversations by hour and day of week
 - **Page-Specific Engagement**: Which website pages generate the most chatbot interactions
@@ -12,6 +13,7 @@ Based on industry best practices and the extracted requirements, the following k
 - **Messages Per Conversation**: Average number of messages exchanged in each session
 
 ### User Engagement Quality
+
 - **Hover Time**: Duration between page load and chatbot interaction (indicates interest level)
 - **Completion Rate**: Percentage of conversations that reach a logical conclusion vs. abandoned
 - **Return Rate**: Percentage of users who engage with the chatbot on multiple visits
@@ -21,6 +23,7 @@ Based on industry best practices and the extracted requirements, the following k
 ## 2. Search and Content Analysis
 
 ### Information Discovery
+
 - **Most Searched Terms**: Ranking of keywords and phrases users search for most frequently
 - **Vehicle Model Interest**: Which models generate the most queries and conversations
 - **Feature Inquiries**: Most frequently asked questions about vehicle features and specifications
@@ -28,6 +31,7 @@ Based on industry best practices and the extracted requirements, the following k
 - **Content Gaps**: Topics where the chatbot fails to provide satisfactory answers
 
 ### Language and Communication
+
 - **Language Preferences**: Usage statistics for English vs. Spanish conversations
 - **Query Complexity**: Analysis of simple vs. complex customer inquiries
 - **Sentiment Tracking**: Positive, negative, or neutral tone in customer messages
@@ -37,6 +41,7 @@ Based on industry best practices and the extracted requirements, the following k
 ## 3. Lead Generation and Conversion Metrics
 
 ### Lead Qualification
+
 - **Lead Capture Rate**: Percentage of conversations that result in contact information collection
 - **Sales Team Lookup**: Number of users who specifically ask about or look up sales personnel
 - **Follow-Up Requests**: Users who request to be contacted by the dealership
@@ -44,6 +49,7 @@ Based on industry best practices and the extracted requirements, the following k
 - **Lead Quality Score**: Scoring system based on conversation content, intent signals, and engagement level
 
 ### Conversion Funnel
+
 - **Awareness to Consideration**: Users moving from general browsing to specific vehicle inquiries
 - **Consideration to Intent**: Transition from research questions to purchase-oriented queries
 - **Intent to Action**: Conversion from expressed interest to concrete actions (test drive, application)
@@ -53,6 +59,7 @@ Based on industry best practices and the extracted requirements, the following k
 ## 4. Inventory and Product Interest
 
 ### Vehicle Preference Analysis
+
 - **Model Popularity**: Ranking of vehicle models by conversation volume
 - **Feature Prioritization**: Which vehicle features are most frequently discussed
 - **Price Sensitivity**: Analysis of price-related questions and reactions
@@ -60,6 +67,7 @@ Based on industry best practices and the extracted requirements, the following k
 - **New vs. Used Interest**: Distribution of inquiries between new and pre-owned vehicles
 
 ### Competitive Intelligence
+
 - **Brand Comparisons**: Frequency of competitive brand mentions in conversations
 - **Cross-Shopping Patterns**: Which models are commonly compared against each other
 - **Conquest Opportunities**: Identification of users considering switching from competitor brands
@@ -69,6 +77,7 @@ Based on industry best practices and the extracted requirements, the following k
 ## 5. Service and Ownership Metrics
 
 ### Service Department Engagement
+
 - **Service Inquiry Types**: Distribution of service-related questions by category
 - **Appointment Scheduling Rate**: Percentage of service discussions that result in bookings
 - **Maintenance Query Patterns**: Seasonal or mileage-based maintenance question trends
@@ -76,6 +85,7 @@ Based on industry best practices and the extracted requirements, the following k
 - **Service Satisfaction Indicators**: Sentiment analysis of service-related conversations
 
 ### Ownership Experience
+
 - **Current Owner Identification**: Percentage of users identified as existing customers
 - **Owner-Specific Questions**: Common inquiries from current vehicle owners
 - **Loyalty Indicators**: Signals of repeat purchase interest from existing customers
@@ -85,6 +95,7 @@ Based on industry best practices and the extracted requirements, the following k
 ## 6. Marketing Campaign Effectiveness
 
 ### Campaign Response Metrics
+
 - **Promotional Awareness**: Recognition and inquiries about current dealership promotions
 - **Special Offer Engagement**: Interaction with time-limited deals and incentives
 - **Campaign-Specific Queries**: Volume of questions related to specific marketing campaigns
@@ -92,6 +103,7 @@ Based on industry best practices and the extracted requirements, the following k
 - **Cross-Promotion Success**: Effectiveness of chatbot in promoting related services/products
 
 ### Content Effectiveness
+
 - **Message Resonance**: Which marketing messages generate the most positive engagement
 - **Content Sharing**: Frequency of users requesting to share or save information
 - **Call-to-Action Response**: Effectiveness of various calls to action within the conversation
@@ -101,6 +113,7 @@ Based on industry best practices and the extracted requirements, the following k
 ## 7. Technical and Operational Metrics
 
 ### Platform Performance
+
 - **Response Time**: Average time to generate chatbot responses
 - **Error Rate**: Frequency of misunderstood queries or technical failures
 - **Device Distribution**: Usage patterns across desktop, mobile, and tablet devices
@@ -108,6 +121,7 @@ Based on industry best practices and the extracted requirements, the following k
 - **Session Continuity**: Ability to maintain context across multiple user sessions
 
 ### Operational Efficiency
+
 - **Human Handoff Frequency**: Percentage of conversations requiring human intervention
 - **Resolution Rate**: Percentage of inquiries successfully resolved by the chatbot
 - **Training Opportunities**: Identification of knowledge gaps requiring additional training
@@ -117,6 +131,7 @@ Based on industry best practices and the extracted requirements, the following k
 ## 8. Advanced Analytics and Predictive Insights
 
 ### Behavioral Patterns
+
 - **Visit-to-Purchase Timeline**: Average time from first chatbot interaction to purchase
 - **Buying Signals**: Conversation patterns that correlate with higher purchase likelihood
 - **Hesitation Indicators**: Language patterns that suggest uncertainty or objections
@@ -124,6 +139,7 @@ Based on industry best practices and the extracted requirements, the following k
 - **Loyalty Predictors**: Conversation elements that correlate with repeat business
 
 ### Predictive Modeling
+
 - **Lead Scoring Algorithm**: Automated scoring of conversation quality and purchase intent
 - **Next-Best-Action Recommendations**: Suggested follow-ups based on conversation analysis
 - **Inventory Matching**: Correlation between user preferences and available inventory
