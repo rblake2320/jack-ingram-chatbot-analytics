@@ -18,6 +18,8 @@ from . import mp_workers
 from .conftest import first_slot
 
 CT = ZoneInfo("America/Chicago")
+# Low-entropy fixture so secret scanners (gitleaks generic-api-key) don't mistake it for a credential.
+REPLAY_ID = "booking-0000001"
 
 
 def at(y, m, d, hh, mm=0) -> datetime:
@@ -173,14 +175,14 @@ def _body(slot: str, **kw) -> dict:
 
 def test_api_booking_flow(client):
     slot = first_slot(client)
-    created = client.post("/api/appointments", json=_body(slot), headers={"Idempotency-Key": "key-12345678"})
+    created = client.post("/api/appointments", json=_body(slot), headers={"Idempotency-Key": REPLAY_ID})
     assert created.status_code == 201
     data = created.json()
     assert data["phone"] == "***-***-0142" and data["ics"].startswith("BEGIN:VCALENDAR")
-    replay = client.post("/api/appointments", json=_body(slot), headers={"Idempotency-Key": "key-12345678"})
+    replay = client.post("/api/appointments", json=_body(slot), headers={"Idempotency-Key": REPLAY_ID})
     assert replay.json()["replayed"] is True and replay.json()["confirmation_code"] == data["confirmation_code"]
     conflict = client.post(
-        "/api/appointments", json=_body(slot, notes="different"), headers={"Idempotency-Key": "key-12345678"}
+        "/api/appointments", json=_body(slot, notes="different"), headers={"Idempotency-Key": REPLAY_ID}
     )
     assert conflict.status_code == 409 and conflict.json()["error"] == "idempotency_conflict"
     cancel = client.post(f"/api/appointments/{data['confirmation_code']}/cancel", json={"phone_last4": "0142"})
