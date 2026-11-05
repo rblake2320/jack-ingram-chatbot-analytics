@@ -2,55 +2,68 @@
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/rblake2320/jack-ingram-chatbot-analytics)
 ![GitHub repo size](https://img.shields.io/github/repo-size/rblake2320/jack-ingram-chatbot-analytics)
-![GitHub issues](https://img.shields.io/github/issues/rblake2320/jack-ingram-chatbot-analytics)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/rblake2320/jack-ingram-chatbot-analytics)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
 ## Overview
 
-This repository contains a comprehensive analytics-enabled chatbot solution designed specifically for Jack Ingram Motors and its six brand-specific dealership sites (Audi, Mercedes-Benz, Nissan, Porsche, Volkswagen, and Volvo). The solution provides powerful customer engagement capabilities while capturing detailed analytics to drive marketing campaigns and business growth.
+An AI assistant and analytics service for Jack Ingram Motors and its six brands (Audi, Mercedes-Benz, Nissan,
+Porsche, Volkswagen and Volvo), plus the research and proposal documents behind it.
 
-### Key Features
+The application lives in [`src/demo`](src/demo/README.md). It is a Python 3.12 FastAPI service that uses
+Claude (`claude-opus-5-5`) with tools, and has a deterministic fallback so it keeps working without an API key or
+during an outage.
 
-- **Brand-Specific Intelligence**: Unique voice and tone for each dealership brand
-- **Comprehensive Analytics**: Visitor behavior tracking across all metrics
-- **Enhanced Customer Experience**: 24/7 instant assistance across all brands
-- **Business Process Optimization**: Intelligent lead qualification and routing
-- **Multi-Tenant Architecture**: Scalable to additional dealerships
+## What the application does
 
-## Business Impact
+- **Chat** with tool use: inventory search and comparison, current offers, NHTSA VIN decoding, recalls and crash
+  ratings, payment, lease and trade-in estimates, appointment booking, lead capture, service-history lookup
+- **Scheduling** for service visits and test drives with business hours, holidays, capacity limits and
+  calendar (ICS) files
+- **Lead capture and CRM delivery** through a transactional outbox: JSON or ADF 1.0 XML, HMAC-signed,
+  retried with backoff
+- **Live-agent handoff** with a staff console at `/agent`
+- **Analytics dashboard** at `/admin`: conversations, conversion, latency, topics, activity heatmap, tool
+  health. No raw customer text is stored in analytics.
+- **Tamper evidence**: every business event goes into a hash-chained, HMAC-sealed ledger in the same transaction
+  as the data
+- **Security**: secrets only from the environment, strict CSP, CSRF guard, rate limits shared across workers,
+  admin bearer auth, PII-redacting logs
 
-Implementation of this solution delivers:
+The bundled inventory, offers and service records are **sample data**, and the dealership's addresses and hours
+have not been re-verified. See [TURNOVER.md](TURNOVER.md) for the full status, known limitations and the
+credential incident that requires key rotation.
 
-- **37% increase** in web-to-lead conversions
-- **25-40% more** appointments scheduled
-- **75% overall ROI** improvement
-- **24/7 customer engagement** capturing after-hours traffic (30-40% of visitors)
-- **Unprecedented insights** into customer behavior and preferences
+## Quick start (Windows PowerShell)
 
-## Repository Structure
-
+```powershell
+git clone https://github.com/rblake2320/jack-ingram-chatbot-analytics.git
+cd jack-ingram-chatbot-analytics\src\demo
+py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements-dev.txt
+Copy-Item .env.example .env
+uvicorn chatbot.main:app --reload --port 8080
 ```
+
+Then open `http://localhost:8080`. Run the tests with `python -m pytest -q`.
+
+## Repository structure
+
+```text
 /
-├── docs/                          # Documentation directory
-│   ├── proposal/                  # Proposal documents
-│   ├── analysis/                  # Analysis documents
-│   │   ├── website_analysis/      # Website analysis documents
-│   │   ├── brand_analysis/        # Brand-specific analysis
-│   │   └── requirements/          # Requirements documents
-│   ├── implementation/            # Implementation documents
-│   └── business/                  # Business documents
-├── src/                           # Source code directory (for future development)
-│   ├── config/                    # Configuration files
-│   ├── api/                       # API integration code
-│   ├── analytics/                 # Analytics implementation
-│   └── ui/                        # UI components
-├── examples/                      # Example code and usage
-├── tests/                         # Test files
-└── .github/                       # GitHub specific files
-    ├── ISSUE_TEMPLATE/            # Issue templates
-    └── workflows/                 # GitHub Actions workflows
+├── src/demo/                 # The application (FastAPI), tests, Dockerfile, DigitalOcean app spec
+├── docs/                     # Research, proposal, implementation and business documents
+│   ├── proposal/
+│   ├── analysis/             # website, brand and requirements analysis
+│   ├── implementation/
+│   └── business/
+├── screenshots/              # Site captures used in the analysis
+├── TURNOVER.md               # Current status, limitations, operations, troubleshooting
+└── .github/                  # CI (tests on Linux + Windows, secret scan, Docker smoke), templates
 ```
+
+Design notes for individual features (appointments and handoff, inventory search, lead capture, NHTSA plan)
+remain at the repository root as `*_implementation.md` and `*_plan.md`.
 
 ## Documentation
 
@@ -62,143 +75,59 @@ Implementation of this solution delivers:
 ### Analysis Documents
 
 #### Website Analysis
+
 - [Main Site Analysis](docs/analysis/website_analysis/main_site.md): Jack Ingram Motors main site analysis
 - [User Journeys](docs/analysis/website_analysis/user_journeys.md): User journey mapping
 - [Technology Stack](docs/analysis/website_analysis/tech_stack.md): Technical stack assessment
 
-#### Brand-Specific Analysis
+#### Brand Analysis
+
 - [Audi Analysis](docs/analysis/brand_analysis/audi.md): Audi Montgomery site analysis
 - [Mercedes-Benz Analysis](docs/analysis/brand_analysis/mercedes_benz.md): Mercedes-Benz site analysis
 - [Nissan Analysis](docs/analysis/brand_analysis/nissan.md): Nissan site analysis
 - [Porsche Analysis](docs/analysis/brand_analysis/porsche.md): Porsche site analysis
 - [Volkswagen Analysis](docs/analysis/brand_analysis/volkswagen.md): Volkswagen site analysis
 
-#### Requirements Documents
+#### Requirements
+
 - [Analytics Requirements](docs/analysis/requirements/analytics_requirements.md): Detailed analytics requirements
 - [Metrics Definition](docs/analysis/requirements/metrics.md): Key customer behavior metrics
 - [Pain Points Analysis](docs/analysis/requirements/pain_points.md): Dealership customer experience pain points
 
 ### Implementation Documents
+
 - [Compatibility Assessment](docs/implementation/compatibility.md): Chatbot compatibility assessment
 - [Optimization Recommendations](docs/implementation/optimization.md): Optimization guidance
 - [Implementation Plan](docs/implementation/implementation_plan.md): Detailed implementation roadmap
 - [Validation Report](docs/implementation/validation.md): Solution validation
 
 ### Business Documents
+
 - [Business Enhancements](docs/business/enhancements.md): Business enhancement documentation
 - [Feature Mapping](docs/business/feature_mapping.md): Feature-pain point mapping
 - [Dashboard Design](docs/business/dashboard_design.md): Analytics dashboard specifications
 
-## Implementation Plan
+## Research benchmarks
 
-The solution will be implemented through a phased approach:
+The proposal documents cite industry figures for dealership chatbots (for example, higher web-to-lead conversion
+and more scheduled appointments). They are **projections from third-party research, not measured results of
+this code**. The analytics dashboard records this deployment's own conversion, handoff and satisfaction rates.
 
-### Phase 1: Core Integration (Weeks 1-2)
-- Base chatbot deployment across all sites
-- Core knowledge base implementation
-- Basic analytics tracking
-- Essential brand customizations
+## Deployment
 
-### Phase 2: Enhanced Functionality (Weeks 3-4)
-- Inventory integration
-- Appointment scheduling
-- Lead capture optimization
-- Advanced brand customizations
-
-### Phase 3: Analytics Expansion (Weeks 5-6)
-- Comprehensive analytics implementation
-- Custom dashboard development
-- Marketing campaign integration
-- Performance optimization
-
-### Phase 4: Advanced Features (Weeks 7-8)
-- Multi-language support
-- Personalization framework
-- Advanced accessibility
-- Cross-brand capabilities
-
-## Technical Implementation
-
-The solution utilizes a modern, lightweight architecture:
-
-```javascript
-// Embed code example
-(function(w, d, s, o, f, js, fjs) {
-  w['JackIngramChatWidget'] = o;
-  w[o] = w[o] || function() {
-    (w[o].q = w[o].q || []).push(arguments)
-  };
-  js = d.createElement(s), fjs = d.getElementsByTagName(s)[0];
-  js.id = o;
-  js.src = f;
-  js.async = 1;
-  fjs.parentNode.insertBefore(js, fjs);
-}(window, document, 'script', 'jiChat', 'https://chat-cdn.jackingram.com/loader.js'));
-
-jiChat('init', {
-  dealershipId: 'jackingram',
-  brand: 'auto-detect', // Will detect brand based on URL
-  language: 'auto-detect', // Will detect language based on site setting
-  theme: 'auto-brand', // Will apply brand-specific styling
-  analyticsEnabled: true
-});
-```
-
-Key technical features include:
-- Asynchronous loading for minimal performance impact
-- Responsive design for all device types
-- Secure API integrations with inventory and scheduling systems
-- Real-time data synchronization
-- WCAG 2.1 AA accessibility compliance
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 16+
-- OpenAI API access
-- Web server with HTTPS support
-
-### Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/rblake2320/jack-ingram-chatbot-analytics.git
-cd jack-ingram-chatbot-analytics
-```
-
-2. Install dependencies (for future development):
-```bash
-npm install
-```
-
-3. Configure environment variables:
-```bash
-cp .env.example .env
-# Edit .env with your API keys and configuration
-```
-
-4. Deploy to your web server following the [Implementation Plan](docs/implementation/implementation_plan.md).
+DigitalOcean App Platform builds `src/demo/Dockerfile` using `src/demo/app.yaml`. Secrets are set in the App
+Platform dashboard, never in the repository. See [TURNOVER.md](TURNOVER.md) for configuration, data durability
+and operations.
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md), and run `python -m ruff check .` and
+`python -m pytest -q` in `src/demo` before opening a pull request.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Contact
 
 Project Owner: [rblake2320](https://github.com/rblake2320)
-
-## Acknowledgments
-
-- Jack Ingram Motors for providing access to their website ecosystem
-- OpenAI for the Assistants API technology

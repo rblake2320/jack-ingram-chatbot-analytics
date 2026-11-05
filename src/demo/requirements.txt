@@ -1,12 +1,11 @@
-flask==3.1.1
-requests==2.32.4
-python-dotenv==1.1.0
-gunicorn==21.2.0
-aiohttp==3.9.3
-beautifulsoup4==4.12.3
-lxml==5.1.0
-httpx==0.26.0
-aiodns==3.1.1  # For async DNS resolution
-cchardet==2.1.7  # For faster encoding detection
-uvloop==0.19.0  # For faster async operations
-pytz==2024.1  # Timezone handling
+# Runtime dependencies (exact pins for reproducible deploys).
+# Install: pip install -r requirements.txt
+fastapi==0.162.0
+uvicorn[standard]==0.54.0
+pydantic==2.14.2
+pydantic-settings==2.16.2
+httpx==0.28.1
+anthropic==2.5.0
+jinja2==3.1.6
+# IANA timezone database: required on Windows (no system tz db) and on minimal containers.
+tzdata==2026.6

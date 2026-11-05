@@ -1,3 +1,15 @@
+# DigitalOcean App Platform spec.
+# Secrets are NOT stored here. Add them in the App Platform dashboard
+# (Settings -> web component -> Environment Variables, tick "Encrypt"):
+#   SESSION_SECRET, LEDGER_HMAC_KEY, ADMIN_TOKEN        (required, >= 32 chars each)
+#   ANTHROPIC_API_KEY                                   (optional; fallback responder without it)
+#   CRM_WEBHOOK_URL, WEBHOOK_SIGNING_SECRET             (optional CRM delivery)
+#   PERPLEXITY_API_KEY, FIRECRAWL_API_KEY, SPECIALS_URLS (optional live data)
+# Generate values with: python -m chatbot.cli gen-secret
+#
+# Data note: SQLite lives on the container filesystem, which App Platform does not persist across
+# deploys and does not share between instances. Keep instance_count at 1 and treat the CRM webhook
+# as the system of record (see README "Data durability").
 name: jack-ingram-chatbot
 region: nyc
 services:
@@ -7,13 +19,26 @@ services:
       branch: main
       deploy_on_push: true
     source_dir: src/demo
-    envs:
-      - key: ANTHROPIC_API_KEY
-        value: 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
-        type: SECRET
-    build_command: pip install -r requirements.txt
-    run_command: gunicorn app:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8080 --timeout 120
+    dockerfile_path: src/demo/Dockerfile
+    http_port: 8080
     instance_size_slug: basic-xxs
     instance_count: 1
+    health_check:
+      http_path: /health
+      initial_delay_seconds: 10
+      period_seconds: 15
+    envs:
+      - key: ENVIRONMENT
+        value: production
+        scope: RUN_TIME
+      - key: CLIENT_IP_HEADER
+        value: do-connecting-ip
+        scope: RUN_TIME
+      - key: WEB_CONCURRENCY
+        value: "2"
+        scope: RUN_TIME
+      - key: ANTHROPIC_MODEL
+        value: claude-opus-5-5
+        scope: RUN_TIME
     routes:
       - path: /
